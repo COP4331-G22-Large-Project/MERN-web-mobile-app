@@ -14,9 +14,7 @@ Setup should be easy for all systems because it just requires NodeJS and MongoDB
 		1. `sudo npm install -g expo-cli`
 4. Run the following commands (run in the project root).
 ```bash
-cd backend
-npm install
-cd ../frontend
+cd web
 npm install
 cd ../mobile
 npm install
