@@ -23,14 +23,10 @@ npm install
 cd ..
 ```
 
-## Running the app
-To run the front-end and back-end simultaneously for development, run (from the project root):
-```bash
-(cd frontend && npm start) && (cd backend && npm start)
-```
-You may also run only 1 at a time using `npm start` from within the directory you want.
+## Web App
+To run the web app, go into the `web` folder and run `npm start`. This launches both the front-end and the back-end. The browser should open automatically to http://localhost:3000
 
-## Mobile development
+## Mobile App
 
 ### Using Expo
 Install Expo on your phone's app store.
