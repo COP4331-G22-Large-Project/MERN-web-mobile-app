@@ -11,18 +11,20 @@
     "mongoose": "^5.9.19",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "@babel/preset-env": "^7.10.2",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
   },
   "scripts": {
     "start": "concurrently \"npm:start-*\"",
     "start-FE": "react-scripts start",
     "start-BE": "nodemon --exec babel-node ./index.js --watch api --watch index.js",
     "build": "react-scripts build",
-    "prod": "node index.js",
+    "prod": "babel-node index.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8000",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -39,9 +41,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.10.2",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "concurrently": "^5.2.0",
     "nodemon": "^2.0.4"
   }
