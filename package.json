@@ -1,0 +1,22 @@
+{
+  "name": "largeproject",
+  "version": "1.0.0",
+  "description": "This is required for Heroku to recognize the app. It will help deploy the web-app.",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd web && npm run prod",
+    "heroku-prebuild": "cd web && npm ci",
+    "build": "cd web && npm run build",
+    "heroku-cleanup": "cd web && rm -rf src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/notrealjohn/largeproject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/notrealjohn/largeproject/issues"
+  },
+  "homepage": "https://gitlab.com/notrealjohn/largeproject#readme"
+}
