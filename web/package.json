@@ -20,8 +20,9 @@
     "start": "concurrently \"npm:start-*\"",
     "start-FE": "react-scripts start",
     "start-BE": "nodemon --exec babel-node ./index.js --watch api --watch index.js",
-    "build": "react-scripts build",
-    "prod": "babel-node index.js",
+    "build": "rm -rf dist && npm run build-server && react-scripts build && mv build dist",
+    "build-server": "babel -d dist --minified index.js ./api",
+    "prod": "node dist/index.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
