@@ -18,5 +18,6 @@
   "bugs": {
     "url": "https://gitlab.com/notrealjohn/largeproject/issues"
   },
-  "homepage": "https://gitlab.com/notrealjohn/largeproject#readme"
+  "homepage": "https://gitlab.com/notrealjohn/largeproject#readme",
+  "dependencies": {}
 }
