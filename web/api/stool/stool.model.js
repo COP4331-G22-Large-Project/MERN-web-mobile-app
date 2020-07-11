@@ -25,12 +25,12 @@ const stoolSchema = new mongoose.Schema({
 		enum: ['Little', 'Normal', 'A lot']
 	},
 	// The foods associated with this stool
-	food: [{
+	foods: [{
 		type: mongoose.Schema.ObjectId,
 		ref: 'Food'
 	}],
 	// The exercises associated with this stool
-	exercise: [{
+	exercises: [{
 		type: mongoose.Schema.ObjectId,
 		ref: 'Exercise'
 	}]

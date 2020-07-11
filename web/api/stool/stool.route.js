@@ -8,6 +8,10 @@ import Stool from './stool.model';
 const FOOD_AGE = 7;
 const EXERCISE_AGE = 1;
 
+function hoursToMilli(h) {
+	return h * 60 * 60 * 1000;
+}
+
 const stoolRouter = express.Router();
 
 /* Searches for a stool that matches the given params
@@ -72,10 +76,29 @@ stoolRouter.get('/search', (req, res) => {
 stoolRouter.post('/add', (req, res) => {
 	const { type, speed, amount } = req.body;
 
+	const now = Date.now();
+
 	const newStool = new Stool({ type, speed, amount });
 	const promises = [
-		// Find food an exercise within an amount of time
+		Food.find({
+			userId: req.user._id,
+			stoolId: null,
+			date: { $lte: now - hoursToMilli(FOOD_AGE) }
+		}),
+		Exercise.find({
+			userId: req.user._id,
+			stoolId: null,
+			date: { $lte: now - hoursToMilli(EXERCISE_AGE) }
+		})
 	];
+	Promise.all(promises).then((values) => {
+		newStool.foods = values[0];
+		newStool.exercises = values[1];
+
+		newStool.save((stool) => {
+			res.json(stool);
+		}).catch(e => res.status(500).send(e));
+	}).catch(e => res.status(500).send(e));
 });
 
 stoolRouter.delete('/delete', (req, res) => {
