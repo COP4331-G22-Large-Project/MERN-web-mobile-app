@@ -7,6 +7,7 @@ import path from 'path';
 import passport from 'passport';
 
 import loginRouter from './api/login/login.route';
+import stoolRouter from './api/stool/stool.route';
 
 const MongoStore = require('connect-mongo')(expressSession);
 
@@ -21,6 +22,7 @@ mongoose.connect(mongoUri, {useNewUrlParser: true, useUnifiedTopology: true})
 		console.error(err);
 		process.exit(1);
 	});
+mongoose.set('useCreateIndex', true);
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -48,7 +50,7 @@ app.use(expressSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Place this function before any API routes that only allow logged-in users
+// Place this function before any API routes that should only allow logged-in users
 function ensureLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
 		next();
@@ -65,6 +67,11 @@ app.use('/api/secret',
 	(req, res) => {
 		res.send('Welcome to the secret club, ' + req.user.username);
 	}
+);
+
+app.use('/api/stool',
+	ensureLoggedIn,
+	stoolRouter
 );
 
 // If there was no matching request
