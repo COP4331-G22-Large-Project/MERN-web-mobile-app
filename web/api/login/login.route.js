@@ -3,6 +3,7 @@ import passport from 'passport';
 import crypto from 'crypto';
 import { Strategy } from 'passport-local';
 import uid from 'uid';
+import { typeCheck } from 'type-check';
 
 import User, { emailRegex } from '../user/user.model';
 
@@ -35,14 +36,12 @@ passport.use(new Strategy(logIn));
 
 // Allows Passport to let express-session link session to ID
 passport.serializeUser((user, done) => {
-	console.log('storing session');
 	done(null, user._id)
 });
 
 // Allows Passport to grab a user based on ID
 passport.deserializeUser((id, done) => {
 	User.findById(id, (err, user) => {
-		console.log('grabbed session of ' + (user || {}).username)
 		done(err, user);
 	});
 })
@@ -83,8 +82,8 @@ loginRouter.post('/register', (req, res) => {
 		lastName,
 	} = req.body;
 
-	if (!username || !password || !email || !firstName || !lastName) {
-		return res.status(400).send('missing fields');
+	if (!typeCheck('{username: String, password: String, email: String}', { username, password, email })) {
+		return res.status(400).send('Invalid request parameters');
 	}
 
 	isUserDuplicate().then(({ isUsername, isEmail }) => {

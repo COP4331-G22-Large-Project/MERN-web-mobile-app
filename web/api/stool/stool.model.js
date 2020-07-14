@@ -4,7 +4,8 @@ const stoolSchema = new mongoose.Schema({
 	// The user who owns this stool
 	userId: {
 		type: mongoose.Schema.ObjectId,
-		ref: 'User'
+		ref: 'User',
+		required: true
 	},
 	// The date this stool was recorded
 	date: {
@@ -15,14 +16,14 @@ const stoolSchema = new mongoose.Schema({
 	type: {
 		type: Number,
 		min: 1,
-		max: 7
+		max: 7,
+		required: true
 	},
-	// How long the user was on the toilet
-	speed: Number,
 	// The amount of poo
 	amount: {
 		type: String,
-		enum: ['Little', 'Normal', 'A lot']
+		enum: ['Little', 'Normal', 'A lot'],
+		required: true
 	},
 	// The foods associated with this stool
 	foods: [{

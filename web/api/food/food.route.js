@@ -1,5 +1,7 @@
 import express from 'express';
 import escapeRegExp from 'lodash.escaperegexp';
+import { typeCheck } from 'type-check';
+
 import Food from './food.model';
 
 const foodRouter = express.Router();
@@ -14,16 +16,16 @@ const foodRouter = express.Router();
 async function searchFood(
 	userId,
 	{
-		dateMin = 0,
-		dateMax = Number.MAX_VALUE,
+		dateMin = '0',
+		dateMax = String(Date.now()),
 		name = ''
 	}
 ) {
 	if (!userId) {
 		throw { status: 401, msg: 'Unauthorized' };
 	}
-	if (typeCheck(
-		'{dateMin: Number, dateMax: Number, name: String}',
+	if (!typeCheck(
+		'{dateMin: String, dateMax: String, name: String}',
 		{ dateMin, dateMax, name }
 	)) {
 		throw { status: 400, msg: 'Invalid search paramters' };
@@ -37,7 +39,7 @@ async function searchFood(
 };
 
 foodRouter.get('/', (req, res) => {
-	searchFood(req.user._id).then((foods) => {
+	searchFood(req.user._id, {}).then((foods) => {
 		res.json(foods);
 	}).catch(e => res.status(e.status || 500).send(e.msg));
 });
@@ -53,7 +55,7 @@ foodRouter.post('/add', (req, res) => {
 
 	const newFood = new Food({ name, userId: req.user._id });
 
-	newFood.save((food) => {
+	newFood.save().then((food) => {
 		res.json(food);
 	}).catch(e => res.status(500).send(e));
 });
@@ -61,11 +63,11 @@ foodRouter.post('/add', (req, res) => {
 foodRouter.delete('/delete', (req, res) => {
 	const { foods } = req.body;
 	if (typeCheck('[String]', foods)) {
-		Food.deleteMany({ userId: req.user._id, _id: { $in: foods } }, (err) => {
+		Food.deleteMany({ userId: req.user._id, _id: { $in: foods } }, (err, results) => {
 			if (err) {
 				return res.status(500).send(err);
 			}
-			res.send('successfully deleted');
+			res.send(`successfully deleted ${results.deletedCount} foods`);
 		})
 	} else {
 		res.status(400).send('foods must be array of ids');

@@ -9,7 +9,8 @@ const exerciseSchema = new mongoose.Schema({
 	},
 	userId: {
 		type: mongoose.Schema.ObjectId,
-		ref: 'User'
+		ref: 'User',
+		required: true
 	},
 	// The date this exercise was recorded
 	date: {
@@ -17,9 +18,15 @@ const exerciseSchema = new mongoose.Schema({
 		default: Date.now
 	},
 	// The name of the exercise
-	name: String,
+	name: {
+		type: String,
+		required: true
+	},
 	// How long the exercise lasted
-	duration: Number
+	duration: {
+		type: Number,
+		required: true
+	}
 });
 
 export default mongoose.model('Exercise', exerciseSchema);

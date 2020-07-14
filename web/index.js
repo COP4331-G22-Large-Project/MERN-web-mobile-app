@@ -8,12 +8,15 @@ import passport from 'passport';
 
 import loginRouter from './api/login/login.route';
 import stoolRouter from './api/stool/stool.route';
+import foodRouter from './api/food/food.route';
+import exerciseRouter from './api/exercise/exercise.route';
 
 const MongoStore = require('connect-mongo')(expressSession);
 
 const sessionSecret = process.env.SESSION_SECRET || 'testing';
 
 // Connect to MongoDB. Program exits if connection doesn't success
+
 
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/Brist-Tool';
 mongoose.connect(mongoUri, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -41,10 +44,7 @@ app.use(expressSession({
 	store: new MongoStore({
 		mongooseConnection: mongoose.connection,
 		collection: 'Session'
-	}),
-	cookie: {
-		maxAge: 60 * 60 * 24 // 24 hours
-	}
+	})
 }));
 // Passport initialization
 app.use(passport.initialize());
@@ -73,10 +73,18 @@ app.use('/api/stool',
 	ensureLoggedIn,
 	stoolRouter
 );
+app.use('/api/food',
+	ensureLoggedIn,
+	foodRouter
+);
+app.use('/api/exercise',
+	ensureLoggedIn,
+	exerciseRouter
+);
 
 // If there was no matching request
 app.use((req, res) => {
-	res.status(404).send('Nothing here');
+	res.status(404).send('Route not found');
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}`));

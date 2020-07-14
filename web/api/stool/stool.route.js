@@ -1,5 +1,8 @@
 import express from 'express';
-import typeCheck from 'type-check';
+import Food from '../food/food.model';
+import Exercise from '../exercise/exercise.model';
+import { typeCheck } from 'type-check';
+
 import Stool from './stool.model';
 
 // These values help derive how old a food/exercise should be until it counts towards a stool.
@@ -27,10 +30,10 @@ const stoolRouter = express.Router();
 async function searchStool(
 	userId, 
 	{
-		dateMin = 0,
-		dateMax = Number.MAX_VALUE,
-		typeMin = 1,
-		typeMax = 7,
+		dateMin = '0',
+		dateMax = String(Date.now()),
+		typeMin = '1',
+		typeMax = '7',
 		amount = ['Little', 'Normal', 'A lot'],
 		food = [],
 		exercise = []
@@ -39,14 +42,16 @@ async function searchStool(
 	if (!userId) {
 		throw { status: 401, msg: 'Unauthorized' };
 	}
-	if (typeCheck(
-		'{dateMin: Number, dateMax: Number, typeMin: Number, typeMax: Number, amount: [String], food: [String], exercise: [String]}',
-		{ dateMin, dateMax, typeMin, typeMax, food, exercise }
+	console.log({ dateMin, dateMax, typeMin, typeMax, amount, food, exercise });
+	if (!typeCheck(
+		'{dateMin: String, dateMax: String, typeMin: String, typeMax: String, amount: [String], food: [String], exercise: [String]}',
+		{ dateMin, dateMax, typeMin, typeMax, amount, food, exercise }
 	)) {
 		throw { status: 400, msg: 'Invalid search paramters' };
 	}
 	return await Stool
 		.find({
+			userId,
 			date: { $lte: dateMax, $gte: dateMin },
 			type: { $lte: typeMax, $gte: typeMin },
 			amount: { $in: amount },
@@ -62,23 +67,23 @@ async function searchStool(
 }
 
 stoolRouter.get('/', (req, res) => {
-	searchStool(req.user._id).then((stools) => {
+	searchStool(req.user._id, {}).then((stools) => {
 		res.json(stools);
-	}).catch(e => res.status(e.status || 500).send(e.msg));
+	}).catch(e => res.status(e.status || 500).send(e.msg || e));
 });
 
 stoolRouter.get('/search', (req, res) => {
 	searchStool(req.user, req.query).then((stools) => {
 		res.json(stools);
-	}).catch(e => res.status(e.status || 500).send(e.msg));
+	}).catch(e => res.status(e.status || 500).send(e.msg || e));
 });
 
 stoolRouter.post('/add', (req, res) => {
-	const { type, speed, amount } = req.body;
+	const { type, amount } = req.body;
 
 	const now = Date.now();
 
-	const newStool = new Stool({ type, speed, amount });
+	const newStool = new Stool({ userId: req.user._id , type, amount });
 	const promises = [
 		Food.find({
 			userId: req.user._id,
@@ -92,11 +97,26 @@ stoolRouter.post('/add', (req, res) => {
 		})
 	];
 	Promise.all(promises).then((values) => {
-		newStool.foods = values[0];
-		newStool.exercises = values[1];
+		const [foods, exercises] = values;
+		newStool.foods = foods;
+		newStool.exercises = exercises;
 
-		newStool.save((stool) => {
-			res.json(stool);
+		// We save first to ensure that everything was correctly provided
+		newStool.save().then(async (stool) => {
+			try {
+				// Loop through all foods and exercises to attach ids
+				for (let i = 0; i < foods.length; i++) {
+					foods[i].stoolId = stool._id;
+					await foods[i].save();
+				}
+				for (let i = 0; i < exercises.length; i++) {
+					exercises[i].stoolId = stool._id;
+					await exercises[i].save();
+				}
+				res.json(stool);
+			} catch (e) {
+				res.status(500).send(e);
+			}
 		}).catch(e => res.status(500).send(e));
 	}).catch(e => res.status(500).send(e));
 });
@@ -104,12 +124,34 @@ stoolRouter.post('/add', (req, res) => {
 stoolRouter.delete('/delete', (req, res) => {
 	const { stools } = req.body;
 	if (typeCheck('[String]', stools)) {
-		Stool.deleteMany({ userId: req.user._id, _id: { $in: stools } }, (err) => {
+		const query = { userId: req.user._id, _id: { $in: stools } };
+		Stool.find(query)
+			.populate('foods')
+			.populate('exercises')
+			.exec(async (err, stools) => {
 			if (err) {
 				return res.status(500).send(err);
 			}
-			res.send('successfully deleted');
-		})
+			for (let i = 0; i < stools.length; i++) {
+				const stool = stools[i];
+
+				for (let j = 0; j < stool.foods; j++) {
+					stool.foods[i].stoolId = null;
+					await stool.foods[i].save();
+				}
+				for (let j = 0; j < stool.exercises; j++) {
+					stool.exercises[i].stoolId = null;
+					await stool.exercises[i].save();
+				}
+			}
+
+			Stool.deleteMany(query, (err1, results) => {
+				if (err1) {
+					return res.status(500).send(err1);
+				}
+				res.send(`successfully deleted ${results.deletedCount} stools`);
+			});
+		});
 	} else {
 		res.status(400).send('stools must be array of ids');
 	}

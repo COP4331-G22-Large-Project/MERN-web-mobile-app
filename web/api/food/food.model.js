@@ -9,15 +9,19 @@ const foodSchema = new mongoose.Schema({
 	},
 	userId: {
 		type: mongoose.Schema.ObjectId,
-		ref: 'User'
+		ref: 'User',
+		required: true
 	},
 	// The date this food was recorded
 	date: {
 		type: Date,
-		default: Date.now
+		default: Date.now,
 	},
 	// The name of the food
-	name: String
+	name: {
+		type: String,
+		required: true
+	}
 });
 
 export default mongoose.model('Food', foodSchema);
