@@ -7,6 +7,8 @@ import { typeCheck } from 'type-check';
 
 import User, { emailRegex } from '../user/user.model';
 
+import { createTransport } from 'nodemailer';
+
 const loginRouter = express.Router();
 
 // Hashes password with salt 1000 times using sha512
@@ -14,7 +16,7 @@ function generatePasswordWithSalt(user, givenPassword) {
 	return crypto.pbkdf2Sync(givenPassword, user._id.toString(), 1000, 64, 'sha512').toString('hex');
 }
 
-function validatePassoword(user, givenPassword) {
+function validatePassword(user, givenPassword) {
 	const hashedPassword = generatePasswordWithSalt(user, givenPassword);
 	return user.password === hashedPassword;
 }
@@ -108,6 +110,11 @@ loginRouter.post('/register', (req, res) => {
 			res.json(savedUser.toObject());
 		}).catch(err => res.status(500).send(err));
 	})
+});
+
+// add a secret key to user
+loginRouter.post('/verify_request', (req, res) => {
+	
 });
 
 export default loginRouter;

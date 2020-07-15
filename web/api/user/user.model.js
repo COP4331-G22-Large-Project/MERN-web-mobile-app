@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
 		unique: true
 	},
 	password: String,
+	verification: {
+		type: String,
+		unique: true
+	}
 });
 
 // When converting to an object, strip out the password and _id since they are sensitive
@@ -22,6 +26,7 @@ if (!userSchema.options.toObject) userSchema.options.toObject = {};
 userSchema.options.toObject.transform = function (doc, ret, options) {
 	delete ret._id;
 	delete ret.password;
+	delete ret.verification;
 
 	return ret;
 }
