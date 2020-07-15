@@ -1,36 +1,101 @@
-import * as React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import {
+  StyleSheet, 
+  Text, 
+  View, 
+  Dimensions,
+  TextInput, 
+  TouchableOpacity, 
+  StatusBar,
+  ImageBackground,
+  Image
+} from 'react-native';
 
-const instructions = Platform.select({
-  ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
-  android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
-});
+import bgImage from './app/img/imagetest.jpg';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to React Native!</Text>
-      <Text style={styles.instructions}>To get started, edit App.js</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
-    </View>
-  );
+const{ width: WIDTH } = Dimensions.get('window')
+
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <ImageBackground source = { bgImage } style={(styles.backgroundContainer)}>
+      <Text style={styles.Welcome}>Login To My APP</Text>
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+      />
+      
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry
+        />
+        
+
+        <View style={styles.btnContainer}>
+        <TouchableOpacity
+          style={styles.userBtn}
+          onPress={() => alert("Login Works")}
+          >
+            <Text style={styles.btnTxt}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.userBtn}
+            onPress={() => alert("Signup Works")}
+            >
+          <Text style={styles.btnTxt}>Signup</Text>
+          </TouchableOpacity>
+        </View>
+        </ImageBackground>
+      
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundContainer: {
     flex: 1,
+    width: '100%',
+    height:'100%',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    alignItems: 'center'
   },
-  welcome: {
-    fontSize: 20,
+  welcomeContainer: {
+    alignItems: 'center',
+    marginBottom: '20%',
+  },
+  Welcome: {
+    fontSize: 30,
     textAlign: 'center',
     margin: 10,
+    color: 'white',
+    paddingTop: '-50%'
+    
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  input: {
+    width: '90%',
+
+    padding: 15,
+    marginBottom: 10
   },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%'
+
+  },
+  userBtn:{
+    backgroundColor: '#FFD700',
+    padding: 15,
+    width: '45%'  
+  },
+  btnTxt: {
+    fontSize: 20,
+    textAlign: 'center'
+  }
+
+
 });
