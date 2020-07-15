@@ -103,18 +103,36 @@ loginRouter.post('/register', (req, res) => {
 			firstName,
 			lastName,
 			username,
-			email
+			email,
+			verfication,
 		});
 		user.password = generatePasswordWithSalt(user, password);
+		let date_obj = new Date();
+		user.verfication = "false";
 		user.save().then((savedUser) => {
 			res.json(savedUser.toObject());
 		}).catch(err => res.status(500).send(err));
 	})
 });
 
+const token;
+
 // add a secret key to user
 loginRouter.post('/verify_request', (req, res) => {
-	
+	token = "hi";
 });
+
+//
+loginRouter.post('/verify_token', (req, res) => {
+	const {
+		maybe_token
+	} = req.body;
+
+	res.json({verfied: String});
+	if (maybe_token == token)
+		res.verfied = "true";
+	else
+		res.verfied = "false";
+})
 
 export default loginRouter;
