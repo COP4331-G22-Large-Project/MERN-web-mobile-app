@@ -7,6 +7,7 @@ import { typeCheck } from 'type-check';
 
 import User, { emailRegex } from '../user/user.model';
 
+// email verification requirements
 import { createTransport } from 'nodemailer';
 
 const loginRouter = express.Router();
@@ -107,7 +108,6 @@ loginRouter.post('/register', (req, res) => {
 			verfication,
 		});
 		user.password = generatePasswordWithSalt(user, password);
-		let date_obj = new Date();
 		user.verfication = "false";
 		user.save().then((savedUser) => {
 			res.json(savedUser.toObject());
@@ -115,51 +115,77 @@ loginRouter.post('/register', (req, res) => {
 	})
 });
 
-const token;
+// a variable we can set from once from one endpoint and verify from a second
+// we need a different instance of this for every user....
+const token; // this won't work huh
+const sender_user = 'test@gmail.com';
+const sender_pass = 'this_is_a_fake_password';
 
-// add a secret key to user
+// Request Verification
 loginRouter.post('/verify_request', (req, res) => {
+	
+	// is user verified?
+	if (User.verfication == "true")
+	{
+		res.body = {response: "You are already verified"};
+		return res;
+	}
+
+	// set token for this user
 	token = "hi";
 	
+	// create an object which can send mail
+	// the server and authentication information should belong to the app
 	var transporter = createTransport({
 		service: 'gmail',
 		auth: {
-			user: 'coydiego@gmail.com',
-			pass: 'Peeper71!'
+			user: sender_user, // for testing
+			pass: sender_pass // not working
 		}
 	});
 
+	// authentication email
 	var mailOptions = {
-		from: 'coydiego@gmail.com',
+		from: sender_user,
 		to: User.email,
 		subject: 'verification',
 		text: token
 	};
 
+	// send email and handle results
 	transporter.sendMail(mailOptions, function(error,info){
 		if (error){
 			console.log(error)
-			res.body = {
+			res.body = { // tell the user error
 				response: error.toString(),
 			}
 		} else {
 			console.log('Email sent: ' + info.response);
-			res.body = {
+			res.body = { // tell user success
 				response: 'Email sent ' + info.response,
 			}
 		}
 	});
 });
 
-//
+// given the token, verify the user
 loginRouter.post('/verify_token', (req, res) => {
+	// assumming this is how the user is sending us their token
 	const {
 		maybe_token
 	} = req.body;
-
+	
+	// response object
 	res.json({verfied: String});
+
+	// verify token and time
 	if (maybe_token == token)
+	{
+		// respond to user
 		res.verfied = "true";
+		// verify user in db
+		User.body.verfication = "true";
+	}
 	else
 		res.verfied = "false";
 })
