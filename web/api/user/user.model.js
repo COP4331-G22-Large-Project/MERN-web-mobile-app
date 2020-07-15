@@ -15,10 +15,7 @@ const userSchema = new mongoose.Schema({
 		unique: true
 	},
 	password: String,
-	verification: {
-		type: String,
-		unique: true
-	}
+	verification: String,
 });
 
 // When converting to an object, strip out the password and _id since they are sensitive

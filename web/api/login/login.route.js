@@ -120,6 +120,35 @@ const token;
 // add a secret key to user
 loginRouter.post('/verify_request', (req, res) => {
 	token = "hi";
+	
+	var transporter = createTransport({
+		service: 'gmail',
+		auth: {
+			user: 'coydiego@gmail.com',
+			pass: 'Peeper71!'
+		}
+	});
+
+	var mailOptions = {
+		from: 'coydiego@gmail.com',
+		to: User.email,
+		subject: 'verification',
+		text: token
+	};
+
+	transporter.sendMail(mailOptions, function(error,info){
+		if (error){
+			console.log(error)
+			res.body = {
+				response: error.toString(),
+			}
+		} else {
+			console.log('Email sent: ' + info.response);
+			res.body = {
+				response: 'Email sent ' + info.response,
+			}
+		}
+	});
 });
 
 //
