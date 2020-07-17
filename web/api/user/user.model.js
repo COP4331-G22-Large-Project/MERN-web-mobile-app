@@ -16,16 +16,21 @@ const userSchema = new mongoose.Schema({
 	},
 	password: String,
 
-	// can tell us if a user is verified or not
-	// can be a place to store user verification token + timeout time
-	verification: String, // we should probably put this in another document
+	// The token to use to verify the user's email
+	verificationToken: String,
+	// A boolean of whether or not the user is verified
+	verified: {
+		type: Boolean,
+		default: false
+	}
 });
 
-// When converting to an object, strip out the password and _id since they are sensitive
+// When converting to an object, strip out the sensitive information
 if (!userSchema.options.toObject) userSchema.options.toObject = {};
 userSchema.options.toObject.transform = function (doc, ret, options) {
 	delete ret._id;
 	delete ret.password;
+	delete ret.verificationToken;
 
 	return ret;
 }
