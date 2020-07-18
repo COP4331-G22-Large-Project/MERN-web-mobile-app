@@ -20,7 +20,7 @@ export default class App extends React.Component {
   render() {
     return (
       <ImageBackground source = { bgImage } style={(styles.backgroundContainer)}>
-      <Text style={styles.Welcome}>Login To My APP</Text>
+      <Text style={styles.Welcome}> To My APP</Text>
       
       <TextInput
         style={styles.input}
