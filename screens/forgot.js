@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import Navigator from "../routes/homestack";
 
-export default function App({ navigation }) {
+export default function forgot({ navigation }) {
   const [email, set_email] = useState("");
 
-  const pressHandler4 = () => {
+  const pressHandler = () => {
     navigation.navigate("CheckEmail");
   };
 
@@ -19,8 +20,7 @@ export default function App({ navigation }) {
         placeholder="e.g. jDoe@hotmail.comm"
         onChangeText={(val) => set_email(val)}
       />
-      // if email is good, send to check your email page.
-      <Button title="Submit" onPress={pressHandler4} />
+      <Button title="Submit" onPress={pressHandler} />
     </View>
   );
 }
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    boraderWidth: 1,
+    borderWidth: 1,
     borderColor: "black",
     padding: 8,
     margin: 10,

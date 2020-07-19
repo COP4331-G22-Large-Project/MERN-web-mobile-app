@@ -27,7 +27,10 @@ export default function Splash({ navigation }) {
         onPress={pressHandler2}
       />
 
-      <Button title="Forgot Password" onPress={pressHandler3} />
+      <Button
+        title="Forgot Password"
+        onPress={() => navigation.push("Forgot")}
+      />
     </View>
   );
 }

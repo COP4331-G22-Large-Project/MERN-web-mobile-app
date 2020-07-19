@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    boraderWidth: 1,
+    borderWidth: 1,
     borderColor: "black",
     padding: 8,
     margin: 10,

@@ -18,11 +18,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  input: {
-    boraderWidth: 1,
-    borderColor: "black",
-    padding: 8,
-    margin: 10,
-    width: 200,
-  },
 });
