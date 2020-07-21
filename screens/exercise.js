@@ -1,30 +1,30 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import Navigator from "../routes/homestack";
 
-export default function forgot({ navigation }) {
-  const [email, set_email] = useState("");
+export default function App() {
+  const [exercise, set_exercise] = useState("");
 
   const pressHandler = () => {
-    navigation.navigate("CheckEmail");
+    alert("Thank you for submitting!");
   };
 
   return (
     <View style={StyleSheet.container}>
       <Text>Bris-Tool</Text>
       <Text>Your Personal Health Journal</Text>
-      <Text>Forgot your password?</Text>
-      <Text>Please enter your email: </Text>
-      <TextInput
-        style={styles.input}
-        placeholder="e.g. jDoe@hotmail.comm"
-        onChangeText={(val) => set_email(val)}
-      />
 
       <Text>
-        If this email is valid, the submit button will redirect to a "check your
-        email" page.
+        This is where you can keep track of any exercise or activity you've
+        taken part in.
       </Text>
+      <Text>Enter exercise/movement: </Text>
+      <TextInput
+        style={styles.input}
+        placeholder="e.g. 30 flights of stairs"
+        onChangeText={(val) => set_exercise(val)}
+      />
+
+      <Text>Stored exercise: {exercise}</Text>
       <Button title="Submit" onPress={pressHandler} />
     </View>
   );

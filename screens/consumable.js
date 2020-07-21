@@ -1,30 +1,29 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import Navigator from "../routes/homestack";
 
-export default function forgot({ navigation }) {
-  const [email, set_email] = useState("");
+export default function App() {
+  const [consumable, set_consumable] = useState("");
 
   const pressHandler = () => {
-    navigation.navigate("CheckEmail");
+    alert("Thank you for submitting!");
   };
 
   return (
     <View style={StyleSheet.container}>
       <Text>Bris-Tool</Text>
       <Text>Your Personal Health Journal</Text>
-      <Text>Forgot your password?</Text>
-      <Text>Please enter your email: </Text>
-      <TextInput
-        style={styles.input}
-        placeholder="e.g. jDoe@hotmail.comm"
-        onChangeText={(val) => set_email(val)}
-      />
 
       <Text>
-        If this email is valid, the submit button will redirect to a "check your
-        email" page.
+        This is where you can keep track of things you've had to eat or drink.
       </Text>
+      <Text>Enter a consumable: </Text>
+      <TextInput
+        style={styles.input}
+        placeholder="e.g. Gas station nachos"
+        onChangeText={(val) => set_consumable(val)}
+      />
+
+      <Text>Stored consumable: {consumable}</Text>
       <Button title="Submit" onPress={pressHandler} />
     </View>
   );

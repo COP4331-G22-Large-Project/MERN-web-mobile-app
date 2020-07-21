@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import Navigator from "../routes/homestack";
 
-export default function App() {
+export default function App({ navigation }) {
   const [userName, set_userName] = useState("");
   const [email, set_email] = useState("");
   const [password, set_password] = useState("");
   const [password_check, set_check] = useState("");
+
+  const pressHandler = () => {
+    navigation.navigate("CheckEmail");
+  };
 
   return (
     <View style={StyleSheet.container}>
@@ -41,11 +46,16 @@ export default function App() {
         onChangeText={(val) => set_check(val)}
       />
 
+      <Text>
+        Below shows that we are storing user input. If storing this info into
+        the database works then this page gets redirected to a "check your
+        email" page.
+      </Text>
       <Text>Stored Username: {userName}</Text>
       <Text>Stored Email: {email} </Text>
       <Text>Stored Password: {password}</Text>
       <Text>Password Check: {password_check}</Text>
-      <Text>Sign In</Text>
+      <Button title="Submit" onPress={pressHandler} />
     </View>
   );
 }

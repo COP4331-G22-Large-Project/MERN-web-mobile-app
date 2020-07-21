@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import Navigator from "../routes/homestack";
 
-export default function App() {
+export default function App({ navigation }) {
   const [userName, set_userName] = useState("");
   const [password, set_password] = useState("");
+
+  const pressHandler = () => {
+    navigation.navigate("Home");
+  };
 
   return (
     <View style={StyleSheet.container}>
@@ -25,9 +30,14 @@ export default function App() {
         onChangeText={(val) => set_password(val)}
       />
 
+      <Text>Below just shows that we are storing user input.</Text>
+      <Text>
+        This will turn into an if/then that will make a database request and
+        either allow or deny access.
+      </Text>
       <Text>Stored Username: {userName}</Text>
       <Text>Stored Password: {password}</Text>
-      <Text>Sign In</Text>
+      <Button title="Login" onPress={pressHandler} />
     </View>
   );
 }
