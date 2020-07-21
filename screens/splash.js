@@ -16,21 +16,24 @@ export default function Splash({ navigation }) {
   };
 
   return (
-    <View style={StyleSheet.container}>
-      <Text>Bris-Tool</Text>
-      <Text>Your Personal Health Journal</Text>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.headerText}>Bris-Tool</Text>
+        <Text style={styles.headerText}>Your Personal Health Journal</Text>
+      </View>
+      <View style={styles.loginBox}>
+        <Button  title="Login here" onPress={pressHandler1} />
 
-      <Button title="Login Here" onPress={pressHandler1} />
+        <Button
+          title="New user? Create an account here!"
+          onPress={pressHandler2}
+        />
 
-      <Button
-        title="New user? Create an account here!"
-        onPress={pressHandler2}
-      />
-
-      <Button
-        title="Forgot Password"
-        onPress={() => navigation.push("Forgot")}
-      />
+        <Button
+          title="Forgot Password"
+          onPress={() => navigation.push("Forgot")}
+        />
+      </View>
     </View>
   );
 }
@@ -38,8 +41,28 @@ export default function Splash({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "lightblue",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
+  loginBox: {
+    justifyContent: "center",
+    width: '80%',
+    marginTop: "45%",
+    padding: 8, 
+  },
+  headerContainer: {
+    marginTop: 20,
+  },
+  headerText: {
+    textAlign: "center",
+    fontSize: 25
+  },
+  loginBoxButtons: {
+    marginVertical: 10,
+    backgroundColor: 'red',
+    justifyContent: 'space-between',
+    opacity: 10
+  
+  }
 });
