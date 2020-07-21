@@ -16,7 +16,7 @@ const API_URL = process.env.NODE_ENV === 'production'
 
 // a variable we can set from once from one endpoint and verify from a second
 // we need a different instance of this for every user....
-const token; // this won't work huh
+var token; // this won't work huh
 const sender_user = process.env.EMAIL_USER || 'test@gmail.com';
 const sender_pass = process.env.EMAIL_PASSWORD || 'this_is_a_fake_password';
 
