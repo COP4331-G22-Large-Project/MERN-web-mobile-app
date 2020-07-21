@@ -21,6 +21,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "No styling or backend hookups yet.  Also thinking about adding drawer navigation still. "
   }
 }
