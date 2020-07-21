@@ -19,5 +19,8 @@
     "url": "https://gitlab.com/notrealjohn/largeproject/issues"
   },
   "homepage": "https://gitlab.com/notrealjohn/largeproject#readme",
-  "dependencies": {}
+  "dependencies": {
+    "lodash.escaperegexp": "^4.1.2",
+    "type-check": "^0.4.0"
+  }
 }
