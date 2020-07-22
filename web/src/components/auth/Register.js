@@ -1,13 +1,14 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const SignUp = () => {
+const Register = () => {
     const [formData, setFormData] = useState(
         {
-            name:'',
-            email:'',
-            password:'',
-            password2:''
+            username:'',
+            firstname:'',
+            lastname:'',
+            email:''
         }
     );
     const{ name, email, password, password2} = formData;
@@ -79,4 +80,4 @@ const SignUp = () => {
 };
 
 
-export default SignUp
+export default Register
