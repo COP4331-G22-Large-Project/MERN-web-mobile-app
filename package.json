@@ -2,7 +2,7 @@
   "name": "largeproject",
   "version": "1.0.0",
   "description": "This is required for Heroku to recognize the app. It will help deploy the web-app.",
-  "main": "index.js",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "cd web && npm run prod",
     "heroku-prebuild": "cd web && npm ci",
