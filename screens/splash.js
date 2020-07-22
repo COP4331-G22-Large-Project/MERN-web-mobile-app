@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, Modal } from "react-native";
 import Navigator from "../routes/homestack";
 
 export default function Splash({ navigation }) {
@@ -16,25 +16,31 @@ export default function Splash({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Bris-Tool</Text>
-        <Text style={styles.headerText}>Your Personal Health Journal</Text>
-      </View>
-      <View style={styles.loginBox}>
-        <Button  title="Login here" onPress={pressHandler1} />
+    // <Modal visible={false}>
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <View style={styles.headerText}>
+            <Text style={{ fontSize: 25 }}>Bris-Tool</Text>
+          </View>
+          <View style={styles.headerText}>
+            <Text style={{ fontSize: 25 }}>Your Personal Health Journal</Text>
+          </View>
+        </View>
+        <View style={styles.loginBox}>
+          <Button title="Login here" onPress={pressHandler1} />
 
-        <Button
-          title="New user? Create an account here!"
-          onPress={pressHandler2}
-        />
+          <Button
+            title="New user? Create an account here!"
+            onPress={pressHandler2}
+          />
 
-        <Button
-          title="Forgot Password"
-          onPress={() => navigation.push("Forgot")}
-        />
+          <Button
+            title="Forgot Password"
+            onPress={() => navigation.push("Forgot")}
+          />
+        </View>
       </View>
-    </View>
+    // </Modal>
   );
 }
 
@@ -43,26 +49,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "lightblue",
     alignItems: "center",
-    justifyContent: "flex-start",
+    //justifyContent: "center",
   },
   loginBox: {
-    justifyContent: "center",
-    width: '80%',
+    justifyContent: 'center',
+    width: "80%",
     marginTop: "45%",
-    padding: 8, 
+    padding: 8,
   },
   headerContainer: {
     marginTop: 20,
   },
   headerText: {
-    textAlign: "center",
-    fontSize: 25
+    alignItems: 'center',
+    justifyContent: 'center',
+    
   },
   loginBoxButtons: {
     marginVertical: 10,
-    backgroundColor: 'red',
-    justifyContent: 'space-between',
-    opacity: 10
-  
-  }
+    backgroundColor: "red",
+    justifyContent: "space-between",
+    opacity: 10,
+  },
 });

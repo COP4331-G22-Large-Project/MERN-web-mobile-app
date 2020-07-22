@@ -34,6 +34,7 @@ export default function App({ navigation }) {
 
       <Text>Password:</Text>
       <TextInput
+        secureTextEntry = {true}
         style={styles.input}
         placeholder="e.g. not1234!"
         onChangeText={(val) => set_password(val)}
@@ -41,6 +42,7 @@ export default function App({ navigation }) {
 
       <Text>Confirm Password:</Text>
       <TextInput
+        secureTextEntry = {true}
         style={styles.input}
         placeholder="e.g. not1234!"
         onChangeText={(val) => set_check(val)}
