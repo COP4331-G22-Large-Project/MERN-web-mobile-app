@@ -166,12 +166,18 @@ loginRouter.get('/verify_token', (req, res) => {
 	}
 });
 
-// lil proof of concept
-loginRouter.get('/send_email', (req, res) => {
+// recreate and resend user's token
+loginRouter.get('/retoken', (req, res) => {
 	// if user is already verified, exit
-	req.user.verification_token = uid(16);
-	req.user.save();
-	sendRegistrationEmail(req.user);
+	if (!user.verified) {
+		// create and save new token
+		req.user.verification_token = uid(16);
+		req.user.save().then((savedUser) => {
+			sendRegistrationEmail(savedUser);
+			res.json(savedUser.toObject());
+		}).catch(err => res.status(500).send(err));
+		res.status(200).send('success');
+	}
 });
 
 export default loginRouter;
