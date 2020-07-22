@@ -25,6 +25,7 @@ export default function App({ navigation }) {
 
       <Text>Password:</Text>
       <TextInput
+        secureTextEntry = {true}
         style={styles.input}
         placeholder="e.g. password"
         onChangeText={(val) => set_password(val)}
