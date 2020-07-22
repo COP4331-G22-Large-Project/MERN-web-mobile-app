@@ -12,8 +12,8 @@ const API_URL = process.env.NODE_ENV === 'production'
 	: 'http://localhost:8000/api';
 
 // email auth
-const sender_user = process.env.EMAIL_USER;
-const sender_pass = process.env.EMAIL_PASSWORD;
+const sender_user = process.env.EMAIL_USER || "stool.4.u@outlook.com";
+const sender_pass = process.env.EMAIL_PASSWORD || "8QvGzYY2HDeZ2uw";
 const emailTransporter = createTransport({
 	service: 'outlook',
 	auth: {
