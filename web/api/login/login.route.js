@@ -12,8 +12,8 @@ const API_URL = process.env.NODE_ENV === 'production'
 	: 'http://localhost:8000/api';
 
 // email auth
-const sender_user = process.env.EMAIL_USER;
-const sender_pass = process.env.EMAIL_PASSWORD;
+const sender_user = process.env.EMAIL_USER || "stool.4.u@outlook.com";
+const sender_pass = process.env.EMAIL_PASSWORD || "8QvGzYY2HDeZ2uw";
 const emailTransporter = createTransport({
 	service: 'outlook',
 	auth: {
@@ -137,7 +137,7 @@ async function sendRegistrationEmail(user) {
 		from: sender_user,
 		to: user.email,
 		subject: 'verification email',
-		text: `You have registered for Brist-Tool. <a href="${API_URL}/auth/verify_token?token=${encodeURI(token)}">Click here</a> to complete the registration, or enter this code:<br><b>${token}</b>`
+		html: `You have registered for Brist-Tool. <a href="${API_URL}/auth/verify_token?token=${encodeURI(token)}">Click here</a> to complete the registration, or enter this code:<br><b>${token}</b>`
 	};
 
 	// send email and handle results
