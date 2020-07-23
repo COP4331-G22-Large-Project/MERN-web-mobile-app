@@ -174,7 +174,7 @@ loginRouter.get('/verify_token', (req, res) => {
 loginRouter.post('/retoken', (req, res) => {
 	if (req.isAuthenticated()) {
 		// if user is already verified, exit
-		if (!user.verified) {
+		if (!req.user.verified) {
 			// create and save new token
 			req.user.verification_token = uid(16);
 			req.user.save().then((savedUser) => {
