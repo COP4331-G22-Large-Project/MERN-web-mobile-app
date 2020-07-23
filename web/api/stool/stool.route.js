@@ -1,4 +1,5 @@
 import express from 'express';
+import escapeRegExp from 'lodash.escaperegexp';
 import Food from '../food/food.model';
 import Exercise from '../exercise/exercise.model';
 import { typeCheck } from 'type-check';
@@ -8,8 +9,8 @@ import Stool from './stool.model';
 // These values help derive how old a food/exercise should be until it counts towards a stool.
 // More research should be done to accurately detemine these values
 // Unit is in hours
-const FOOD_AGE = 7;
-const EXERCISE_AGE = 1;
+const FOOD_AGE = 0;
+const EXERCISE_AGE = 0;
 
 function hoursToMilli(h) {
 	return h * 60 * 60 * 1000;
@@ -35,14 +36,13 @@ async function searchStool(
 		typeMin = '1',
 		typeMax = '7',
 		amount = ['Little', 'Normal', 'A lot'],
-		food = [],
-		exercise = []
+		food = [''],
+		exercise = ['']
 	}
 ) {
 	if (!userId) {
 		throw { status: 401, msg: 'Unauthorized' };
 	}
-	console.log({ dateMin, dateMax, typeMin, typeMax, amount, food, exercise });
 	if (!typeCheck(
 		'{dateMin: String, dateMax: String, typeMin: String, typeMax: String, amount: [String], food: [String], exercise: [String]}',
 		{ dateMin, dateMax, typeMin, typeMax, amount, food, exercise }
@@ -50,20 +50,34 @@ async function searchStool(
 		throw { status: 400, msg: 'Invalid search paramters' };
 	}
 	return await Stool
-		.find({
-			userId,
-			date: { $lte: dateMax, $gte: dateMin },
-			type: { $lte: typeMax, $gte: typeMin },
-			amount: { $in: amount },
-		})
-		.populate({
-			path: 'food',
-			match: { food: { $all: food } }
-		})
-		.populate({
-			path: 'exercise',
-			match: { exercise: { $all: exercise } }
-		});
+		.aggregate([
+			{
+				$lookup: {
+					from: 'foods',
+					localField: 'foods',
+					foreignField: '_id',
+					as: 'foods'
+				}
+			},
+			{
+				$lookup: {
+					from: 'exercises',
+					localField: 'exercises',
+					foreignField: '_id',
+					as: 'exercises'
+				}
+			},
+			{
+				$match: {
+					userId,
+					date: { $lte: new Date(Number(dateMax)), $gte: new Date(Number(dateMin)) },
+					type: { $lte: Number(typeMax), $gte: Number(typeMin) },
+					amount: { $in: amount },
+					foods: { $all: food.map(f => ({ $elemMatch: { name: new RegExp(escapeRegExp(f), 'ig') } })) },
+					exercises: { $all: exercise.map(e => ({ $elemMatch: { name: new RegExp(escapeRegExp(e), 'ig') } })) },
+				}
+			},
+		]);
 }
 
 stoolRouter.get('/', (req, res) => {
@@ -73,7 +87,7 @@ stoolRouter.get('/', (req, res) => {
 });
 
 stoolRouter.get('/search', (req, res) => {
-	searchStool(req.user, req.query).then((stools) => {
+	searchStool(req.user._id, req.query).then((stools) => {
 		res.json(stools);
 	}).catch(e => res.status(e.status || 500).send(e.msg || e));
 });
