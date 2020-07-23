@@ -1,62 +1,85 @@
-import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
-const Login = () => {
-    const [formData, setFormData] = useState(
-        {
-            name:'',
-            password:'',
+import React, {Component} from 'react';
+import axios from 'axios';
+
+export default class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.onChangeUsername = this.onChangeUsername.bind(this)
+        this.onChangePassword = this.onChangePassword.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
+
+        this.state = {
+            username : '',
+            password :''
+
         }
-    );
-    const{ name,password} = formData;
-  
-    const onChange = e => 
-        setFormData({ ...formData, [e.target.name]: e.target.value});
-            
-    const onSubmit = async e => {
-            e.preventDefault();
-            
-                console.log('SUCCESS');   
-            
-        };
-    
-            
-    return <Fragment>
-        
-        <h1 className="large text-primary">Sign In</h1>
-      <p className="lead"><i class="fas fa-user"></i> Sign Into Your Account</p>
-      <form class="form" onSubmit={e => onSubmit(e)}>
-        <div class="form-group">
-          <input type="text" 
-          placeholder="UserName" 
-          name="name" 
-          value ={name}
-          onChange={e =>onChange(e)}
-          required />
-        </div>
-        
-        <div class="form-group">
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value ={password}
-            onChange={e =>onChange(e)} required
-            minLength="6"
-          />
-        </div>
-        
-        <input type="submit" class="btn btn-primary" value="Login" />
-      </form>
-      <p class="my-1">
-        Don't have an account? <Link to ="/signup">Sign Up</Link>
-      </p>
-        
-        </Fragment>;
+    }
+
+    onChangeUsername(e){
+        this.setState({
+            username : e.target.value
+        })
+    }
 
 
+    onChangePassword(e){
+        this.setState({
+            password:e.target.value
+        })
+    }
 
-};
+
+    onSubmit(e){
+        e.preventDefault()
 
 
+            const login = {
+                username: this.state.username,
+                password: this.state.password
 
-export default Login
+            }
+
+            console.log(login)
+            axios.post('http://localhost:3000/api/auth/login',login)
+                .then(res => console.log(res.data))
+
+            this.setState({
+                username : '',
+                password :''
+
+            })
+
+    }
+
+    render(){
+        return(
+            <div>
+                <h3>Login</h3>
+                <form onSubmit={this.onSubmit}>
+                    <div className="form-group">
+                        <label>Username: </label>
+                        <input type = "string"
+                               required
+                               className="form-control"
+                               value = {this.state.username}
+                               onChange = {this.onChangeUsername}
+                        />
+                    </div>
+                    <div>
+                        <label>Password: </label>
+                        <input type = "password"
+                               required
+                               className="form-control"
+                               value = {this.state.password}
+                               onChange={this.onChangePassword}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input type ="submit" value = "Sign In" className="btn btn-primary"/>
+                    </div>
+                </form>
+            </div>
+        )
+    }
+}
+

@@ -18,7 +18,7 @@ const sessionSecret = process.env.SESSION_SECRET || 'testing';
 // Connect to MongoDB. Program exits if connection doesn't success
 
 
-const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/Brist-Tool';
+const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://dguerry:cop4331c@cluster1-z3lyd.mongodb.net/<dbname>?retryWrites=true&w=majority';
 mongoose.connect(mongoUri, {useNewUrlParser: true, useUnifiedTopology: true})
 	.then(() => console.log('MongoDB connected'))
 	.catch((err) => {

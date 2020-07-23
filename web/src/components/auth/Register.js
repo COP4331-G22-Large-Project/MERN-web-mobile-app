@@ -135,7 +135,7 @@ export default class Register extends Component {
                      </div>
                      <div>
                          <label>Password: </label>
-                         <input type = "string"
+                         <input type = "password"
                                 required
                                 className="form-control"
                                 value = {this.state.password}
@@ -144,7 +144,7 @@ export default class Register extends Component {
                      </div>
                      <div>
                          <label>Confirm Password: </label>
-                         <input type = "string"
+                         <input type = "password"
                                 required
                                 className="form-control"
                                 value = {this.state.confirmPassword}
