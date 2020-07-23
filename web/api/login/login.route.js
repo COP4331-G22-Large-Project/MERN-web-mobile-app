@@ -155,28 +155,33 @@ loginRouter.get('/verify_token', (req, res) => {
 	// assumming this is how the user is sending us their token
 	const { token } = req.query;
 
-	if (token === req.user.verificationToken) {
-		req.user.verificationToken = null;
-		req.user.verified = true;
-		req.user.save().then(() => {
-			res.redirect('/');
-		}).catch(e => res.status(500).send('error'));
-	} else {
-		res.status(401).send('Unauthorized');
-	}
+	User.findOne({ verificationToken: token }, (err, user) => {
+		if (err) {
+			return res.status(500).send(err);
+		} else if (user) {
+			user.verificationToken = null;
+			user.verified = true;
+			user.save().then(() => {
+				res.redirect('/');
+			}).catch(e => res.status(500).send('error'));
+		} else {
+			res.status(401).send('Unauthorized');
+		}
+	});
 });
 
 // recreate and resend user's token
-loginRouter.get('/retoken', (req, res) => {
+loginRouter.post('/retoken', (req, res) => {
 	// if user is already verified, exit
 	if (!user.verified) {
 		// create and save new token
 		req.user.verification_token = uid(16);
 		req.user.save().then((savedUser) => {
 			sendRegistrationEmail(savedUser);
-			res.json(savedUser.toObject());
+			res.status(200).send('success');
 		}).catch(err => res.status(500).send(err));
-		res.status(200).send('success');
+	} else {
+		res.status(200).send('already verified');
 	}
 });
 
