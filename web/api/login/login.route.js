@@ -172,16 +172,20 @@ loginRouter.get('/verify_token', (req, res) => {
 
 // recreate and resend user's token
 loginRouter.post('/retoken', (req, res) => {
-	// if user is already verified, exit
-	if (!user.verified) {
-		// create and save new token
-		req.user.verification_token = uid(16);
-		req.user.save().then((savedUser) => {
-			sendRegistrationEmail(savedUser);
-			res.status(200).send('success');
-		}).catch(err => res.status(500).send(err));
+	if (req.isAuthenticated()) {
+		// if user is already verified, exit
+		if (!user.verified) {
+			// create and save new token
+			req.user.verification_token = uid(16);
+			req.user.save().then((savedUser) => {
+				sendRegistrationEmail(savedUser);
+				res.status(200).send('success');
+			}).catch(err => res.status(500).send(err));
+		} else {
+			res.status(200).send('already verified');
+		}
 	} else {
-		res.status(200).send('already verified');
+		res.status(401).send('not logged in');
 	}
 });
 
