@@ -10,7 +10,7 @@ import {
   ImageBackground,
   Image
 } from 'react-native';
-// test 2
+// test 2***
 import bgImage from './app/img/imagetest.jpg';
 
 const{ width: WIDTH } = Dimensions.get('window')
