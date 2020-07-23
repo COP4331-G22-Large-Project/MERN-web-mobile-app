@@ -60,6 +60,7 @@ export default class LogStool extends Component {
                                />
                     </div>
                     <div>
+
                         <label>Stool Amount(text description...but not too descriptive): </label>
                         <input type = "string"
                                required
