@@ -22,5 +22,8 @@
   "dependencies": {
     "lodash.escaperegexp": "^4.1.2",
     "type-check": "^0.4.0"
+  },
+  "devDependencies": {
+    "react-datepicker": "^3.1.3"
   }
 }
