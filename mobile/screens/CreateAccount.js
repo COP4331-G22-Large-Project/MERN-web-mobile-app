@@ -12,44 +12,47 @@ import Header from "../components/Header";
 const CreateAccount = (props) => {
   return (
     <Modal visible={props.visible} animationType="slide">
-      <Header title="Bris-Tool" name= 'Your Personal Health Log' />
-      <View style={styles.outtermost}>
-        <View style={styles.inputBox}>
-          <Text style={{ fontSize: 17, margin: 10 }}>Username: </Text>
-          <TextInput style={styles.inputTextBox} placeholder="Enter Username" />
-          <Text style={{ fontSize: 17, margin: 10 }}>Email: </Text>
-          <TextInput style={styles.inputTextBox} placeholder="Enter Email" />
-          <Text style={{ fontSize: 17, margin: 10 }}>Password: </Text>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.inputTextBox}
-            placeholder="Enter Password"
-          />
-          <Text style={{ fontSize: 17, margin: 10 }}>Confirm Password: </Text>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.inputTextBox}
-            placeholder="Confirm Password"
-          />
+      <Header title="Bris-Tool" name="Your Personal Health Log" />
+        <View style={styles.outtermost}>
+          <View style={styles.inputBox}>
+            <Text style={{ fontSize: 17, margin: 10 }}>Username: </Text>
+            <TextInput
+              style={styles.inputTextBox}
+              placeholder="Enter Username"
+            />
+            <Text style={{ fontSize: 17, margin: 10 }}>Email: </Text>
+            <TextInput style={styles.inputTextBox} placeholder="Enter Email" />
+            <Text style={{ fontSize: 17, margin: 10 }}>Password: </Text>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.inputTextBox}
+              placeholder="Enter Password"
+            />
+            <Text style={{ fontSize: 17, margin: 10 }}>Confirm Password: </Text>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.inputTextBox}
+              placeholder="Confirm Password"
+            />
 
-          <View style={styles.buttonView}>
-            <View style={styles.button}>
-              <Button
-                color="white"
-                title="Create Account"
-                onPress={props.onLogin}
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                color="white"
-                title="Back To Home"
-                onPress={props.onClose}
-              />
+            <View style={styles.buttonView}>
+              <View style={styles.button}>
+                <Button
+                  color="white"
+                  title="Create Account"
+                  onPress={props.onLogin}
+                />
+              </View>
+              <View style={styles.button}>
+                <Button
+                  color="white"
+                  title="Back To Home"
+                  onPress={props.onClose}
+                />
+              </View>
             </View>
           </View>
         </View>
-      </View>
     </Modal>
   );
 };
@@ -87,7 +90,7 @@ const styles = StyleSheet.create({
   buttonView: {
     justifyContent: "center",
     alignItems: "center",
-    marginBottom:'5%'
+    marginBottom: "5%",
   },
   button: {
     width: "80%",
