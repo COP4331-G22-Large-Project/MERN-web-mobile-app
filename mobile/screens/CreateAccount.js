@@ -8,15 +8,12 @@ import {
   Modal,
   TextInput,
 } from "react-native";
-
+import Header from "../components/Header";
 const CreateAccount = (props) => {
   return (
     <Modal visible={props.visible} animationType="slide">
+      <Header title="Bris-Tool" name= 'Your Personal Health Log' />
       <View style={styles.outtermost}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Bris-Stool </Text>
-          <Text style={styles.headerText}>Your Personal Health Log</Text>
-        </View>
         <View style={styles.inputBox}>
           <Text style={{ fontSize: 17, margin: 10 }}>Username: </Text>
           <TextInput style={styles.inputTextBox} placeholder="Enter Username" />
@@ -34,21 +31,22 @@ const CreateAccount = (props) => {
             style={styles.inputTextBox}
             placeholder="Confirm Password"
           />
-        </View>
-        <View style={{ width: "50%" }}>
-          <View style={styles.button}>
-            <Button
-              color="white"
-              title="Create Account"
-              onPress={props.onLogin}
-            />
-          </View>
-          <View style={styles.button}>
-            <Button
-              color="white"
-              title="Back To Home"
-              onPress={props.onClose}
-            />
+
+          <View style={styles.buttonView}>
+            <View style={styles.button}>
+              <Button
+                color="white"
+                title="Create Account"
+                onPress={props.onLogin}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                color="white"
+                title="Back To Home"
+                onPress={props.onClose}
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -65,14 +63,17 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     width: "80%",
-    height: "50%",
-    justifyContent: "center",
-    backgroundColor: "#FCF8D6",
+    backgroundColor: "white",
     marginHorizontal: "10%",
     borderColor: "#FCF8D6",
     borderWidth: 1,
     padding: 10,
-    width: "80%",
+    paddingBottom: 10,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    shadowOpacity: 0.26,
+    borderRadius: 20,
   },
   inputTextBox: {
     width: "100%",
@@ -83,26 +84,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: "white",
   },
-  button: {
-    width: "100%",
-    height: "15%",
+  buttonView: {
     justifyContent: "center",
+    alignItems: "center",
+    marginBottom:'5%'
+  },
+  button: {
+    width: "80%",
+    height: 40,
     borderColor: "#84ABB0",
     borderWidth: 1,
     backgroundColor: "#84ABB0",
-    marginTop: "5%",
-  },
-  header: {
-    marginVertical: 40,
-    marginHorizontal: 0,
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderColor: '#84ABB0'
-  },
-  headerText: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#84ABB0",
+    marginTop: "10%",
+    borderRadius: 10,
   },
 });
 
