@@ -11,7 +11,7 @@ const Landing = () =>{
               The method to track your health
             </p>
             <div className="buttons">
-              <Link to="/signup" className="btn btn-primary">Sign Up</Link>
+              <Link to="/register" className="btn btn-landingregister">Register</Link>
               <Link to="/login" className="btn btn-light">Login</Link>
             </div>
           </div>

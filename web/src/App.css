@@ -16,7 +16,7 @@
 body {
   font-family: 'Raleway', sans-serif;
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.8;
   background-color: #fff;
   color: #333;
 }
@@ -49,17 +49,23 @@ img {
   font-size: 4rem;
   line-height: 1.2;
   margin-bottom: 1rem;
+  font-family: Ubuntu-Regular;
+
 }
 
 .large {
   font-size: 3rem;
   line-height: 1.2;
   margin-bottom: 1rem;
+  font-family: Ubuntu-Regular;
+
 }
 
 .lead {
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  font-family: Ubuntu-Regular;
+
 }
 
 .text-center {
@@ -162,22 +168,40 @@ img {
 .alert-primary {
   background: var(--primary-color);
   color: #fff;
-}
+  font-family: Ubuntu-Regular;
+  padding: 0.5rem 8rem;
 
+}
+.btn-register{
+  background: var(--primary-color);
+  color: #fff;
+  font-family: Ubuntu-Regular;
+  padding: 0.5rem 7.6rem;
+
+}
 .btn-light,
 .bg-light,
 .badge-light,
 .alert-light {
   background: var(--light-color);
   color: #333;
-}
+  font-family: Ubuntu-Regular;
 
+}
+.btn-landingregister {
+  background: var(--primary-color);
+  color: #fff;
+  font-family: Ubuntu-Regular;
+
+}
 .btn-dark,
 .bg-dark,
 .badge-dark,
 .alert-dark {
   background: var(--dark-color);
   color: #fff;
+  font-family: Ubuntu-Regular;
+
 }
 
 .btn-danger,
@@ -186,6 +210,8 @@ img {
 .alert-danger {
   background: var(--danger-color);
   color: #fff;
+  font-family: Ubuntu-Regular;
+
 }
 
 .btn-success,
@@ -194,6 +220,8 @@ img {
 .alert-success {
   background: var(--success-color);
   color: #fff;
+  font-family: Ubuntu-Regular;
+
 }
 
 .btn-white,
@@ -263,31 +291,6 @@ button {
   font: inherit;
 }
 
-.form .social-input {
-  display: flex;
-}
-
-.form .social-input i {
-  padding: 0.5rem;
-  width: 4rem;
-}
-
-.form .social-input i.fa-twitter {
-  color: #38a1f3;
-}
-.form .social-input i.fa-facebook {
-  color: #3b5998;
-}
-.form .social-input i.fa-instagram {
-  color: #3f729b;
-}
-.form .social-input i.fa-youtube {
-  color: #c4302b;
-}
-.form .social-input i.fa-linkedin {
-  color: #0077b5;
-}
-
 .table th,
 .table td {
   padding: 1rem;
@@ -330,7 +333,6 @@ button {
   margin-right: 0.6rem;
 }
 
-/* Landing Page */
 .landing {
   position: relative;
   background: url('./img/bluebackground.jpg') no-repeat center center/cover;
@@ -348,144 +350,22 @@ button {
   justify-content: center;
   text-align: center;
 }
+.center{
+  
+padding:250px;
 
-/* Profiles Page */
-.profile {
-  display: grid;
-  grid-template-columns: 2fr 4fr 2fr;
-  align-items: center;
-  grid-gap: 2rem;
-  padding: 1rem;
-  line-height: 1.8;
+
+
+}
+.form-control{
   margin-bottom: 1rem;
-}
+  font-weight: 300;
+  font-size: 1.5rem;
+  font-family: Ubuntu-Regular;
 
-/* Profile Page */
-.profile-grid {
-  display: grid;
-  grid-template-areas:
-    'top top'
-    'about about'
-    'exp edu'
-    'github github';
-  grid-gap: 1rem;
-}
-
-.profile-top {
-  grid-area: top;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.profile-top img {
-  width: 250px;
-}
-
-.profile-top .icons a {
-  color: #fff;
-  margin: 0 0.3rem;
-}
-
-.profile-top .icons a:hover {
-  color: var(--dark-color);
-}
-
-.profile-about {
-  grid-area: about;
-  text-align: center;
-}
-
-.profile-about .skills {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.profile-exp {
-  grid-area: exp;
-}
-
-.profile-edu {
-  grid-area: edu;
-}
-
-.profile-exp h2,
-.profile-edu h2 {
-  margin-bottom: 1rem;
-}
-
-.profile-exp > div,
-.profile-edu > div {
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: #ccc 1px dotted;
-}
-
-.profile-exp > div:last-child,
-.profile-edu > div:last-child {
-  border: 0;
-}
-
-.profile-exp p,
-.profile-edu p {
-  margin: 0.5rem 0;
-}
-
-.profile-github {
-  grid-area: github;
-}
-
-.profile-github .repo {
-  display: flex;
-}
-
-.profile-github .repo > div:first-child {
-  flex: 7;
-  flex-basis: 70%;
-}
-
-.profile-github > div:last-child {
-  flex: 3;
-  flex-basis: 20%;
-}
-
-/* Posts Page */
-.post-form .post-form-header {
-  background: var(--primary-color);
-  padding: 0.5rem;
-}
-
-.post {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-gap: 2rem;
-  align-items: center;
-}
-
-.post > div:first-child {
-  text-align: center;
-}
-
-.post img {
-  width: 100px;
-}
-
-.post .comment-count {
-  background: var(--light-color);
-  color: var(--primary-color);
-  padding: 0.1rem 0.2rem;
-  border-radius: 5px;
-  font-size: 0.8rem;
-}
-
-.post .post-date {
-  color: #aaa;
-  font-size: 0.8rem;
-  margin-bottom: 0.5rem;
+  font-size: 24px;
+  line-height: 1.7;
+  color: #666666;
 }
 
 /* Mobile Styles */
