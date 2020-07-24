@@ -6,12 +6,12 @@ const Landing = () =>{
         <section className="landing">
         <div className="dark-overlay">
           <div className="landing-inner">
-            <h1 className="x-large">Bristol Stool Chart</h1>
+            <h1 className="x-large">Brist-Tool</h1>
             <p className="lead">
-              The method to track your health
+              The App To Track Your Health!
             </p>
             <div className="buttons">
-              <Link to="/signup" className="btn btn-primary">Sign Up</Link>
+              <Link to="/register" className="btn btn-primary">Register</Link>
               <Link to="/login" className="btn btn-light">Login</Link>
             </div>
           </div>

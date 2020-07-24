@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -8,9 +7,10 @@ const Log = props => (
         <td>{props.log.userId}</td>
         <td>{props.log.amount}</td>
         <td>{props.log.type}</td>
-        <td>{props.log.date}</td>
+        <td>{props.log.date.substring(0,10)}</td>
+        <td>{props.log.date.substring(11,19)}</td>
         <td>
-             <a href="#" onClick={() => { props.deleteLog(props) }}>delete</a>
+             <a href="Delete Button" onClick={() => { props.deleteLog(props.log._id)}}>delete</a>
         </td>
     </tr>
 )
@@ -24,7 +24,7 @@ export default class Logs extends Component{
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3000/api/stool/')
+        axios.get('/api/stool/')
             .then(res =>{
                 this.setState({stools: res.data})
             })
@@ -34,10 +34,15 @@ export default class Logs extends Component{
     }
 
     deleteLog(id){
-        axios.delete('http://localhost:3000/api/stool/delete/' + id)
+
+        const stool = {
+            "stools": [id]
+        }
+        console.log(stool)
+        axios.delete('/api/stool/delete', stool)
             .then(res => {console.log(res)})
         this.setState({
-            stools: this.state.stools.filter(el=>el._id != id)
+
         })
     }
     logList(){
@@ -58,6 +63,7 @@ export default class Logs extends Component{
                         <th>Amount</th>
                         <th>Type</th>
                         <th>Date</th>
+                        <th>Time</th>
                         <th>Actions</th>
                     </tr>
                     </thead>

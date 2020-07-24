@@ -73,6 +73,7 @@ async function isUserDuplicate(username, email) {
 	return { isUsername: usernameUser, isEmail: emailUser };
 }
 
+
 loginRouter.post('/register', (req, res) => {
 	const {
 		username,
@@ -109,5 +110,7 @@ loginRouter.post('/register', (req, res) => {
 		}).catch(err => res.status(500).send(err));
 	})
 });
+
+
 
 export default loginRouter;

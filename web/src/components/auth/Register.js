@@ -72,8 +72,9 @@ export default class Register extends Component {
              }
 
              console.log(user)
-             axios.post('http://localhost:3000/api/auth/register',user)
-                 .then(res => console.log(res.data))
+             axios.post('/api/auth/register',user)
+                 .then(res => window.location.href="/emailverification")
+                 .catch((err) => {console.log("Registration Failed FAILED")})
 
              this.setState({
                  username : '',

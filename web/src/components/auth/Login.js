@@ -39,9 +39,9 @@ export default class Login extends Component {
 
             }
 
-            console.log(login)
-            axios.post('http://localhost:3000/api/auth/login',login)
-                .then(res => console.log(res.data))
+            axios.post('/api/auth/login',login)
+                .then(res => window.location.href="/logs")
+                .catch((err) => {console.log("Sign in FAILED")})
 
 
             this.setState({

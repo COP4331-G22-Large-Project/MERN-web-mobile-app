@@ -1,4 +1,5 @@
 /* Global Styles */
+
 :root {
   --primary-color: #0d5d69;
   --dark-color: #343a40;
@@ -297,6 +298,7 @@ button {
 .table th {
   background: var(--light-color);
 }
+
 
 /* Navbar */
 .navbar {
