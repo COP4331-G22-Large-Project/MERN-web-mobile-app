@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import path from 'path';
 import passport from 'passport';
-
+import App from './App';
 import loginRouter from './api/login/login.route';
 import stoolRouter from './api/stool/stool.route';
 import foodRouter from './api/food/food.route';
