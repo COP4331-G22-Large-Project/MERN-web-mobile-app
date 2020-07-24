@@ -6,5 +6,5 @@ export * from "./SettingScreen";
 export * from "./Consumables";
 export * from "./Exercise";
 export * from "./Stool";
-//export * from "./Logs";
+export * from "./Logs";
 export * from "./ForgotScreen";
