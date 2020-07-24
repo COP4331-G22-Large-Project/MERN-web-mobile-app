@@ -34,7 +34,7 @@ export default class LogStool extends Component {
             amount: this.state.amount
         }
         console.log(stool)
-        axios.post('http://localhost:3000/api/stool/add',stool)
+        axios.post('/api/stool/add',stool)
             .then(res => console.log(res.data));
 
         this.setState({

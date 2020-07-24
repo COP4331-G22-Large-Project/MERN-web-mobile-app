@@ -40,7 +40,7 @@ export default class Login extends Component {
             }
 
             axios.post('/api/auth/login',login)
-                .then(res => window.location.href="/logs")
+                .then(res => window.location.href="/logs",localStorage.setItem('isLoggedIn','true'))
                 .catch((err) => {console.log("Sign in FAILED")})
 
 

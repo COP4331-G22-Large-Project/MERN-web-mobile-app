@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-const Navbar = props => {
-    if (props.isAuth) {
+import axios from 'axios'
+const Navbar = req => {
+
+    if (localStorage.getItem('isLoggedIn') === 'true') {
         return (
             <nav className="navbar bg-dark">
                 <h1>
@@ -9,10 +11,10 @@ const Navbar = props => {
                 </h1>
 
                 <ul>
-                    <li><Link to="Log Exercise">LogExercise</Link></li>
-                    <li><Link to="Log Food">LogFood</Link></li>
-                    <li><Link to="Log Stool">LogStool</Link></li>
-                    <li><Link to="View Logs">Logs</Link></li>
+                    <li><Link to="/logexercise">Log Exercise</Link></li>
+                    <li><Link to="/logfood">Log Food</Link></li>
+                    <li><Link to="/logstool">Log Stool</Link></li>
+                    <li><Link to="/logs"> View Logs</Link></li>
                 </ul>
             </nav>
 
@@ -29,8 +31,8 @@ const Navbar = props => {
                 </h1>
 
                 <ul>
-                    <li><Link to="Register">Register</Link></li>
-                    <li><Link to="login">Login</Link></li>
+                    <li><Link to="/register">Register</Link></li>
+                    <li><Link to="/login">Login</Link></li>
                 </ul>
             </nav>
 

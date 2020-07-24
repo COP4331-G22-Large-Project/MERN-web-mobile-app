@@ -26,7 +26,7 @@ export default class LogFood extends Component {
             name: this.state.name,
         }
         console.log(food)
-        axios.post('http://localhost:3000/api/food/add',food)
+        axios.post('/api/food/add',food)
             .then(res => console.log(res.data));
 
         this.setState({
