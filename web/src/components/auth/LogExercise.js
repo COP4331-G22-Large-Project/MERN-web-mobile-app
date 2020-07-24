@@ -34,7 +34,7 @@ export default class LogExercise extends Component {
             duration: this.state.duration
         }
         console.log(exercise)
-        axios.post('http://localhost:3000/api/exercise/add',exercise)
+        axios.post('/api/exercise/add',exercise)
             .then(res => console.log(res.data));
 
         this.setState({
