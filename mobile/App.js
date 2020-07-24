@@ -68,7 +68,14 @@ const StackAuth = createStackNavigator();
 function AuthStack() {
   return (
     <StackAuth.Navigator initialRouteName="SignIn">
-      <StackAuth.Screen name="SignIn" component={SignInScreen} />
+      <StackAuth.Screen
+        name="Bris-Tool"
+        options={{
+          headerStyle: { backgroundColor: "teal" },
+          headerTitleStyle: { fontWeight: "bold" , fontSize: 25},
+        }}
+        component={SignInScreen}
+      />
       <StackAuth.Screen name="Register" component={RegisterScreen} />
       <StackAuth.Screen name="Forgot" component={ForgotScreen} />
     </StackAuth.Navigator>
