@@ -17,6 +17,13 @@ import {
 import { AuthContext } from "./src/utils";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-community/async-storage";
+import Colors from "./constants/colors";
+import Icon from "react-native-vector-icons/Ionicons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { NavigationEvents } from "react-navigation";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from '@expo/vector-icons';
 
 //
 //const StackHome = createStackNavigator();
@@ -46,18 +53,59 @@ const Tab = createBottomTabNavigator();
 
 function HomeTab() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: Colors.primary,
+        inactiveTintColor: "white",
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={HomeScreen} /*component={HomeStack}*/
+        options={{
+  
+          tabBarIcon: ({}) => (
+            <Icon name="ios-home" color="black" size={24} />
+          ),
+  
+        }}
       />
       <Tab.Screen
         name="Consumables"
         component={Consumables} /*component={SettingStack}*/
+        options={{
+          tabBarIcon: ({}) => (
+            <MaterialCommunityIcons name="food" size={24} color="black" />
+          ),
+        }}
       />
-      <Tab.Screen name="Exercise" component={Exercise} />
-      <Tab.Screen name="Stool" component={Stool} />
-      <Tab.Screen name="Logs" component={Logs} />
+      <Tab.Screen
+        name="Exercise"
+        component={Exercise}
+        options={{
+          tabBarIcon: ({}) => (
+            <Ionicons name="md-fitness" size={24} color="black" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Stool"
+        component={Stool}
+        options={{
+          tabBarIcon: ({}) => (
+            <FontAwesome5 name="poop" size={24} color="black" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Logs"
+        component={Logs}
+        options={{
+          tabBarIcon: ({}) => (
+            <FontAwesome name="book" size={24} color="black" />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -71,8 +119,12 @@ function AuthStack() {
       <StackAuth.Screen
         name="Bris-Tool"
         options={{
-          headerStyle: { backgroundColor: "teal" },
-          headerTitleStyle: { fontWeight: "bold" , fontSize: 25},
+          headerStyle: { backgroundColor: Colors.primary },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 25,
+            color: "white",
+          },
         }}
         component={SignInScreen}
       />
