@@ -19,6 +19,7 @@
     "http-proxy-middleware": "^1.0.4",
     "lodash.escaperegexp": "^4.1.2",
     "mongoose": "^5.9.21",
+    "nodemailer": "^6.4.10",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "react": "^16.13.1",

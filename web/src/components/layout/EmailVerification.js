@@ -23,10 +23,12 @@ export default class EmailVerification extends Component {
 
 
         const emailVerification = {
-            verificationCode: this.state.username
+            token: this.state.verificationCode
         }
 
-
+        axios.post('/api/auth/verify_token',emailVerification)
+            .then(res => window.location.href="/logs",localStorage.setItem('isLoggedIn','true'))
+            .catch((err) => {console.log(err)})
 
 
         this.setState({
@@ -47,7 +49,7 @@ export default class EmailVerification extends Component {
                         <input type = "string"
                                required
                                className="form-control"
-                               value = {this.state.type}
+                               value = {this.state.verificationCode}
                                onChange = {this.onChangeVerificationCode}
                         />
                     </div>

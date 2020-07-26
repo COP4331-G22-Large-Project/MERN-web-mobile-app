@@ -60,13 +60,12 @@ export default class LogStool extends Component {
                                />
                     </div>
                     <div>
-
-                        <label>Stool Amount(text description...but not too descriptive): </label>
-                        <input type = "string"
+                        <label>Stool Amount(Little, Normal, A lot): </label>
+                        <input type = "integer"
                                required
                                className="form-control"
                                value = {this.state.amount}
-                               onChange={this.onChangeStoolDesc}
+                               onChange = {this.onChangeStoolDesc}
                         />
                     </div>
                     <div className="form-group">
