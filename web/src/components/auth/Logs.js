@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-
+import { searchStool, getAllStools, deleteStools } from '../../api/stool';
 
 const Log = props => (
     <tr>
@@ -23,34 +22,21 @@ export default class Logs extends Component{
         this.state = {stools: []}
     }
 
+    refreshLogs() {
+        getAllStools().then((res) => {
+            this.setState({stools: res.data})
+        }).catch(err => console.log(err));
+    }
+
     componentDidMount() {
-        axios.get('/api/stool/')
-            .then(res =>{
-                this.setState({stools: res.data})
-            })
-            .catch((err) =>{
-            console.log(err);
-        })
+        this.refreshLogs();
     }
 
-    deleteLog(id){
-
-        const stool = {
-            "stools": [id]
-        }
-        console.log(stool)
-        axios.delete('/api/stool/delete', stool)
-            .then(res => {console.log(res)})
-        this.setState({
-
-        })
+    deleteLog(id) {
+        deleteStools([id]).then((res) => {
+            this.refreshLogs();
+        }).catch((err) => console.log(err));
     }
-    logList(){
-        return this.state.stools.map(currentLog =>{
-            return <Log log = {currentLog} deleteLog ={this.deleteLog} key={currentLog._id}/>
-        })
-    }
-
 
     render(){
         return (
@@ -68,7 +54,11 @@ export default class Logs extends Component{
                     </tr>
                     </thead>
                     <tbody>
-                    { this.logList() }
+                    {
+                        this.state.stools.map(log => (
+                            <Log log={log} deleteLog={this.deleteLog} key={log._id}/>
+                        ))
+                    }
                     </tbody>
                 </table>
             </div>
