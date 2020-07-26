@@ -20,6 +20,7 @@
   },
   "homepage": "https://gitlab.com/notrealjohn/largeproject#readme",
   "dependencies": {
+    "js-sha256": "^0.9.0",
     "lodash.escaperegexp": "^4.1.2",
     "type-check": "^0.4.0"
   },
