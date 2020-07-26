@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "dependencies": {
     "@babel/preset-env": "^7.10.2",
     "@testing-library/jest-dom": "^4.2.4",
