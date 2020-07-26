@@ -25,8 +25,8 @@ export const retoken = () => axios.post('/api/auth/retoken');
 // Send the forgotten password email
 export const askResetPassword = (email) => axios.post('/api/auth/repassword', { email });
 
-// TODO: Not yet implemented. Waiting for route to be done
 // Actually resets the password
-export const doResetPassword = (password, token) => {
-	new Promise(() => 'password reset route being developed'));
-}
+export const doResetPassword = (password, token) => axios.post('/api/auth/reset_password', {
+	password: sha256(password),
+	token,
+});
