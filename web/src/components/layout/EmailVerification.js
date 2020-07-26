@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {verify_token} from '../../api/auth';
 
 export default class EmailVerification extends Component {
     constructor(props) {

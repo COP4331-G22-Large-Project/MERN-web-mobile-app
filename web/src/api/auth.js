@@ -22,6 +22,9 @@ export const register = (username, password, email, firstName, lastName) => axio
 // Resend verification email
 export const retoken = () => axios.post('/api/auth/retoken');
 
+// Verify token
+export const verify_token = (token) => axios.get('/api/auth/verify_token', { token });
+
 // Send the forgotten password email
 export const askResetPassword = (email) => axios.post('/api/auth/repassword', { email });
 
