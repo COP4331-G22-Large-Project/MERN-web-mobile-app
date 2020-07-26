@@ -143,29 +143,30 @@ stoolRouter.delete('/delete', (req, res) => {
 			.populate('foods')
 			.populate('exercises')
 			.exec(async (err, stools) => {
-			if (err) {
-				return res.status(500).send(err);
-			}
-			for (let i = 0; i < stools.length; i++) {
-				const stool = stools[i];
+				if (err) {
+					return res.status(500).send(err);
+				}
+				for (let i = 0; i < stools.length; i++) {
+					const stool = stools[i];
 
-				for (let j = 0; j < stool.foods; j++) {
-					stool.foods[i].stoolId = null;
-					await stool.foods[i].save();
+					for (let j = 0; j < stool.foods.length; j++) {
+						stool.foods[j].stoolId = null;
+						await stool.foods[j].save();
+					}
+					for (let j = 0; j < stool.exercises.length; j++) {
+						stool.exercises[j].stoolId = null;
+						await stool.exercises[j].save();
+					}
 				}
-				for (let j = 0; j < stool.exercises; j++) {
-					stool.exercises[i].stoolId = null;
-					await stool.exercises[i].save();
-				}
-			}
 
-			Stool.deleteMany(query, (err1, results) => {
-				if (err1) {
-					return res.status(500).send(err1);
-				}
-				res.send(`successfully deleted ${results.deletedCount} stools`);
-			});
-		});
+				Stool.deleteMany(query, (err1, results) => {
+					if (err1) {
+						return res.status(500).send(err1);
+					}
+					res.send(`successfully deleted ${results.deletedCount} stools`);
+				});
+			}
+		);
 	} else {
 		res.status(400).send('stools must be array of ids');
 	}
