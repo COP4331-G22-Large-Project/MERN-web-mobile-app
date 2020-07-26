@@ -137,7 +137,7 @@ async function sendRegistrationEmail(user) {
 		from: sender_user,
 		to: user.email,
 		subject: 'verification email',
-		html: `You have registered for Brist-Tool. <a href="${API_URL}/auth/verify_token?token=${encodeURI(token)}">Click here</a> to complete the registration, or enter this code:<br><b>${token}</b>`
+		text: `You have registered for Brist-Tool. <a href="${API_URL}/auth/verify_token?token=${encodeURI(token)}">Click here</a> to complete the registration, or enter this code:<br><b>${token}</b>`
 	};
 
 	// send email and handle results
@@ -155,38 +155,23 @@ loginRouter.get('/verify_token', (req, res) => {
 	// assumming this is how the user is sending us their token
 	const { token } = req.query;
 
-	User.findOne({ verificationToken: token }, (err, user) => {
-		if (err) {
-			return res.status(500).send(err);
-		} else if (user) {
-			user.verificationToken = null;
-			user.verified = true;
-			user.save().then(() => {
-				res.redirect('/');
-			}).catch(e => res.status(500).send('error'));
-		} else {
-			res.status(401).send('Unauthorized');
-		}
-	});
+	if (token === req.user.verificationToken) {
+		req.user.verificationToken = null;
+		req.user.verified = true;
+		req.user.save().then(() => {
+			res.redirect('/');
+		}).catch(e => res.status(500).send('error'));
+	} else {
+		res.status(401).send('Unauthorized');
+	}
 });
 
-// recreate and resend user's token
-loginRouter.post('/retoken', (req, res) => {
-	if (req.isAuthenticated()) {
-		// if user is already verified, exit
-		if (!req.user.verified) {
-			// create and save new token
-			req.user.verification_token = uid(16);
-			req.user.save().then((savedUser) => {
-				sendRegistrationEmail(savedUser);
-				res.status(200).send('success');
-			}).catch(err => res.status(500).send(err));
-		} else {
-			res.status(200).send('already verified');
-		}
-	} else {
-		res.status(401).send('not logged in');
-	}
+// lil proof of concept
+loginRouter.get('/send_email', (req, res) => {
+	// if user is already verified, exit
+	req.user.verification_token = uid(16);
+	req.user.save();
+	sendRegistrationEmail(req.user);
 });
 
 export default loginRouter;
