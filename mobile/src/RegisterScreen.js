@@ -9,9 +9,9 @@ import {
   ScrollView,
   Text,
 } from "react-native";
+import { AuthContext } from "./utils";
 import Card from "../components/Card";
 import Colors from "../constants/colors";
-import { AuthContext } from "./utils";
 
 export function RegisterScreen() {
   const [username, setUsername] = React.useState("");
@@ -22,7 +22,7 @@ export function RegisterScreen() {
   const { container, txtInput } = styles;
   const { signUp } = React.useContext(AuthContext);
 
-  const register = (username, email, password, passwordConfirm) => {
+  const register = ({ username, email, password, passwordConfirm }) => {
     if (password === passwordConfirm) signUp({ username, password, email });
   };
 
