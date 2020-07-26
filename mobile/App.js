@@ -1,101 +1,38 @@
-import React from 'react';
+import React,{useState} from 'react';
+
 import {
-  StyleSheet, 
-  Text, 
-  View, 
-  Dimensions,
-  TextInput, 
-  TouchableOpacity, 
-  StatusBar,
-  ImageBackground,
-  Image
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
-// test 2***
-import bgImage from './app/img/imagetest.jpg';
-
-const{ width: WIDTH } = Dimensions.get('window')
+import{ globalStyles} from './Pages/styles/global';
 
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <ImageBackground source = { bgImage } style={(styles.backgroundContainer)}>
-      <Text style={styles.Welcome}>Login My APP</Text>
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-      />
-      
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        />
-        
 
-        <View style={styles.btnContainer}>
-        <TouchableOpacity
-          style={styles.userBtn}
-          onPress={() => alert("Login Works")}
-          >
-            <Text style={styles.btnTxt}>Login</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.userBtn}
-            onPress={() => alert("Signup Works")}
-            >
-          <Text style={styles.btnTxt}>Signup</Text>
-          </TouchableOpacity>
-        </View>
-        </ImageBackground>
-      
-    );
-  }
-}
 
-const styles = StyleSheet.create({
-  backgroundContainer: {
-    flex: 1,
-    width: '100%',
-    height:'100%',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginBottom: '20%',
-  },
-  Welcome: {
-    fontSize: 30,
-    textAlign: 'center',
-    margin: 10,
-    color: 'white',
-    paddingTop: '-50%'
-    
-  },
-  input: {
-    width: '90%',
+// Flat List
+export default function Home({ navigation}) {
 
-    padding: 15,
-    marginBottom: 10
-  },
-  btnContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '90%'
+  // array of objects, need key for flat lists
+  const [reviews, setReviews] = useState([
+    {title: 'Log 1', rating: 5, body: 'lorem ipsum', key: '1'},
+    {title: 'Log 2', rating: 4, body: 'lorem ipsum', key: '2'},
+    {title: 'Log 3', rating: 3, body: 'lorem ipsum', key: '3'},
+  ]);
 
-  },
-  userBtn:{
-    backgroundColor: '#FFD700',
-    padding: 15,
-    width: '45%'  
-  },
-  btnTxt: {
-    fontSize: 20,
-    textAlign: 'center'
+return(
+  <View style={globalStyles.container}>
+  <FlatList
+  data={reviews}
+  renderItem={({item}) => (
+    <TouchableOpacity onPress={() => navigation.navigate('ReviewDetails', item)}>
+  <Text style={globalStyles.titleText}>{ item.title}</Text>
+  </TouchableOpacity>
+)}
+  />
+  </View>
+)
   }
 
-
-});
