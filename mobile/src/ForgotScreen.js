@@ -1,13 +1,14 @@
 import * as React from "react";
 import { Button, TextInput, View, StyleSheet } from "react-native";
 
-export function ForgotScreen() {
+export function ForgotScreen({ navigation }) {
   const [email, setEmail] = React.useState("");
 
   const { container, txtInput } = styles;
 
   const forgot = (email) => {
     console.log("You can handle api for forgot here");
+    navigation.navigate("CheckEmail");
   };
 
   return (
@@ -18,7 +19,10 @@ export function ForgotScreen() {
         onChangeText={setEmail}
         style={txtInput}
       />
-      <Button title="Forgot Password" onPress={() => forgot({ email })} />
+      <Button
+        title="Forgot Password"
+        onPress={() => navigation.navigate("CheckEmail")}
+      />
     </View>
   );
 }

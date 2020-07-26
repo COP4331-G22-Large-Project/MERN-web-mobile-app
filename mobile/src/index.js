@@ -8,3 +8,4 @@ export * from "./Exercise";
 export * from "./Stool";
 export * from "./Logs";
 export * from "./ForgotScreen";
+export * from "./CheckEmail";

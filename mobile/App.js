@@ -13,6 +13,7 @@ import {
   Stool,
   Logs,
   ForgotScreen,
+  CheckEmail,
 } from "./src";
 import { AuthContext } from "./src/utils";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -149,19 +150,19 @@ function AuthStack() {
       <StackAuth.Screen
         name="Register"
         options={{
-          title: 'Sign up!',
+          title: "Sign up!",
           headerStyle: { backgroundColor: Colors.primary },
           headerTitleStyle: {
             fontWeight: "bold",
             fontSize: 20,
             color: "black",
           },
-          headerTintColor: 'black'
-
+          headerTintColor: "black",
         }}
         component={RegisterScreen}
       />
       <StackAuth.Screen name="Forgot" component={ForgotScreen} />
+      <StackAuth.Screen name="CheckEmail" component={CheckEmail} />
     </StackAuth.Navigator>
   );
 }
