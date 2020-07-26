@@ -8,6 +8,7 @@ import {
   Keyboard,
   ScrollView,
 } from "react-native";
+import { AuthContext } from "./utils";
 import Card from "../components/Card";
 import Colors from "../constants/colors";
 
@@ -17,8 +18,12 @@ export function RegisterScreen() {
 
   const { container, txtInput } = styles;
 
+  const { signUp } = React.useContext(AuthContext);
+
   const register = (username, password) => {
-    console.log("You can handle api register here");
+    // TODO: Verify passwords
+
+    signUp({ username, password });
   };
 
   return (

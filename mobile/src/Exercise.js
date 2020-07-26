@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { Button, Text, View, StyleSheet, SafeAreaView } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
+import { addExercise } from '../api/exercise';
 
 export function Exercise() {
   const { container } = styles;
@@ -9,7 +10,11 @@ export function Exercise() {
   const [exercise, set_exercise] = useState("");
 
   const pressHandler = () => {
-    alert("Thank you for submitting!");
+    addExercise(/* name, duration */).then((res) => {
+      
+    }).catch((err) => {
+      
+    });
   };
 
   return (

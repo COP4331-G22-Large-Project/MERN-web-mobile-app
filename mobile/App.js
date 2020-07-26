@@ -26,6 +26,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 
+import {
+  login,
+  checkedLoggedIn,
+  logout,
+  register,
+} from './api/auth';
+
 //
 //const StackHome = createStackNavigator();
 
@@ -176,50 +183,34 @@ export default function App({ navigation }) {
         case "RESTORE_TOKEN":
           return {
             ...prevState,
-            userToken: action.token,
+            user: action.user,
             isLoading: false,
           };
         case "SIGN_IN":
-          if (action.token) {
-            AsyncStorage.setItem("userToken", action.token);
-          }
           return {
             ...prevState,
-            isSignout: false,
-            userToken: action.token,
+            isSignout: false
           };
         case "SIGN_OUT":
-          AsyncStorage.removeItem("userToken");
           return {
             ...prevState,
             isSignout: true,
-            userToken: null,
+            user: null,
           };
       }
     },
     {
       isLoading: true,
-      isSignout: false,
-      userToken: null,
+      isSignout: true,
+      user: null,
     }
   );
 
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const bootstrapAsync = async () => {
-      let userToken;
-
-      try {
-        userToken = await AsyncStorage.getItem("userToken");
-      } catch (e) {
-        // Restoring token failed
-      }
-
-      // After restoring token, we may need to validate it in production apps
-
-      // This will switch to the App screen or Auth screen and this loading
-      // screen will be unmounted and thrown away.
-      dispatch({ type: "RESTORE_TOKEN", token: userToken });
+      const user = await checkedLoggedIn();
+      dispatch({ type: "RESTORE_TOKEN", user });
     };
 
     bootstrapAsync();
@@ -227,24 +218,25 @@ export default function App({ navigation }) {
 
   const authContext = React.useMemo(
     () => ({
-      signIn: async (data) => {
-        // We need to send some data (usually username, password) to server and get a token
-        // We will also need to handle errors if sign in failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
+      signIn: (data) => {
+        login(data.username, data.password).then((res) => {
+          dispatch({ type: "SIGN_IN", user: res.data });
+        }).catch((err) => {
+          // TODO: Invalid username/password
+        });
 
-        console.log("SignIn Data: ", data);
-
-        dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
       },
-      signOut: () => dispatch({ type: "SIGN_OUT" }),
-      signUp: async (data) => {
-        // We need to send user data to server and get a token
-        // We will also need to handle errors if sign up failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
-
-        dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
+      signOut: () => {
+        logout();
+        dispatch({ type: "SIGN_OUT" });
+      },
+      signUp: (data) => {
+        register(data.username, data.password, data.email, data.firstName, data.lastName).then((res) => {
+          dispatch({ type: "SIGN_IN" });
+        }).catch((err) => {
+          // TODO: Tell user the error that occured
+          console.log(err.data.err);
+        });
       },
     }),
     []
