@@ -7,18 +7,23 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
+  Text,
 } from "react-native";
 import Card from "../components/Card";
 import Colors from "../constants/colors";
+import { AuthContext } from "./utils";
 
 export function RegisterScreen() {
   const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [passwordConfirm, setPasswordConfirm] = React.useState("");
 
   const { container, txtInput } = styles;
+  const { signUp } = React.useContext(AuthContext);
 
-  const register = (username, password) => {
-    console.log("You can handle api register here");
+  const register = (username, email, password, passwordConfirm) => {
+    if (password === passwordConfirm) signUp({ username, password, email });
   };
 
   return (
@@ -26,15 +31,21 @@ export function RegisterScreen() {
       <ScrollView contentContainerStyle={container}>
         <Card style={styles.cardStyle}>
           <TextInput
-            placeholder="Username"
+            placeholder="Enter A Username"
             value={username}
             onChangeText={setUsername}
             style={txtInput}
             textAlign="center"
           />
-          <TextInput placeholder="Email" style={txtInput} textAlign="center" />
           <TextInput
-            placeholder="Password"
+            placeholder="Enter An Email"
+            value={email}
+            onChangeText={setEmail}
+            style={txtInput}
+            textAlign="center"
+          />
+          <TextInput
+            placeholder="Enter Password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -43,8 +54,8 @@ export function RegisterScreen() {
           />
           <TextInput
             placeholder="Confirm Password"
-            value={password}
-            onChangeText={setPassword}
+            value={passwordConfirm}
+            onChangeText={setPasswordConfirm}
             secureTextEntry
             style={txtInput}
             textAlign="center"
@@ -53,7 +64,9 @@ export function RegisterScreen() {
             <Button
               color="black"
               title="Register"
-              onPress={() => register({ username, password })}
+              onPress={() =>
+                register({ username, email, password, passwordConfirm })
+              }
             />
           </View>
         </Card>

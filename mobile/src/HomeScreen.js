@@ -12,20 +12,18 @@ import Header from "../components/Header";
 import Card from "../components/Card";
 import Colors from "../constants/colors";
 
-export function HomeScreen() {
+export function HomeScreen({}) {
   const { signOut } = React.useContext(AuthContext);
   const { container } = styles;
 
   return (
     <View style={container}>
+      <Header title="Home" />
 
-        <Header title="Home" />
-   
-
-      <ScrollView contentContainerStyle={styles.scrollview} >
+      <ScrollView contentContainerStyle={styles.scrollview}>
         <View style={styles.CardContainer}>
           <Card>
-            <Text style={styles.introtext}>Hi "UserName"</Text>
+            <Text style={styles.introtext}>Hi UserName!</Text>
             <Text style={styles.introtext}>Welcome to Bris-Tool</Text>
             <Text style={styles.introtext}>Your Personal Health Journal</Text>
             <Text style={styles.bodyText}>
@@ -56,8 +54,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  scrollview:{
-    alignItems:'center'
+  scrollview: {
+    alignItems: "center",
   },
   CardContainer: {
     paddingVertical: 30,

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, TextInput, View, StyleSheet } from "react-native";
+import { Button, TextInput, View, StyleSheet, Text } from "react-native";
 
 export function ForgotScreen({ navigation }) {
   const [email, setEmail] = React.useState("");
@@ -13,6 +13,7 @@ export function ForgotScreen({ navigation }) {
 
   return (
     <View style={container}>
+      <Text>Please enter your password:</Text>
       <TextInput
         placeholder="Email"
         value={email}
