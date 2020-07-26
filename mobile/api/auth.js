@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { sha256 } from 'js-sha256';
+import { apiUrl } from '../src/utils';
 
 // Login with username and password
-export const login = (username, password) => axios.post('/api/auth/login', {
+export const login = (username, password) => axios.post(apiUrl + '/auth/login', {
 	username,
 	password: sha256(password),
 });
@@ -14,7 +15,7 @@ export const checkLoggedIn = () => axios.post('/api/user');
 export const logout = () => axios.post('/apit/auth/logout');
 
 // Register a new user
-export const register = (username, password, email, firstName, lastName) => axios.post('/api/auth/register', {
+export const register = (username, password, email, firstName, lastName) => axios.post(apiUrl + '/auth/register', {
 	username,
 	password: sha256(password),
 	email,
@@ -23,13 +24,13 @@ export const register = (username, password, email, firstName, lastName) => axio
 });
 
 // Resend verification email
-export const retoken = () => axios.post('/api/auth/retoken');
+export const retoken = () => axios.post(apiUrl + '/auth/retoken');
 
 // Send the forgotten password email
-export const askResetPassword = (email) => axios.post('/api/auth/repassword', { email });
+export const askResetPassword = (email) => axios.post(apiUrl + '/auth/repassword', { email });
 
 // Actually resets the password
-export const doResetPassword = (password, token) => axios.post('/api/auth/reset_password', {
+export const doResetPassword = (password, token) => axios.post(apiUrl + '/auth/reset_password', {
 	password: sha256(password),
 	token,
 });

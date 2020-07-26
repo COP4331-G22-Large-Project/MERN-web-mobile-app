@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { typeCheck } from 'type-check';
+import { apiUrl } from '../src/utils';
 
 /* Searches for a food that matches the given params
 	dateMin/dateMax - the date range
@@ -8,13 +9,13 @@ import { typeCheck } from 'type-check';
 	The parameters are defaulted so that excluding them does not reduce results.
 	Excluding all returns all
 */
-export const searchFood = (searchObj) => axios.get('/api/food/search', { params: searchObj });
+export const searchFood = (searchObj) => axios.get(apiUrl + '/food/search', { params: searchObj });
 
 // Gets all the food owned by the user
-export const getAllFood = () => axios.get('/api/food');
+export const getAllFood = () => axios.get(apiUrl + '/food');
 
 // Adds a food
-export const addFood = (name) => axios.post('/api/food/add', { name });
+export const addFood = (name) => axios.post(apiUrl + '/food/add', { name });
 
 // Deletes a list of foods
 export const deleteFoods = (foods) => {
@@ -24,7 +25,7 @@ export const deleteFoods = (foods) => {
 	} else {
 		foodIds = foods;
 	}
-	axios.delete('/api/food/delete', {
+	axios.delete(apiUrl + '/food/delete', {
 		foods: foodIds
 	});
 }

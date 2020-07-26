@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { typeCheck } from 'type-check';
+import { apiUrl } from '../src/utils';
 
 /* Searches for a stool that matches the given params
 	dateMin/dateMax - the date range
@@ -11,13 +12,13 @@ import { typeCheck } from 'type-check';
 	The parameters are defaulted so that excluding them does not reduce results.
 	Excluding all returns all
 */
-export const searchStool = (searchObj) => axios.get('/api/stool/search', { params: searchObj });
+export const searchStool = (searchObj) => axios.get(apiUrl + '/stool/search', { params: searchObj });
 
 // Gets all stools owned by the user
-export const getAllStools = () => axios.get('/api/stool');
+export const getAllStools = () => axios.get(apiUrl + '/stool');
 
 // Adds a stool
-export const addStool = (type, amount) => axios.post('/api/stool/add', { type, amount });
+export const addStool = (type, amount) => axios.post(apiUrl + '/stool/add', { type, amount });
 
 // Deletes a list of stools
 export const deleteStools = (stools) => {
@@ -27,7 +28,7 @@ export const deleteStools = (stools) => {
 	} else {
 		stoolIds = stools;
 	}
-	axios.delete('/api/stool/delete', {
+	axios.delete(apiUrl + '/stool/delete', {
 		stools: stoolIds
 	});
 }
