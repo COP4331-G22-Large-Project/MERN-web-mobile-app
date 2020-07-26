@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import { register } from '../../api/auth';
 
 export default class Register extends Component {
     constructor(props) {
@@ -59,38 +59,36 @@ export default class Register extends Component {
 
      onSubmit(e){
         e.preventDefault()
+        const
+        {
+            username,
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+        } = this.state;
 
-         if(this.state.password === this.state.confirmPassword)
-         {
-             const user = {
-                 username: this.state.username,
-                 firstName: this.state.firstName,
-                 lastName: this.state.lastName,
-                 email: this.state.email,
-                 password: this.state.password,
-                 confirmPassword: this.state.confirmPassword
-             }
+        if (password === confirmPassword)
+        {
+            register(username, password, email, firstName, lastName).then((res) => {
+                window.location.href = "/emailverification";
+                this.setState({
+                    username : '',
+                    firstName : '',
+                    lastName : '',
+                    email : '',
+                    password :'',
+                    confirmPassword : ''
+                });
+            }).catch((err) => {
 
-             console.log(user)
-             axios.post('/api/auth/register',user)
-                 .then(res => window.location.href="/emailverification")
-                 .catch((err) => {console.log("Registration Failed FAILED")})
-
-             this.setState({
-                 username : '',
-                 firstName : '',
-                 lastName : '',
-                 email : '',
-                 password :'',
-                 confirmPassword : ''
-             })
-         }
-         else
-         {
-             console.log("Passwords do NOT match")
-         }
-
-
+            })
+        }
+        else
+        {
+            console.log("Passwords do NOT match")
+        }
      }
 
      render(){

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import axios from 'axios';
+import { addExercise } from '../../api/exercise';
 
 export default class LogExercise extends Component {
     constructor(props) {
@@ -27,20 +27,15 @@ export default class LogExercise extends Component {
     }
 
     onSubmit(e){
+        const { name, duration } = this.state;
         e.preventDefault();
 
-        const exercise = {
-            name: this.state.name,
-            duration: this.state.duration
-        }
-        console.log(exercise)
-        axios.post('http://localhost:3000/api/exercise/add',exercise)
-            .then(res => console.log(res.data));
-
-        this.setState({
-            name: '',
-            duration: ''
-        })
+        addExercise(name, duration).then((res) => {
+            this.setState({
+                name: '',
+                duration: ''
+            });
+        }).catch((err) => console.log(err));
     }
 
 

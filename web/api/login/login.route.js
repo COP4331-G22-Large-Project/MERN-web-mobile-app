@@ -159,6 +159,7 @@ loginRouter.post('/verify_token', (req, res) => {
 		if (err) {
 			return res.status(500).send(err);
 		} else if (user) {
+			console.log(user)
 			user.verificationToken = null;
 			user.verified = true;
 			user.save().then(() => {

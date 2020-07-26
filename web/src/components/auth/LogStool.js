@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import axios from 'axios';
+import { addStool } from '../../api/stool';
 
 export default class LogStool extends Component {
     constructor(props) {
@@ -27,6 +27,7 @@ export default class LogStool extends Component {
     }
 
     onSubmit(e){
+        const { type, amount } = this.state;
         e.preventDefault();
 
         const stool = {
@@ -34,16 +35,13 @@ export default class LogStool extends Component {
             amount: this.state.amount
         }
         console.log(stool)
-        axios.post('/api/stool/add',stool)
-            .then(res => console.log(res.data));
-
-        this.setState({
-            type: '',
-            amount: ''
-        })
+        addStool(type, amount).then((res) => {
+            this.setState({
+                type: '',
+                amount: ''
+            });
+        }).catch((err) => console.log(err));
     }
-
-
 
     render(){
         return(

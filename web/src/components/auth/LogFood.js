@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import axios from 'axios';
+import { addFood } from '../../api/food';
 
 export default class LogFood extends Component {
     constructor(props) {
@@ -20,18 +20,14 @@ export default class LogFood extends Component {
 
 
     onSubmit(e){
+        const { name } = this.state;
         e.preventDefault();
 
-        const food = {
-            name: this.state.name,
-        }
-        console.log(food)
-        axios.post('/api/food/add',food)
-            .then(res => console.log(res.data));
-
-        this.setState({
-            name: ''
-        })
+        addFood(name).then((res) => {
+            this.setState({
+                name: ''
+            });
+        }).catch((err) => console.log(err));
     }
 
     render(){
@@ -44,7 +40,7 @@ export default class LogFood extends Component {
                         <input name = "string"
                                required
                                className="form-control"
-                               value = {this.state.type}
+                               value = {this.state.name}
                                onChange = {this.onChangeFoodName}
                         />
                     </div>

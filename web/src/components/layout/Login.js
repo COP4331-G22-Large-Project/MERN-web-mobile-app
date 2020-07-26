@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import { login } from '../../api/auth';
 
 export default class Login extends Component {
     constructor(props) {
@@ -10,7 +10,7 @@ export default class Login extends Component {
 
         this.state = {
             username : '',
-            password :''
+            password : ''
 
         }
     }
@@ -30,26 +30,18 @@ export default class Login extends Component {
 
 
     onSubmit(e){
+        const { username, password } = this.state;
         e.preventDefault()
+        login(username, password).then((res) => {
+            window.location.href = "/logs";
+            localStorage.setItem('user', JSON.stringify(res.data));
+        }).catch((error) => {
+            
+        });
 
-
-            const login = {
-                username: this.state.username,
-                password: this.state.password
-
-            }
-
-            axios.post('/api/auth/login',login)
-                .then(res => window.location.href="/logs",localStorage.setItem('isLoggedIn','true'))
-                .catch((err) => {console.log("Sign in FAILED")})
-
-
-            this.setState({
-                username : '',
-                password :''
-
-            })
-
+        this.setState({
+            password: ''
+        });
     }
 
     render(){
