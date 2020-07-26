@@ -9,7 +9,7 @@ export const login = (username, password) => axios.post(apiUrl + '/auth/login', 
 });
 
 // Check if the user is already logged in (using saved cookie)
-export const checkLoggedIn = () => axios.post('/api/user');
+export const checkLoggedIn = () => axios.post(apiUrl + '/user');
 
 // Logout securly
 export const logout = () => axios.post('/apit/auth/logout');

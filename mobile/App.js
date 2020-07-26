@@ -174,6 +174,7 @@ const Stack = createStackNavigator();
 export default function App({ navigation }) {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
+      console.log('Running ' + action.type);
       switch (action.type) {
         case "RESTORE_TOKEN":
           return {
@@ -232,7 +233,6 @@ export default function App({ navigation }) {
         dispatch({ type: "SIGN_OUT" });
       },
       signUp: (data) => {
-        console.log(data);
         register(
           data.username,
           data.password,
@@ -245,7 +245,7 @@ export default function App({ navigation }) {
           })
           .catch((err) => {
             // TODO: Tell user the error that occured
-            console.log(err.response.data.err);
+            console.log(err);
           });
       },
     }),
