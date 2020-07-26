@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import path from 'path';
 import passport from 'passport';
 
-import loginRouter from './api/login/login.route';
+import loginRouter from './api/login/login.route.js';
 import stoolRouter from './api/stool/stool.route';
 import foodRouter from './api/food/food.route';
 import exerciseRouter from './api/exercise/exercise.route';
