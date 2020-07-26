@@ -27,7 +27,7 @@ export default class EmailVerification extends Component {
             token: this.state.verificationCode
         }
 
-        axios.post('/api/auth/verify_token',emailVerification)
+        verify_token(this.state.verificationCode)
             .then(res => window.location.href="/logs",localStorage.setItem('isLoggedIn','true'))
             .catch((err) => {console.log(err)})
 
