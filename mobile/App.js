@@ -174,17 +174,18 @@ const Stack = createStackNavigator();
 export default function App({ navigation }) {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
-      console.log('Running ' + action.type);
+      console.log(action);
       switch (action.type) {
         case "RESTORE_TOKEN":
           return {
             ...prevState,
-            user: action.user,
+            user: action.user || null,
             isLoading: false,
           };
         case "SIGN_IN":
           return {
             ...prevState,
+            user: action.user,
             isSignout: false,
           };
         case "SIGN_OUT":
@@ -202,14 +203,20 @@ export default function App({ navigation }) {
     }
   );
 
+  console.log(state);
+
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const bootstrapAsync = () => {
       checkLoggedIn()
         .then((res) => {
+          console.log('restore success');
+          console.log(res.headers);
           dispatch({ type: "RESTORE_TOKEN", user: res.data });
         })
         .catch((err) => {
+          console.log('restore fail');
+          console.log(err.response.headers);
           dispatch({ type: "RESTORE_TOKEN" });
         });
     };
@@ -259,7 +266,7 @@ export default function App({ navigation }) {
           {state.isLoading ? (
             // We haven't finished checking for the token yet
             <Stack.Screen name="Splash" component={SplashScreen} />
-          ) : state.userToken == null ? (
+          ) : state.user === null ? (
             // No token found, user isn't signed in
             <Stack.Screen
               name="SignIn"

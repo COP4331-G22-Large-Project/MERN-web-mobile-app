@@ -66,7 +66,7 @@ app.post('/api/user',
 	(req, res) => {
 		res.json(req.user.toObject());
 	}
-)
+);
 
 app.use('/api/secret',
 	ensureLoggedIn,

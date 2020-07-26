@@ -6,13 +6,13 @@ import { apiUrl } from '../src/utils';
 export const login = (username, password) => axios.post(apiUrl + '/auth/login', {
 	username,
 	password: sha256(password),
-});
+}, { withCredentials: true });
 
 // Check if the user is already logged in (using saved cookie)
-export const checkLoggedIn = () => axios.post(apiUrl + '/user');
+export const checkLoggedIn = () => axios.post(apiUrl + '/user', undefined, { withCredentials: true });
 
 // Logout securly
-export const logout = () => axios.post('/apit/auth/logout');
+export const logout = () => axios.post(apiUrl + '/auth/logout', undefined, { withCredentials: true });
 
 // Register a new user
 export const register = (username, password, email, firstName, lastName) => axios.post(apiUrl + '/auth/register', {
