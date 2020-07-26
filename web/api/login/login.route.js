@@ -189,4 +189,70 @@ loginRouter.post('/retoken', (req, res) => {
 	}
 });
 
+// get email from user, get user object, send reset password to email
+loginRouter.post('repassword', (req, res) => 
+{
+	const reset_password_web_link = '${API_URL}/IDK';
+	const { email } = req.body;
+	User.findOne({email}, (err, user) => 
+	{
+		if (err) {
+			res.status(500).send(err);
+		}
+		else if (!user)
+		{
+			res.status(200).send('success');
+			console.log('email not found');
+		}
+		else
+		{
+			user.passwordVerification = uid(16);
+			user.save().then((savedUser) => 
+			{
+			
+				const token = savedUser.passwordVerification;
+
+				// authentication email
+				var mailOptions = 
+				{
+					from: sender_user,
+					to: savedUser.email,
+					subject: 'password reset token',
+					html: `You have requested (hopefully) to reset your Brist-Tool password. If you did not request a password reset, ignore this email. <a href="${reset_password_web_link}?token=${encodeURI(token)}">Click here</a> to reset your password, or enter this code:<br><b>${token}</b>`
+				};
+
+				res.status(200).send('success');
+				console.log('email found');
+			}).catch(err => res.status(500).send(err));
+		}
+	});
+});
+
+loginRouter.post('reset_password', (req,res) =>
+{
+	const { token } = req.body;
+	const { password } = req.body;
+	
+	User.findOne({ passwordVerification: token }, (err, user) =>
+	{
+		if (err)
+		{
+			res.status(500).send(err);
+		}
+		else if (!user)
+		{
+			// can you brute force a token search using this route?
+			res.status(500).send();
+		}
+		else
+		{
+			user.password = generatePasswordWithSalt(user, password);
+			user.save().then((savedUser) =>
+			{
+				res.status(200).send('password reset')
+			}).catch(err => res.status(500).send(err));
+		}
+	});
+});
+
 export default loginRouter;
