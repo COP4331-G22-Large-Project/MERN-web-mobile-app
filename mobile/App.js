@@ -23,7 +23,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { NavigationEvents } from "react-navigation";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
 
 //
 //const StackHome = createStackNavigator();
@@ -56,26 +56,29 @@ function HomeTab() {
     <Tab.Navigator
       tabBarOptions={{
         activeTintColor: Colors.primary,
-        inactiveTintColor: "white",
+        inactiveTintColor: "black",
       }}
     >
       <Tab.Screen
         name="Home"
         component={HomeScreen} /*component={HomeStack}*/
         options={{
-  
-          tabBarIcon: ({}) => (
-            <Icon name="ios-home" color="black" size={24} />
+          tabBarIcon: ({ color, focused }) => (
+            <Icon name="ios-home" color={color} size={24} focused={focused} />
           ),
-  
         }}
       />
       <Tab.Screen
         name="Consumables"
         component={Consumables} /*component={SettingStack}*/
         options={{
-          tabBarIcon: ({}) => (
-            <MaterialCommunityIcons name="food" size={24} color="black" />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name="food"
+              size={24}
+              color={color}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -83,8 +86,13 @@ function HomeTab() {
         name="Exercise"
         component={Exercise}
         options={{
-          tabBarIcon: ({}) => (
-            <Ionicons name="md-fitness" size={24} color="black" />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name="md-fitness"
+              size={24}
+              color={color}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -92,8 +100,13 @@ function HomeTab() {
         name="Stool"
         component={Stool}
         options={{
-          tabBarIcon: ({}) => (
-            <FontAwesome5 name="poop" size={24} color="black" />
+          tabBarIcon: ({ color, focused }) => (
+            <FontAwesome5
+              name="poop"
+              size={24}
+              color={color}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -101,8 +114,13 @@ function HomeTab() {
         name="Logs"
         component={Logs}
         options={{
-          tabBarIcon: ({}) => (
-            <FontAwesome name="book" size={24} color="black" />
+          tabBarIcon: ({ color, focused }) => (
+            <FontAwesome
+              name="book"
+              size={24}
+              color={color}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -123,12 +141,26 @@ function AuthStack() {
           headerTitleStyle: {
             fontWeight: "bold",
             fontSize: 25,
-            color: "white",
+            color: "black",
           },
         }}
         component={SignInScreen}
       />
-      <StackAuth.Screen name="Register" component={RegisterScreen} />
+      <StackAuth.Screen
+        name="Register"
+        options={{
+          title: 'Sign up!',
+          headerStyle: { backgroundColor: Colors.primary },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            color: "black",
+          },
+          headerTintColor: 'black'
+
+        }}
+        component={RegisterScreen}
+      />
       <StackAuth.Screen name="Forgot" component={ForgotScreen} />
     </StackAuth.Navigator>
   );

@@ -10,12 +10,12 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   ImageBackground,
-  Image
+  Image,
 } from "react-native";
 import { AuthContext } from "./utils";
 import Header from "../components/Header";
 import Card from "../components/Card";
-import Colors from '../constants/colors'
+import Colors from "../constants/colors";
 
 export function SignInScreen({ navigation }) {
   const [username, setUsername] = React.useState("");
@@ -26,81 +26,81 @@ export function SignInScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={container}>
+      <ScrollView contentContainerStyle={container}>
         {/* <ImageBackground source = {require('../assets/Background.jpg')} style={container} resizeMode= 'cover'>
-        */}
-          <View>
-            
-          </View>
-          <View style={styles.insideContainer}>
-            <Card style={styles.card}>
-              <TextInput
-                placeholder="Username"
-                value={username}
-                onChangeText={setUsername}
-                style={txtInput}
-                textAlign="center"
-              />
-              <TextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                style={txtInput}
-                textAlign="center"
-              />
-              <View style={styles.twoButton}>
-                <View style={styles.buttonView}>
-                  <Button
-                    color="white"
-                    title="Sign in"
-                    onPress={() => signIn({ username, password })}
-                  />
-                </View>
+         */}
+        <View></View>
 
-                <View style={styles.buttonView}>
-                  <Button
-                    color="white"
-                    title="Register"
-                    onPress={() => navigation.navigate("Register")}
-                  />
-                </View>
-              </View>
-              <View style={styles.buttonView}>
-                <Button
-                  color="white"
-                  title="Forgot Password"
-                  onPress={() => navigation.navigate("Forgot")}
-                />
-              </View>
-            </Card>
+        <Card style={styles.card}>
+          <TextInput
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}
+            style={txtInput}
+            textAlign="center"
+          />
+          <TextInput
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            style={txtInput}
+            textAlign="center"
+          />
+          <View style={styles.twoButton}>
+            <View style={styles.buttonView}>
+              <Button
+                color="black"
+                title="Sign in"
+                onPress={() => signIn({ username, password })}
+              />
+            </View>
+
+            <View style={styles.buttonView}>
+              <Button
+                color="black"
+                title="Register"
+                onPress={() => navigation.navigate("Register")}
+              />
+            </View>
           </View>
-          <View style = {styles.footer}>
+          <View style={styles.buttonView}>
+            <Button
+              color="black"
+              title="Forgot Password"
+              onPress={() => navigation.navigate("Forgot")}
+            />
+          </View>
+        </Card>
+
+        <View style={styles.footerBox}>
+          <View>
             <Text>Created By Group 22.Inc</Text>
           </View>
-          </View>
-          {/* </ImageBackground>  */}
-        
+        </View>
+      </ScrollView>
+      {/* </ImageBackground>  */}
     </TouchableWithoutFeedback>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: "center",
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
-  imageContainer:{
-    flex: 1,
-    opacity: .80
+  // imageContainer:{
+  //   flex: 1,
+  //   opacity: .80
 
-  },
+  // },
   insideContainer: {
-    flex:1,
+    flex: 1,
     justifyContent: "center",
+    backgroundColor: "red",
   },
   card: {
-    
+    marginVertical: 150,
     width: 330,
     // maxWidth: "80%",
     alignItems: "center",
@@ -130,10 +130,10 @@ const styles = StyleSheet.create({
     width: "65%",
     borderRadius: 10,
   },
-  footer:{
+  footerBox: {
     padding: 40,
-    width:'100%',
-    alignItems: 'center',
-    
-  }
+    width: "100%",
+    alignItems: "center",
+  
+  },
 });
