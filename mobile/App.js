@@ -174,7 +174,6 @@ const Stack = createStackNavigator();
 export default function App({ navigation }) {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
-      console.log(action);
       switch (action.type) {
         case "RESTORE_TOKEN":
           return {
@@ -203,20 +202,14 @@ export default function App({ navigation }) {
     }
   );
 
-  console.log(state);
-
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const bootstrapAsync = () => {
       checkLoggedIn()
         .then((res) => {
-          console.log('restore success');
-          console.log(res.headers);
           dispatch({ type: "RESTORE_TOKEN", user: res.data });
         })
         .catch((err) => {
-          console.log('restore fail');
-          console.log(err.response.headers);
           dispatch({ type: "RESTORE_TOKEN" });
         });
     };
@@ -232,14 +225,13 @@ export default function App({ navigation }) {
             dispatch({ type: "SIGN_IN", user: res.data });
           })
           .catch((err) => {
-            // TODO: Invalid username/password
           });
       },
       signOut: () => {
         logout();
         dispatch({ type: "SIGN_OUT" });
       },
-      signUp: (data) => {
+      signUp: (data, cb) => {
         register(
           data.username,
           data.password,
@@ -248,11 +240,10 @@ export default function App({ navigation }) {
           data.lastName
         )
           .then((res) => {
-            dispatch({ type: "SIGN_IN" });
+            cb(null, res.data);
           })
           .catch((err) => {
-            // TODO: Tell user the error that occured
-            console.log(err);
+            cb(err);
           });
       },
     }),
