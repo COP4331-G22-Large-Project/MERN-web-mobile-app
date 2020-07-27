@@ -162,7 +162,7 @@ loginRouter.get('/verify_token', (req, res) => {
 			user.verificationToken = null;
 			user.verified = true;
 			user.save().then(() => {
-				res.redirect('/');
+				res.redirect('/login');
 			}).catch(e => res.status(500).send('error'));
 		} else {
 			res.status(401).send('Unauthorized');
@@ -172,20 +172,30 @@ loginRouter.get('/verify_token', (req, res) => {
 
 // recreate and resend user's token
 loginRouter.post('/retoken', (req, res) => {
-	if (req.isAuthenticated()) {
-		// if user is already verified, exit
-		if (!req.user.verified) {
-			// create and save new token
-			req.user.verification_token = uid(16);
-			req.user.save().then((savedUser) => {
-				sendRegistrationEmail(savedUser);
+	const { email } = req.body;
+
+	if (emailRegex.test(email)) {
+		User.findOne({ email }, (err, user) => {
+			if (err) {
+				res.status(500).send(err);
+			} else if (user) {
+				if (!user.verified) {
+					// create and save new token
+					user.verificationToken = uid(16);
+					user.save().then((savedUser) => {
+						sendRegistrationEmail(savedUser);
+						res.status(200).send('success');
+					}).catch(err => res.status(500).send(err));
+				} else {
+					res.status(200).send('already verified');
+				}
+			} else {
+				// We're gonna call it a success
 				res.status(200).send('success');
-			}).catch(err => res.status(500).send(err));
-		} else {
-			res.status(200).send('already verified');
-		}
+			}
+		});
 	} else {
-		res.status(401).send('not logged in');
+		res.status(400).send('bad email syntax');
 	}
 });
 
@@ -203,12 +213,10 @@ loginRouter.post('/repassword', (req, res) =>
 		else if (!user)
 		{
 			res.status(200).send('success');
-			console.log('email not found');
 		}
 		else if (!user.verified)
 		{
 			res.status(500).send('you must be verified to reset password');
-			console.log('unverified email');
 		}
 		else
 		{
@@ -230,9 +238,8 @@ loginRouter.post('/repassword', (req, res) =>
 				
 				emailTransporter.sendMail(mailOptions, function(error,info){
 					if (error){
-						console.log(error)
+						console.log(error);
 					} else {
-						console.log('Email sent: ' + info.response);
 						res.status(200).send('success');
 						
 					}
@@ -244,28 +251,24 @@ loginRouter.post('/repassword', (req, res) =>
 
 loginRouter.post('/reset_password', (req,res) =>
 {
-	const { token } = req.body;
-	const { password } = req.body;
+	const { token, password } = req.body;
 	
-	User.findOne({ "passwordVerification": token }, (err, user) =>
+	User.findOne({ passwordVerification: token }, (err, user) =>
 	{
 		if (err)
 		{
 			res.status(500).send(err);
-			console.log("query wrong");
 		}
 		else if (!user)
 		{
-			// can you brute force a token search using this route?
-			res.status(500).send();
-			console.log("user not found");
+			res.status(401).send('Unauthorized');
 		}
 		else
 		{
 			user.password = generatePasswordWithSalt(user, password);
 			user.save().then((savedUser) =>
 			{
-				res.status(200).send('password reset')
+				res.status(200).send('password reset');
 			}).catch(err => res.status(500).send(err));
 		}
 	});
