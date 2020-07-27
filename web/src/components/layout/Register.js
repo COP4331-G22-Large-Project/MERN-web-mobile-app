@@ -93,66 +93,72 @@ export default class Register extends Component {
 
      render(){
          return(
-             <div>
-                 <h3>Register A User</h3>
+            <div class="boxregister">
+                <p class="sign" align="center">REGISTER</p>
                  <form onSubmit={this.onSubmit}>
-                     <div className="form-group">
-                         <label>Username: </label>
-                         <input type = "string"
+                     <div className="form1">
+                         <input class="un "
+                                align="center" 
+                                type = "string"
+                                placeholder="Username"
                                 required
-                                className="form-control"
                                 value = {this.state.username}
                                 onChange = {this.onChangeUsername}
                          />
                      </div>
-                     <div>
-                         <label>First Name: </label>
-                         <input type = "string"
+                     <div class="form1">
+                         <input class="un "
+                                align="center"
+                                type = "string"
+                                placeholder="First Name"
                                 required
-                                className="form-control"
                                 value = {this.state.firstName}
                                 onChange={this.onChangeFirstName}
                          />
                      </div>
-                     <div>
-                         <label>Last Name: </label>
-                         <input type = "string"
+                     <div class="form1">
+                         <input class="un "
+                                align="center"
+                                type = "string"
+                                placeholder="Last Name"
                                 required
-                                className="form-control"
                                 value = {this.state.lastName}
                                 onChange={this.onChangeLastName}
                          />
                      </div>
-                     <div>
-                         <label>Email: </label>
-                         <input type = "string"
+                     <div class="form1">
+                         <input class="un "
+                                align="center"
+                                type = "string"
+                                placeholder="Email"
                                 required
-                                className="form-control"
                                 value = {this.state.email}
                                 onChange={this.onChangeEmail}
                          />
                      </div>
-                     <div>
-                         <label>Password: </label>
-                         <input type = "password"
+                     <div class="form1">
+                         <input class="un "
+                                align="center"
+                                type = "password"
+                                placeholder="Password"
                                 required
-                                className="form-control"
                                 value = {this.state.password}
                                 onChange={this.onChangePassword}
                          />
                      </div>
-                     <div>
-                         <label>Confirm Password: </label>
-                         <input type = "password"
+                     <div class="form1">
+                         <input class="un "
+                                align="center"
+                                type = "password"
+                                placeholder="Confirm Password"
                                 required
-                                className="form-control"
                                 value = {this.state.confirmPassword}
                                 onChange={this.onChangePasswordConfirm}
                          />
                      </div>
-                     <div className="form-group">
-                         <input type ="submit" value = "Register Account" className="btn btn-primary"/>
-                     </div>
+                     <div className="form1" >
+                        <input type ="submit" value = "Register" className="submit"align="center" />
+                    </div>
                  </form>
              </div>
          )

@@ -57,32 +57,36 @@ export default class Login extends Component {
 
     render(){
         return(
-            <div>
-                <h3>Login</h3>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Username: </label>
-                        <input type = "string"
-                               required
-                               className="form-control"
-                               value = {this.state.username}
-                               onChange = {this.onChangeUsername}
-                        />
-                    </div>
-                    <div>
-                        <label>Password: </label>
-                        <input type = "password"
-                               required
-                               className="form-control"
-                               value = {this.state.password}
-                               onChange={this.onChangePassword}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input type ="submit" value = "Sign In" className="btn btn-primary"/>
-                    </div>
-                </form>
-            </div>
+            <div class="boxlogin">
+
+            <p class="sign" align="center">LOGIN</p>
+            <form onSubmit={this.onSubmit}>
+                <div class="form1">
+                    <input class="un "
+                           type = "string"
+                           align="center" 
+                           placeholder="Username"
+                           required
+                           value = {this.state.username}
+                           onChange = {this.onChangeUsername}
+                    />
+                </div>
+                <div class="form1">
+                    <input 
+                           class="un "
+                           align="center" 
+                           type = "password"
+                           placeholder="Password"
+                           required
+                           value = {this.state.password}
+                           onChange={this.onChangePassword}
+                    />
+                </div>
+                <div className="form1" >
+                    <input type ="submit" value = "Login" className="submit"align="center" />
+                </div>
+            </form>
+        </div>
         )
     }
 }
