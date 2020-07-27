@@ -32,11 +32,21 @@ export default class Login extends Component {
     onSubmit(e){
         const { username, password } = this.state;
         e.preventDefault()
+
         login(username, password).then((res) => {
-            window.location.href = "/logs";
-            localStorage.setItem('user', JSON.stringify(res.data));
+
+            //if local storage user profile is not email verified, redirect to Email Verification, else go to logs
+            if(JSON.parse(localStorage.getItem('user')).verified === false)
+            {
+                window.location.href = '/emailverification'
+            }
+            else
+            {
+                window.location.href = "/logs";
+            }
+
         }).catch((error) => {
-            
+            console.log(error)
         });
 
         this.setState({

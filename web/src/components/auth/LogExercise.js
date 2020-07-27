@@ -43,7 +43,7 @@ export default class LogExercise extends Component {
     render(){
         return(
             <div>
-                <h3>Log A Exercise</h3>
+                <h3>Log A Exercise</h3><br/>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Exercise Name: </label>
@@ -54,6 +54,7 @@ export default class LogExercise extends Component {
                                onChange = {this.onChangeExerciseName}
                         />
                     </div>
+                    <br/>
                     <div>
                         <label>Duration: </label>
                         <input type = "number"
@@ -63,6 +64,7 @@ export default class LogExercise extends Component {
                                onChange={this.onChangeExerciseDuration}
                         />
                     </div>
+                    <br/>
                     <div className="form-group">
                         <input type ="submit" value = "Log Exercise" className="btn btn-primary"/>
                     </div>

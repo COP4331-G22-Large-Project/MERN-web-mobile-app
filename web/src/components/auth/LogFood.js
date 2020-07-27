@@ -33,7 +33,7 @@ export default class LogFood extends Component {
     render(){
         return(
             <div>
-                <h3>Log A Food/Drink</h3>
+                <h3>Log A Food/Drink</h3><br/>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Food/Drink: </label>
@@ -43,7 +43,7 @@ export default class LogFood extends Component {
                                value = {this.state.name}
                                onChange = {this.onChangeFoodName}
                         />
-                    </div>
+                    </div><br/>
                     <div className="form-group">
                         <input type ="submit" value = "Log Food" className="btn btn-primary"/>
                     </div>

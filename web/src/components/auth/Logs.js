@@ -3,7 +3,9 @@ import { searchStool, getAllStools, deleteStools } from '../../api/stool';
 
 const Log = props => (
     <tr>
-        <td>{props.log.userId}</td>
+
+        <td>{props.log.foods}</td>
+        <td>{props.log.exercises}</td>
         <td>{props.log.amount}</td>
         <td>{props.log.type}</td>
         <td>{props.log.date.substring(0,10)}</td>
@@ -20,16 +22,20 @@ export default class Logs extends Component{
         this.deleteLog = this.deleteLog.bind(this)
 
         this.state = {stools: []}
+
     }
 
     refreshLogs() {
         getAllStools().then((res) => {
+            console.log(res.data[0].foods)
             this.setState({stools: res.data})
         }).catch(err => console.log(err));
+
     }
 
     componentDidMount() {
         this.refreshLogs();
+
     }
 
     deleteLog(id) {
@@ -45,9 +51,10 @@ export default class Logs extends Component{
                 <table className="table">
                     <thead className="thead-light">
                     <tr>
-                        <th>User ID</th>
-                        <th>Amount</th>
-                        <th>Type</th>
+                        <th>Foods/Drinks</th>
+                        <th>Exercise</th>
+                        <th>Stool Amount</th>
+                        <th>Stool Type</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Actions</th>
@@ -57,6 +64,7 @@ export default class Logs extends Component{
                     {
                         this.state.stools.map(log => (
                             <Log log={log} deleteLog={this.deleteLog} key={log._id}/>
+
                         ))
                     }
                     </tbody>

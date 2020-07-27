@@ -46,7 +46,7 @@ export default class LogStool extends Component {
     render(){
         return(
             <div>
-                <h3>Log A Stool</h3>
+                <h3>Log A Stool</h3><br/>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Stool Type: </label>
@@ -56,7 +56,7 @@ export default class LogStool extends Component {
                                value = {this.state.type}
                                onChange = {this.onChangeStoolType}
                                />
-                    </div>
+                    </div><br/>
                     <div>
                         <label>Stool Amount(Little, Normal, A lot): </label>
                         <input type = "integer"
@@ -65,7 +65,7 @@ export default class LogStool extends Component {
                                value = {this.state.amount}
                                onChange = {this.onChangeStoolDesc}
                         />
-                    </div>
+                    </div><br/>
                     <div className="form-group">
                         <input type ="submit" value = "Log Stool" className="btn btn-primary"/>
                     </div>
