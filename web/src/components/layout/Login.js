@@ -32,11 +32,22 @@ export default class Login extends Component {
     onSubmit(e){
         const { username, password } = this.state;
         e.preventDefault()
+
         login(username, password).then((res) => {
-            window.location.href = "/logs";
-            localStorage.setItem('user', JSON.stringify(res.data));
+
+
+            if((localStorage.getItem('user')) &&( JSON.parse(localStorage.getItem('user')).verified === false) )
+            {
+                window.location.href = '/emailverification'
+            }
+            else
+            {
+                window.location.href = "/logs";
+            }
+
         }).catch((error) => {
-            
+            console.log(error)
+
         });
 
         this.setState({
@@ -48,35 +59,34 @@ export default class Login extends Component {
         return(
             <div class="boxlogin">
 
-                <p class="sign" align="center">LOGIN</p>
-                <form onSubmit={this.onSubmit}>
-                    <div class="form1">
-                        <input class="un "
-                               type = "string"
-                               align="center" 
-                               placeholder="Username"
-                               required
-                               value = {this.state.username}
-                               onChange = {this.onChangeUsername}
-                        />
-                    </div>
-                    <div class="form1">
-                        <input 
-                               class="un "
-                               align="center" 
-                               type = "password"
-                               placeholder="Password"
-                               required
-                               value = {this.state.password}
-                               onChange={this.onChangePassword}
-                        />
-                    </div>
-                    <div className="form1" >
-                        <input type ="submit" value = "Login" className="submit"align="center" />
-                    </div>
-                </form>
-            </div>
-
+            <p class="sign" align="center">LOGIN</p>
+            <form onSubmit={this.onSubmit}>
+                <div class="form1">
+                    <input class="un "
+                           type = "string"
+                           align="center" 
+                           placeholder="Username"
+                           required
+                           value = {this.state.username}
+                           onChange = {this.onChangeUsername}
+                    />
+                </div>
+                <div class="form1">
+                    <input 
+                           class="un "
+                           align="center" 
+                           type = "password"
+                           placeholder="Password"
+                           required
+                           value = {this.state.password}
+                           onChange={this.onChangePassword}
+                    />
+                </div>
+                <div className="form1" >
+                    <input type ="submit" value = "Login" className="submit"align="center" />
+                </div>
+            </form>
+        </div>
         )
     }
 }

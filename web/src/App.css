@@ -428,8 +428,8 @@ button {
 }
 .boxview{
   background-color: #FFFFFF;
-  width: 495px;
-  height: 1000px;
+  width: 680px;
+  height: 700px;
   margin: 7em auto;
   border-radius: 1.5em;
   box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
@@ -539,7 +539,7 @@ button {
   padding-bottom: 10px;
   padding-top: 10px;
   font-family: 'Ubuntu', sans-serif;
-  margin-left: 33%;
+  margin-left: 32%;
   margin-top: 3%;
 
   font-size: 13px;

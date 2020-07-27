@@ -33,23 +33,23 @@ export default class LogFood extends Component {
     render(){
         return(
             <div class="boxlogF">
-                <p class="sign" align="center">Log A Food/Drink</p>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form1">
-                        <input 
-                               class="un "
-                               name = "string"
-                               placeholder="Food/Drink"
-                               required
-                               value = {this.state.name}
-                               onChange = {this.onChangeFoodName}
-                        />
-                    </div>
-                    <div className="form1">
-                        <input type ="submit" value = "Log Food" className="submitlog" align="center"/>
-                    </div>
-                </form>
-            </div>
+            <p class="sign" align="center">Log A Food/Drink</p>
+            <form onSubmit={this.onSubmit}>
+                <div className="form1">
+                    <input 
+                           class="un "
+                           name = "string"
+                           placeholder="Food/Drink"
+                           required
+                           value = {this.state.name}
+                           onChange = {this.onChangeFoodName}
+                    />
+                </div>
+                <div className="form1">
+                    <input type ="submit" value = "Log Food" className="submitlog" align="center"/>
+                </div>
+            </form>
+        </div>
         )
     }
 }

@@ -34,22 +34,24 @@ export default class VerifyForgottenPassword extends Component {
 
     render(){
         return(
-            <div>
-                <h3>Verify Code</h3><br></br>
-                <h4> Enter the Verification Code sent to your email</h4><br></br>
+            <div class="boxlogE">
+                <p class="sign" align="center">Verify Code</p>
+                <p class="sign" align="center">Enter the Verification Code sent to your email</p>
+            
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Verification Code: </label>
+                    <div className="form1">
                         <input type = "string"
+                               class="un "
+                               align="center" 
+                               placeholder="Verification Code"
                                required
-                               className="form-control"
                                value = {this.state.passwordVerification}
                                onChange = {this.onChangeVerifyCode}
                         />
                     </div>
                     <br></br>
-                    <div className="form-group">
-                        <input type ="submit" value = "Verify Code" className="btn btn-primary"/>
+                    <div className="form1">
+                        <input type ="submit" value = "Verify Code" className="submitresend"align="center" />
                     </div>
                 </form>
             </div>
