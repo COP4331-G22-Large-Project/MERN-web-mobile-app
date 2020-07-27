@@ -209,6 +209,7 @@ loginRouter.post('/repassword', (req, res) =>
 		{
 			res.status(500).send('you must be verified to reset password');
 			console.log('unverified email');
+		}
 		else
 		{
 			user.passwordVerification = uid(16);
