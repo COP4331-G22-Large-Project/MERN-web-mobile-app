@@ -45,6 +45,7 @@ export function RegisterScreen({ navigation }) {
             onChangeText={setUsername}
             style={txtInput}
             textAlign="center"
+            autoCapitalize={"none"}
           />
           <TextInput
             placeholder="Enter An Email"
