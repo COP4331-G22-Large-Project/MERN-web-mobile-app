@@ -72,7 +72,7 @@ export default class Register extends Component {
         if (password === confirmPassword)
         {
             register(username, password, email, firstName, lastName).then((res) => {
-                window.location.href = "/emailverification";
+                window.location.href = "/emailverification?email=" + window.encodeURI(res.data.email);
                 this.setState({
                     username : '',
                     firstName : '',

@@ -13,30 +13,23 @@ import EmailVerification from "./components/layout/EmailVerification";
 
 
 export default function App(){
-
-    return(
-
-  <Router>
-
-          <Navbar/>
-
-
-    <Fragment>
-
-       <Route exact path = '/' component ={Landing} />
-      <section className = "container">
-
-          <Route exact path ="/logexercise" component={LogExercise}/>
+  return (
+    <Router>
+      <Navbar/>
+      <Fragment>
+        <Route exact path='/' component={Landing} />
+        <section className="container">
+          <Route exact path="/logexercise" component={LogExercise}/>
           <Route exact path="/logfood" component={LogFood}/>
-          <Route exact path = "/logstool" component = {LogStool}/>
-          <Route exact path ="/logs" component={Logs}/>
-          <Route exact path="/register" component = {Register} />
-          <Route exact path ="/emailverification" component={EmailVerification}/>
-          <Route exact path="/login" component = {Login} />
-      </section>
-    </Fragment>
-  </Router>
-    )
+          <Route exact path="/logstool" component={LogStool}/>
+          <Route exact path="/logs" component={Logs}/>
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/emailverification" component={EmailVerification}/>
+          <Route exact path="/login" component={Login} />
+        </section>
+      </Fragment>
+    </Router>
+  );
 }
 
 

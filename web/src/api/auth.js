@@ -19,13 +19,13 @@ export const register = (username, password, email, firstName, lastName) => axio
 	lastName,
 });
 
-export const verifyEmail = (token) => axios.get('/api/auth/verify_token', { params: { token } });
+export const verifyEmail = (token) => axios.get('/api/auth/verify_token', {
+	params: { token },
+	headers: {'X-Requested-With': 'XMLHttpRequest'}
+});
 
 // Resend verification email
 export const retoken = (email) => axios.post('/api/auth/retoken', { email });
-
-// Verify token
-export const verify_token = (token) => axios.get('/api/auth/verify_token?token=' + token);
 
 // Send the forgotten password email
 export const askResetPassword = (email) => axios.post('/api/auth/repassword', { email });

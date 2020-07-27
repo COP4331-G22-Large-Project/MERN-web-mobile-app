@@ -1,61 +1,76 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-import {verify_token} from '../../api/auth';
+import { verifyEmail, retoken } from '../../api/auth';
 
 export default class EmailVerification extends Component {
     constructor(props) {
         super(props);
-        this.onChangeVerificationCode = this.onChangeVerificationCode.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        this.onChangeVerificationCode = this.onChangeVerificationCode.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
+        const searchParams = new URLSearchParams(window.location.search);
+        const email = searchParams.get('email');
 
         this.state = {
-            verificationCode : ''
-        }
+            verificationCode : '',
+            email,
+            errorText: '',
+        };
     }
 
-    onChangeVerificationCode(e){
+    onChangeVerificationCode(e) {
         this.setState({
-            verificationCode : e.target.value
-        })
+            verificationCode : e.target.value,
+        });
     }
 
-    onSubmit(e){
+    onSubmit(e) {
         e.preventDefault()
 
 
-        const emailVerification = {
-            token: this.state.verificationCode
-        }
+        const emailVerification = { token: this.state.verificationCode };
 
-        verify_token(this.state.verificationCode)
-            .then(res => window.location.href="/logs",localStorage.setItem('isLoggedIn','true'))
-            .catch((err) => {console.log(err)})
-
-
-        this.setState({
-            verificationCode : ''
+        verifyEmail(this.state.verificationCode)
+            .then(res => {
+                window.location.href = "/login";
+            })
+            .catch((err) => {
+                this.setState({ errorText: 'Invalid code' });
+            });
 
 
-        })
-
+        this.setState({ verificationCode : '' });
     }
 
-    render(){
+    resendEmail() {
+        const { email } = this.state;
+        retoken(email).then((res) => {
+            this.setState({ errorText: 'Email resent. Check your inbox.' });
+        }).catch((err) => {
+            this.setState({ errorText: 'There was a problem resending the email.' });
+        });
+    }
+
+    render() {
+        const { email, errorText } = this.state;
         return(
             <div>
                 <h3>Verify Your Email</h3>
+                <p>Check your email at <b>{email}</b>, or enter the code from the email in the field below:</p>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Verify Code: </label>
-                        <input type = "string"
-                               required
-                               className="form-control"
-                               value = {this.state.verificationCode}
-                               onChange = {this.onChangeVerificationCode}
+                        <input
+                            type="string"
+                            required
+                            className="form-control"
+                            value={this.state.verificationCode}
+                            onChange={this.onChangeVerificationCode}
                         />
+                        <p style={{ color: 'red' }}>{errorText}</p>
                     </div>
                     <div className="form-group">
-                        <input type ="submit" value = "Verify" className="btn btn-primary"/>
+                        <input type="submit" value="Verify" className="btn btn-primary"/>
+                        <input type="button" value="Resend" className="btn btn-primary" onClick={() => this.resendEmail()}/>
                     </div>
                 </form>
             </div>
