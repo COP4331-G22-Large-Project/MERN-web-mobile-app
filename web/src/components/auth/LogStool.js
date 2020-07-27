@@ -45,29 +45,31 @@ export default class LogStool extends Component {
 
     render(){
         return(
-            <div>
-                <h3>Log A Stool</h3><br/>
+            <div class="boxlogS">
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Stool Type: </label>
-                        <input type = "integer"
+                    <div className="form1">
+                    <p class="sign" align="center">Log Stool Type</p>
+                        <input 
+                               class="un "
+                               type = "integer"
                                required
-                               className="form-control"
                                value = {this.state.type}
                                onChange = {this.onChangeStoolType}
                                />
-                    </div><br/>
-                    <div>
-                        <label>Stool Amount(Little, Normal, A lot): </label>
-                        <input type = "integer"
+                    </div>
+                    <div class="form1">
+                        <p class="sign" align="center">Stool Amount</p>
+                        <input class="un "
+                               align="center" 
+                               type = "integer"
+                               placeholder="Little, Normal, A lot"
                                required
-                               className="form-control"
                                value = {this.state.amount}
                                onChange = {this.onChangeStoolDesc}
                         />
-                    </div><br/>
-                    <div className="form-group">
-                        <input type ="submit" value = "Log Stool" className="btn btn-primary"/>
+                    </div>
+                    <div className="form1">
+                        <input type ="submit" value = "Log Stool" className="submitlog" align="center"/>
                     </div>
                 </form>
             </div>

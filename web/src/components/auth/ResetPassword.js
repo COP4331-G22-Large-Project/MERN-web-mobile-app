@@ -63,32 +63,36 @@ export default class ResetPassword extends Component {
 
     render(){
         return(
-            <div>
-                <h3>Reset Your Password </h3><br></br>
-                <h4> Enter Your New Password</h4><br></br>
+            <div class="boxlogE">
+
+                <p class="sign" align="center">Reset Your Password </p>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Password: </label>
-                        <input type = "password"
+                    <div className="form1">
+                        <input 
+                               class="un "
+                               align="center" 
+                               type = "password"
+                               placeholder="Enter Your New Password"
                                required
-                               className="form-control"
                                value = {this.state.password}
                                onChange = {this.onChangePassword}
                         />
                     </div>
                     <br/>
-                    <div className="form-group">
-                        <label>Confirm Password: </label>
-                        <input type = "password"
+                    <div className="form1">
+                        <input 
+                               class="un "
+                               align="center" 
+                               type = "password"
+                               placeholder="Confirm Password"
                                required
-                               className="form-control"
                                value = {this.state.confirmPassword}
                                onChange = {this.onChangeConfirmPassword}
                         />
                     </div>
                     <br></br>
-                    <div className="form-group">
-                        <input type ="submit" value = "Reset Password" className="btn btn-primary"/>
+                    <div className="form1">
+                        <input type ="submit" value = "Reset Password" className="submitlog"align="center"/>
                     </div>
                 </form>
             </div>

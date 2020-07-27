@@ -10,9 +10,6 @@ import LogFood from './components/auth/LogFood';
 import Logs from './components/auth/Logs';
 import './App.css';
 import EmailVerification from "./components/layout/EmailVerification";
-import ForgotPassword from "./components/layout/ForgotPassword";
-import ResetPassword from "./components/auth/ResetPassword";
-import VerifyForgottenPassword from "./components/layout/VerifyForgottenPassword";
 
 
 export default function App(){
@@ -29,9 +26,6 @@ export default function App(){
           <Route exact path="/register" component={Register} />
           <Route exact path="/emailverification" component={EmailVerification}/>
           <Route exact path="/login" component={Login} />
-          <Route exact path='/forgotpassword' component={ForgotPassword}/>
-          <Route exact path='/resetpassword' component={ResetPassword}/>
-          <Route exact path='/verifyforgottenpassword' component={VerifyForgottenPassword}/>
         </section>
       </Fragment>
     </Router>

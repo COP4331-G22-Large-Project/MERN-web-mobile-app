@@ -10,7 +10,7 @@ const Navbar = req => {
         return (
             <nav className="navbar bg-dark">
                 <h1>
-                    <Link to="/"><i className="fas fa-code"></i> Brist-Tool</Link>
+                    <Link to="/">Brist-Tool</Link>
                 </h1>
 
                 <ul>
@@ -33,7 +33,7 @@ const Navbar = req => {
 
             <nav className="navbar bg-dark">
                 <h1>
-                    <Link to="/"><i className="fas fa-code"></i> Brist-Tool</Link>
+                    <Link to="/">Brist-Tool</Link>
                 </h1>
 
                 <ul>

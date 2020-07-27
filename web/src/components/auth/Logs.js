@@ -46,8 +46,9 @@ export default class Logs extends Component{
 
     render(){
         return (
-            <div>
-                <h3>Logs</h3><br/>
+            <div class="boxview">
+            <div className="form1">
+            <p class="sign" align="center">Logs</p>
                 <table className="table">
                     <thead className="thead-light">
                     <tr>
@@ -69,6 +70,7 @@ export default class Logs extends Component{
                     }
                     </tbody>
                 </table>
+            </div>
             </div>
         )
     }
