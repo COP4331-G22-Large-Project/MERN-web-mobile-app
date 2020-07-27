@@ -6,6 +6,8 @@ import uid from 'uid';
 import { typeCheck } from 'type-check';
 import User, { emailRegex } from '../user/user.model';
 import { createTransport } from 'nodemailer';
+import { assert } from "assert";
+const httpMock = require("node-mocks-http");
 
 const API_URL = process.env.NODE_ENV === 'production'
 	? 'https://largeproject.herokuapp.com/api'
@@ -126,6 +128,31 @@ loginRouter.post('/register', (req, res) => {
 			res.json(savedUser.toObject());
 		}).catch(err => res.status(500).send(err));
 	})
+});
+
+// Unit test
+// https://www.npmjs.com/package/node-mocks-http
+loginRouter.post('/register_ut', (req, res) => {
+	var username = req.body.username || 'ut_test_username';
+	var password = req.body.password || 'password';
+	var email = req.body.email || 'coydiego@knights.ucf.edu';
+
+	var request = httpMock.createRequest({
+		method: 'POST',
+		url: '/register',
+		body:
+		{
+			"username": "coy",
+			"password": "diego",
+			"email": "coydiego@knights.ucf.edu",
+			"firstName": "coy",
+			"lastName": "diego",
+		}
+	});
+
+//	var response = httpMock.createResponse();
+	//console.log(response._getJSONData());
+	res.status(200).send(httpMock.createResponse());
 });
 
 async function sendRegistrationEmail(user) {
