@@ -12,13 +12,13 @@ const API_URL = process.env.NODE_ENV === 'production'
 	: 'http://localhost:8000/api';
 
 // email auth
-const sender_user = process.env.EMAIL_USER || "stool.4.u@outlook.com";
-const sender_pass = process.env.EMAIL_PASSWORD || "8QvGzYY2HDeZ2uw";
+const sender_user = process.env.EMAIL_USER || "stool.analytics@gmail.com";
+const sender_pass = process.env.EMAIL_PASSWORD || "Jm3naEDbfL5ned9";
 const emailTransporter = createTransport({
-	service: 'outlook',
+	service: 'gmail',
 	auth: {
-		user: sender_user, 
-		pass: sender_pass 
+		user: sender_user,
+		pass: sender_pass
 	}
 });
 
@@ -189,4 +189,85 @@ loginRouter.post('/retoken', (req, res) => {
 	}
 });
 
+// get email from user, get user object, send reset password to email
+loginRouter.post('/repassword', (req, res) => 
+{
+	const reset_password_web_link = '${API_URL}/IDK';
+	const { email } = req.body;
+
+	User.findOne({email}, (err, user) => 
+	{
+		if (err) {
+			res.status(500).send(err);
+		}
+		else if (!user)
+		{
+			res.status(200).send('success');
+			console.log('email not found');
+		}
+		else if (!user.verified)
+		{
+			res.status(500).send('you must be verified to reset password');
+			console.log('unverified email');
+		}
+		else
+		{
+			user.passwordVerification = uid(16);
+			user.save().then((savedUser) => 
+			{
+			
+				const token = savedUser.passwordVerification;
+
+				// authentication email
+				var mailOptions = 
+				{
+					from: sender_user,
+					to: savedUser.email,
+					subject: 'password reset token',
+					html: `You have requested (hopefully) to reset your Brist-Tool password. If you did not request a password reset, ignore this email. <a href="${reset_password_web_link}?token=${encodeURI(token)}">Click here</a> to reset your password, or enter this code:<br><b>${token}</b>`
+				};
+				
+				
+				emailTransporter.sendMail(mailOptions, function(error,info){
+					if (error){
+						console.log(error)
+					} else {
+						console.log('Email sent: ' + info.response);
+						res.status(200).send('success');
+						
+					}
+				});
+			}).catch(err => res.status(500).send(err));
+		}
+	});
+});
+
+loginRouter.post('/reset_password', (req,res) =>
+{
+	const { token } = req.body;
+	const { password } = req.body;
+	
+	User.findOne({ "passwordVerification": token }, (err, user) =>
+	{
+		if (err)
+		{
+			res.status(500).send(err);
+			console.log("query wrong");
+		}
+		else if (!user)
+		{
+			// can you brute force a token search using this route?
+			res.status(500).send();
+			console.log("user not found");
+		}
+		else
+		{
+			user.password = generatePasswordWithSalt(user, password);
+			user.save().then((savedUser) =>
+			{
+				res.status(200).send('password reset')
+			}).catch(err => res.status(500).send(err));
+		}
+	});
+});
 export default loginRouter;

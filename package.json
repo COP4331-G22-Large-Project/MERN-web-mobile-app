@@ -2,7 +2,7 @@
   "name": "largeproject",
   "version": "1.0.0",
   "description": "This is required for Heroku to recognize the app. It will help deploy the web-app.",
-  "main": "index.js",
+  "main": "/web/index.js",
   "scripts": {
     "start": "cd web && npm run prod",
     "heroku-prebuild": "cd web && npm ci",
@@ -20,7 +20,11 @@
   },
   "homepage": "https://gitlab.com/notrealjohn/largeproject#readme",
   "dependencies": {
-    "lodash.escaperegexp": "^4.1.2",
-    "type-check": "^0.4.0"
-  }
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
+  },
+  "devDependencies": {}
 }

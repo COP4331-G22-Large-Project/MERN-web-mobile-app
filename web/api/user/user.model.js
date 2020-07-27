@@ -22,7 +22,9 @@ const userSchema = new mongoose.Schema({
 	verified: {
 		type: Boolean,
 		default: false
-	}
+	},
+
+	passwordVerification: String,
 });
 
 // When converting to an object, strip out the sensitive information
@@ -31,6 +33,7 @@ userSchema.options.toObject.transform = function (doc, ret, options) {
 	delete ret._id;
 	delete ret.password;
 	delete ret.verificationToken;
+	delete ret.passwordVerification;
 
 	return ret;
 }

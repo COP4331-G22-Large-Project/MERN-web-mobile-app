@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Fragment, useState} from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
+import Landing from './components/layout/Landing';
+import Register from './components/layout/Register';
+import Login from './components/layout/Login';
+import LogStool from './components/auth/LogStool';
+import LogExercise from './components/auth/LogExercise';
+import LogFood from './components/auth/LogFood';
+import Logs from './components/auth/Logs';
 import './App.css';
+import EmailVerification from "./components/layout/EmailVerification";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default function App(){
+
+    return(
+
+  <Router>
+
+          <Navbar/>
+
+
+    <Fragment>
+
+       <Route exact path = '/' component ={Landing} />
+      <section className = "container">
+
+          <Route exact path ="/logexercise" component={LogExercise}/>
+          <Route exact path="/logfood" component={LogFood}/>
+          <Route exact path = "/logstool" component = {LogStool}/>
+          <Route exact path ="/logs" component={Logs}/>
+          <Route exact path="/register" component = {Register} />
+          <Route exact path ="/emailverification" component={EmailVerification}/>
+          <Route exact path="/login" component = {Login} />
+      </section>
+    </Fragment>
+  </Router>
+    )
 }
 
-export default App;
+
