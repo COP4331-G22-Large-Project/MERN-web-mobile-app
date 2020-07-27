@@ -27,7 +27,7 @@ export default class EmailVerification extends Component {
         e.preventDefault()
 
 
-        const emailVerification = { token: this.state.verificationCode };
+
 
         verifyEmail(this.state.verificationCode)
             .then(res => {
@@ -51,11 +51,40 @@ export default class EmailVerification extends Component {
     }
 
     render() {
+
         const { email, errorText } = this.state;
-        return(
-            <div>
-                <h3>Verify Your Email</h3>
-                <p>Check your email at <b>{email}</b>, or enter the code from the email in the field below:</p>
+        if(!localStorage.getItem('user'))
+        {
+            return (
+                <div><br/>
+                    <h3>Verify Your Email</h3><br/>
+                    <p>Check your email at <b>{email}</b>, or enter the code from the email in the field below:</p><br/>
+                    <form onSubmit={this.onSubmit}>
+                        <div className="form-group">
+                            <label>Verify Code: </label>
+                            <input
+                                type="string"
+                                required
+                                className="form-control"
+                                value={this.state.verificationCode}
+                                onChange={this.onChangeVerificationCode}
+                            />
+                            <p style={{color: 'red'}}>{errorText}</p>
+                        </div>
+                        <br/>
+                        <div className="form-group">
+                            <input type="submit" value="Verify" className="btn btn-primary"/>
+                            <input type="button" value="Resend" className="btn btn-primary"
+                                   onClick={() => this.resendEmail()}/>
+                        </div>
+                    </form>
+                </div>
+            )
+        }
+        return (
+            <div><br/>
+                <h3>Verify Your Email</h3><br/>
+                <p>Check your email or Resend</p><br/>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Verify Code: </label>
@@ -66,11 +95,13 @@ export default class EmailVerification extends Component {
                             value={this.state.verificationCode}
                             onChange={this.onChangeVerificationCode}
                         />
-                        <p style={{ color: 'red' }}>{errorText}</p>
+                        <p style={{color: 'red'}}>{errorText}</p>
                     </div>
+                    <br/>
                     <div className="form-group">
                         <input type="submit" value="Verify" className="btn btn-primary"/>
-                        <input type="button" value="Resend" className="btn btn-primary" onClick={() => this.resendEmail()}/>
+                        <input type="button" value="Resend" className="btn btn-primary"
+                               onClick={() => this.resendEmail()}/>
                     </div>
                 </form>
             </div>

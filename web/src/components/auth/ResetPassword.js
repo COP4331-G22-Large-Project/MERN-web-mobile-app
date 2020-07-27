@@ -33,7 +33,7 @@ export default class ResetPassword extends Component {
         {
             const searchParams = new URLSearchParams(window.out)
             const token = searchParams.get("token")
-            if(token)
+            if(!token)
             {
 
                  doResetPassword(password, token).then((res) => {

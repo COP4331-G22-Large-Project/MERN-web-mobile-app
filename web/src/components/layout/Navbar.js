@@ -6,7 +6,7 @@ const Navbar = req => {
 
 
 
-    if (localStorage.getItem('user')) {
+    if ((localStorage.getItem('user')) && ( JSON.parse(localStorage.getItem('user')).verified === true)) {
         return (
             <nav className="navbar bg-dark">
                 <h1>

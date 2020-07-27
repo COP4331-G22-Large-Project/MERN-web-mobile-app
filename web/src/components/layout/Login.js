@@ -35,8 +35,8 @@ export default class Login extends Component {
 
         login(username, password).then((res) => {
 
-            //if local storage user profile is not email verified, redirect to Email Verification, else go to logs
-            if(JSON.parse(localStorage.getItem('user')).verified === false)
+
+            if((localStorage.getItem('user')) &&( JSON.parse(localStorage.getItem('user')).verified === false) )
             {
                 window.location.href = '/emailverification'
             }
@@ -47,6 +47,7 @@ export default class Login extends Component {
 
         }).catch((error) => {
             console.log(error)
+
         });
 
         this.setState({

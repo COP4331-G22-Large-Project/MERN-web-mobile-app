@@ -10,15 +10,11 @@ export const login = (username, password) => axios.post('/api/auth/login', {
 ).then((res) => {
 
 	localStorage.setItem('user', JSON.stringify(res.data));
-	console.log("this is login fucnction")
-	console.log(JSON.parse(localStorage.getItem('user')).verified)
-	if(JSON.parse(localStorage.getItem('user')).verified === 'false')
-	{
-		window.location.href = '/emailverification'
-	}
+
 
 }).catch((error) => {
 console.log(error)
+	alert('Username/Password Incorrect')
 });
 
 // Logout securly
@@ -39,6 +35,10 @@ export const verifyEmail = (token) => axios.get('/api/auth/verify_token', {
 	headers: {'X-Requested-With': 'XMLHttpRequest'}
 });
 
+export const verifyReset = (token) => axios.get('/api/auth/verify_reset', {
+	params: { token },
+	headers: {'X-Requested-With': 'XMLHttpRequest'}
+});
 // Resend verification email
 export const retoken = (email) => axios.post('/api/auth/retoken', { email });
 

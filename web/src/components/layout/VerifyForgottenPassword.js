@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {askResetPassword} from "../../api/auth";
+import {askResetPassword, verifyReset} from "../../api/auth";
 
 export default class VerifyForgottenPassword extends Component {
     constructor(props) {
@@ -8,13 +8,13 @@ export default class VerifyForgottenPassword extends Component {
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
-            verifyCode : ''
+            passwordVerification : ''
         }
     }
 
     onChangeVerifyCode(e){
         this.setState({
-            verifyCode : e.target.value
+            passwordVerification : e.target.value
         })
     }
 
@@ -22,21 +22,12 @@ export default class VerifyForgottenPassword extends Component {
         e.preventDefault()
 
 
-        const{email} = this.state;
 
-        askResetPassword(email).then((res) =>
-        {
-            window.location.href = '/resetpassword'
-        })
-            .catch((err) =>
-            {
-                console.log(err)
-            })
-
-
-
+        verifyReset(this.state.passwordVerification).then(res =>{
+            window.location.href ='/resetpassword'
+        } )
         this.setState({
-            email : ''
+            passwordVerification : ''
         })
 
     }
@@ -48,17 +39,17 @@ export default class VerifyForgottenPassword extends Component {
                 <h4> Enter the Verification Code sent to your email</h4><br></br>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <label>Email: </label>
+                        <label>Verification Code: </label>
                         <input type = "string"
                                required
                                className="form-control"
-                               value = {this.state.verifyCode}
+                               value = {this.state.passwordVerification}
                                onChange = {this.onChangeVerifyCode}
                         />
                     </div>
                     <br></br>
                     <div className="form-group">
-                        <input type ="submit" value = "Send Email" className="btn btn-primary"/>
+                        <input type ="submit" value = "Verify Code" className="btn btn-primary"/>
                     </div>
                 </form>
             </div>
