@@ -206,7 +206,7 @@ loginRouter.post('/retoken', (req, res) => {
 // get email from user, get user object, send reset password to email
 loginRouter.post('/repassword', (req, res) => 
 {
-	const reset_password_web_link = `${API_URL}` + '/resetpassword';
+	const reset_password_web_link = `${API_URL}` + '/verifyforgottenpassword';
 	const { email } = req.body;
 
 	User.findOne({email}, (err, user) => 
@@ -236,7 +236,7 @@ loginRouter.post('/repassword', (req, res) =>
 					from: sender_user,
 					to: savedUser.email,
 					subject: 'password reset token',
-					html: `You have requested (hopefully) to reset your Brist-Tool password. If you did not request a password reset, ignore this email. <a href="${reset_password_web_link}?token=${encodeURI(token)}">Click here</a> to reset your password, or enter this code:<br><b>${token}</b>`
+					html: `You have requested (hopefully) to reset your Brist-Tool password. If you did not request a password reset, ignore this email. <a href=${reset_password_web_link}>Click here</a> and enter this code:<br><b>${token}</b> to reset your passcode`
 				};
 				
 				
@@ -270,6 +270,7 @@ loginRouter.post('/reset_password', (req,res) =>
 		else
 		{
 			user.password = generatePasswordWithSalt(user, password);
+			user.verificationToken = null;
 			user.save().then((savedUser) =>
 			{
 				res.status(200).send('password reset');
