@@ -42,31 +42,32 @@ export default class LogExercise extends Component {
 
     render(){
         return(
-            <div>
-                <h3>Log A Exercise</h3><br/>
+            <div class="boxlogE">
+                <p class="sign" align="center">Log A Exercise</p>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Exercise Name: </label>
-                        <input type = "string"
+                    <div className="form1">
+                        <input 
+                               class="un "
+                               type = "string"
+                               placeholder="Exercise"
                                required
-                               className="form-control"
                                value = {this.state.name}
                                onChange = {this.onChangeExerciseName}
                         />
                     </div>
-                    <br/>
-                    <div>
-                        <label>Duration: </label>
-                        <input type = "number"
+                    <div class="form1">
+                    <p class="sign" align="center">Duration</p>
+
+                        <input class="un "
+                               align="center" 
+                               type = "number"
                                required
-                               className="form-control"
                                value = {this.state.duration}
                                onChange={this.onChangeExerciseDuration}
                         />
                     </div>
-                    <br/>
-                    <div className="form-group">
-                        <input type ="submit" value = "Log Exercise" className="btn btn-primary"/>
+                    <div className="form1">
+                        <input type ="submit" value = "Log Exercise" className="submitlog" align="center"/>
                     </div>
                 </form>
             </div>

@@ -32,22 +32,11 @@ export default class Login extends Component {
     onSubmit(e){
         const { username, password } = this.state;
         e.preventDefault()
-
         login(username, password).then((res) => {
-
-
-            if((localStorage.getItem('user')) &&( JSON.parse(localStorage.getItem('user')).verified === false) )
-            {
-                window.location.href = '/emailverification'
-            }
-            else
-            {
-                window.location.href = "/logs";
-            }
-
+            window.location.href = "/logs";
+            localStorage.setItem('user', JSON.stringify(res.data));
         }).catch((error) => {
-            console.log(error)
-
+            
         });
 
         this.setState({
@@ -57,32 +46,37 @@ export default class Login extends Component {
 
     render(){
         return(
-            <div>
-                <h3>Login</h3>
+            <div class="boxlogin">
+
+                <p class="sign" align="center">LOGIN</p>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Username: </label>
-                        <input type = "string"
+                    <div class="form1">
+                        <input class="un "
+                               type = "string"
+                               align="center" 
+                               placeholder="Username"
                                required
-                               className="form-control"
                                value = {this.state.username}
                                onChange = {this.onChangeUsername}
                         />
                     </div>
-                    <div>
-                        <label>Password: </label>
-                        <input type = "password"
+                    <div class="form1">
+                        <input 
+                               class="un "
+                               align="center" 
+                               type = "password"
+                               placeholder="Password"
                                required
-                               className="form-control"
                                value = {this.state.password}
                                onChange={this.onChangePassword}
                         />
                     </div>
-                    <div className="form-group">
-                        <input type ="submit" value = "Sign In" className="btn btn-primary"/>
+                    <div className="form1" >
+                        <input type ="submit" value = "Login" className="submit"align="center" />
                     </div>
                 </form>
             </div>
+
         )
     }
 }

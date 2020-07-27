@@ -174,30 +174,6 @@ loginRouter.get('/verify_token', (req, res) => {
 	});
 });
 
-//verify token for forgot my password
-loginRouter.get('/verify_reset', (req, res) => {
-	// assumming this is how the user is sending us their token
-	const { token } = req.query;
-
-	User.findOne({ passwordVerification: token }, (err, user) => {
-		if (err) {
-			return res.status(500).send(err);
-		} else if (user) {
-			user.passwordVerification = null;
-			user.save().then(() => {
-				if (req.xhr) {
-					res.status(200).send('verified');
-				} else {
-					res.redirect('/login');
-				}
-			}).catch(e => res.status(500).send('error'));
-		} else {
-			res.status(401).send('Unauthorized');
-		}
-	});
-});
-
-
 // recreate and resend user's token
 loginRouter.post('/retoken', (req, res) => {
 	const { email } = req.body;
@@ -230,7 +206,7 @@ loginRouter.post('/retoken', (req, res) => {
 // get email from user, get user object, send reset password to email
 loginRouter.post('/repassword', (req, res) => 
 {
-	const reset_password_web_link = '${API_URL}/resetpassword';
+	const reset_password_web_link = '${API_URL}/IDK';
 	const { email } = req.body;
 
 	User.findOne({email}, (err, user) => 
