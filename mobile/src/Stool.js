@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { Button, Text, View, StyleSheet, SafeAreaView } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
+import { addStool } from "../api/stool";
 
 export function Stool() {
   const { container } = styles;

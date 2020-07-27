@@ -4,6 +4,7 @@ import { Button, Text, View, StyleSheet, SafeAreaView } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Header from "../components/Header";
 import Card from "../components/Card";
+import { addFood } from "../api/food";
 
 export function Consumables() {
   const { container } = styles;
