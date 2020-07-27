@@ -43,24 +43,22 @@ export default class ForgotPassword extends Component {
 
     render(){
         return(
-            <div class="boxlogE">
-                <p class="sign" align="center">Forgot Your Password?</p>
-                <p class="sign" align="center">Enter the email address associated with the registered Account</p>
+            <div>
+                <h3>Forgot Your Password? </h3><br></br>
+                <h4> Enter the email address associated with the registered Account</h4><br></br>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form1">
-                        <input 
-                               class="un "
-                               align="center" 
-                               type = "string"
-                               placeholder="Email"
+                    <div className="form-group">
+                        <label>Email: </label>
+                        <input type = "string"
                                required
+                               className="form-control"
                                value = {this.state.email}
                                onChange = {this.onChangeEmail}
                         />
                     </div>
                     <br></br>
-                    <div className="form1">
-                        <input type ="submit" value = "Send Email" className="submit"align="center"/>
+                    <div className="form-group">
+                        <input type ="submit" value = "Send Email" className="btn btn-primary"/>
                     </div>
                 </form>
             </div>

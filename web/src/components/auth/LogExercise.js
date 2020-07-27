@@ -43,34 +43,34 @@ export default class LogExercise extends Component {
     render(){
         return(
             <div class="boxlogE">
-            <p class="sign" align="center">Log A Exercise</p>
-            <form onSubmit={this.onSubmit}>
-                <div className="form1">
-                    <input 
-                           class="un "
-                           type = "string"
-                           placeholder="Exercise"
-                           required
-                           value = {this.state.name}
-                           onChange = {this.onChangeExerciseName}
-                    />
-                </div>
-                <div class="form1">
-                <p class="sign" align="center">Duration</p>
+                <p class="sign" align="center">Log A Exercise</p>
+                <form onSubmit={this.onSubmit}>
+                    <div className="form1">
+                        <input 
+                               class="un "
+                               type = "string"
+                               placeholder="Exercise"
+                               required
+                               value = {this.state.name}
+                               onChange = {this.onChangeExerciseName}
+                        />
+                    </div>
+                    <div class="form1">
+                    <p class="sign" align="center">Duration</p>
 
-                    <input class="un "
-                           align="center" 
-                           type = "number"
-                           required
-                           value = {this.state.duration}
-                           onChange={this.onChangeExerciseDuration}
-                    />
-                </div>
-                <div className="form1">
-                    <input type ="submit" value = "Log Exercise" className="submitlog" align="center"/>
-                </div>
-            </form>
-        </div>
+                        <input class="un "
+                               align="center" 
+                               type = "number"
+                               required
+                               value = {this.state.duration}
+                               onChange={this.onChangeExerciseDuration}
+                        />
+                    </div>
+                    <div className="form1">
+                        <input type ="submit" value = "Log Exercise" className="submitlog" align="center"/>
+                    </div>
+                </form>
+            </div>
         )
     }
 }
