@@ -60,7 +60,13 @@ function ensureLoggedIn(req, res, next) {
 }
 
 app.use('/api/auth', loginRouter);
-// app.use('/api', passport.authenticate('local', { failureRedirect: '/login' }));
+
+app.post('/api/user',
+	ensureLoggedIn,
+	(req, res) => {
+		res.json(req.user.toObject());
+	}
+);
 
 app.use('/api/secret',
 	ensureLoggedIn,
