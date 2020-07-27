@@ -183,14 +183,11 @@ loginRouter.get('/verify_reset', (req, res) => {
 		if (err) {
 			return res.status(500).send(err);
 		} else if (user) {
-			user.passwordVerification = null;
-			user.save().then(() => {
-				if (req.xhr) {
-					res.status(200).send('verified');
-				} else {
-					res.redirect('/login');
+			if (req.xhr) {
+				res.status(200).send('verified');
+			} else {
+				res.redirect('/login');
 				}
-			}).catch(e => res.status(500).send('error'));
 		} else {
 			res.status(401).send('Unauthorized');
 		}

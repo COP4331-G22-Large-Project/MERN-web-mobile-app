@@ -47,6 +47,6 @@ export const askResetPassword = (email) => axios.post('/api/auth/repassword', { 
 
 // Actually resets the password
 export const doResetPassword = (password, token) => axios.post('/api/auth/reset_password', {
-	password: sha256(password),
+	password,
 	token,
 });
