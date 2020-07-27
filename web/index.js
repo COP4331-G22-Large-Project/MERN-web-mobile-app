@@ -6,10 +6,10 @@ import mongoose from 'mongoose';
 import path from 'path';
 import passport from 'passport';
 
-import loginRouter from './api/login/login.route';
-import stoolRouter from './api/stool/stool.route';
-import foodRouter from './api/food/food.route';
-import exerciseRouter from './api/exercise/exercise.route';
+import loginRouter from './api/login/login.route.js';
+import stoolRouter from './api/stool/stool.route.js';
+import foodRouter from './api/food/food.route.js';
+import exerciseRouter from './api/exercise/exercise.route.js';
 
 const MongoStore = require('connect-mongo')(expressSession);
 
@@ -60,7 +60,13 @@ function ensureLoggedIn(req, res, next) {
 }
 
 app.use('/api/auth', loginRouter);
-// app.use('/api', passport.authenticate('local', { failureRedirect: '/login' }));
+
+app.post('/api/user',
+	ensureLoggedIn,
+	(req, res) => {
+		res.json(req.user.toObject());
+	}
+);
 
 app.use('/api/secret',
 	ensureLoggedIn,

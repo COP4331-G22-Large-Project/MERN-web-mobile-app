@@ -15,13 +15,25 @@ const userSchema = new mongoose.Schema({
 		unique: true
 	},
 	password: String,
+
+	// The token to use to verify the user's email
+	verificationToken: String,
+	// A boolean of whether or not the user is verified
+	verified: {
+		type: Boolean,
+		default: false
+	},
+
+	passwordVerification: String,
 });
 
-// When converting to an object, strip out the password and _id since they are sensitive
+// When converting to an object, strip out the sensitive information
 if (!userSchema.options.toObject) userSchema.options.toObject = {};
 userSchema.options.toObject.transform = function (doc, ret, options) {
 	delete ret._id;
 	delete ret.password;
+	delete ret.verificationToken;
+	delete ret.passwordVerification;
 
 	return ret;
 }

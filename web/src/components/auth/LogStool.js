@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import axios from 'axios';
+import { addStool } from '../../api/stool';
 
 export default class LogStool extends Component {
     constructor(props) {
@@ -27,6 +27,7 @@ export default class LogStool extends Component {
     }
 
     onSubmit(e){
+        const { type, amount } = this.state;
         e.preventDefault();
 
         const stool = {
@@ -34,51 +35,44 @@ export default class LogStool extends Component {
             amount: this.state.amount
         }
         console.log(stool)
-        axios.post('http://localhost:3000/api/stool/add',stool)
-            .then(res => console.log(res.data));
-
-        this.setState({
-            type: '',
-            amount: ''
-        })
+        addStool(type, amount).then((res) => {
+            this.setState({
+                type: '',
+                amount: ''
+            });
+        }).catch((err) => console.log(err));
     }
-
-
 
     render(){
         return(
-            <section className="center">
-
-            <div>
-            <h1 className="large text-primary">Log A Stool</h1>
-
+            <div class="boxlogS">
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Stool Type: </label>
-                        <input type = "integer"
+                    <div className="form1">
+                    <p class="sign" align="center">Log Stool Type</p>
+                        <input 
+                               class="un "
+                               type = "integer"
                                required
-                               className="form-control"
                                value = {this.state.type}
                                onChange = {this.onChangeStoolType}
                                />
                     </div>
-                    <div>
-
-                        <label>Stool Amount(text description...but not too descriptive): </label>
-                        <input type = "string"
+                    <div class="form1">
+                        <p class="sign" align="center">Stool Amount</p>
+                        <input class="un "
+                               align="center" 
+                               type = "integer"
+                               placeholder="Little, Normal, A lot"
                                required
-                               className="form-control"
                                value = {this.state.amount}
-                               onChange={this.onChangeStoolDesc}
+                               onChange = {this.onChangeStoolDesc}
                         />
                     </div>
-                    <div className="form-group">
-                        <input type ="submit" value = "Log Stool" className="btn btn-primary"/>
+                    <div className="form1">
+                        <input type ="submit" value = "Log Stool" className="submitlog" align="center"/>
                     </div>
                 </form>
             </div>
-            </section>
-
         )
     }
 }

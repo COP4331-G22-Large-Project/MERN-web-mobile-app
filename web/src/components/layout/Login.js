@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import { login } from '../../api/auth';
 
 export default class Login extends Component {
     constructor(props) {
@@ -10,7 +10,7 @@ export default class Login extends Component {
 
         this.state = {
             username : '',
-            password :''
+            password : ''
 
         }
     }
@@ -30,64 +30,53 @@ export default class Login extends Component {
 
 
     onSubmit(e){
+        const { username, password } = this.state;
         e.preventDefault()
+        login(username, password).then((res) => {
+            window.location.href = "/logs";
+            localStorage.setItem('user', JSON.stringify(res.data));
+        }).catch((error) => {
+            
+        });
 
-
-            const login = {
-                username: this.state.username,
-                password: this.state.password
-
-            }
-
-            console.log(login)
-            axios.post('http://localhost:3000/api/auth/login',login)
-                .then(res => console.log(res.data))
-
-
-            this.setState({
-                username : '',
-                password :''
-
-            })
-
+        this.setState({
+            password: ''
+        });
     }
 
     render(){
         return(
-            <section className="center">
+            <div class="boxlogin">
 
-            <div>
-                <h1 className="large text-primary">LOGIN</h1>
-                <p className="lead"><i class="fas fa-user"></i> Sign Into Your Account</p>
-
+                <p class="sign" align="center">LOGIN</p>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-control">
-                        <input type = "string"
-                               placeholder="UserName"
+                    <div class="form1">
+                        <input class="un "
+                               type = "string"
+                               align="center" 
+                               placeholder="Username"
                                required
-                               className="form-control"
                                value = {this.state.username}
                                onChange = {this.onChangeUsername}
                         />
                     </div>
-                    
-                    <div className="form-control">
-
-                        <input type = "password"
+                    <div class="form1">
+                        <input 
+                               class="un "
+                               align="center" 
+                               type = "password"
                                placeholder="Password"
                                required
-                               className="form-control"
                                value = {this.state.password}
                                onChange={this.onChangePassword}
                         />
                     </div>
-                    <div className="form-control">
-                        <input type ="submit" value = "Login" className="btn btn-primary"/>
+                    <div className="form1" >
+                        <input type ="submit" value = "Login" className="submit"align="center" />
                     </div>
                 </form>
-          </div>
-          </section>
-          
+            </div>
+
         )
     }
 }

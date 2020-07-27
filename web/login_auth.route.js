@@ -12,13 +12,13 @@ const API_URL = process.env.NODE_ENV === 'production'
 	: 'http://localhost:8000/api';
 
 // email auth
-const sender_user = process.env.EMAIL_USER || "stool.analytics@gmail.com";
-const sender_pass = process.env.EMAIL_PASSWORD || "Jm3naEDbfL5ned9";
+const sender_user = process.env.EMAIL_USER || "stool.4.u@outlook.com";
+const sender_pass = process.env.EMAIL_PASSWORD || "8QvGzYY2HDeZ2uw";
 const emailTransporter = createTransport({
-	service: 'gmail',
+	service: 'outlook',
 	auth: {
-		user: sender_user,
-		pass: sender_pass
+		user: sender_user, 
+		pass: sender_pass 
 	}
 });
 
@@ -137,7 +137,7 @@ async function sendRegistrationEmail(user) {
 		from: sender_user,
 		to: user.email,
 		subject: 'verification email',
-		html: `You have registered for Brist-Tool. <a href="${API_URL}/auth/verify_token?token=${encodeURI(token)}">Click here</a> to complete the registration, or enter this code:<br><b>${token}</b>`
+		text: `You have registered for Brist-Tool. <a href="${API_URL}/auth/verify_token?token=${encodeURI(token)}">Click here</a> to complete the registration, or enter this code:<br><b>${token}</b>`
 	};
 
 	// send email and handle results
@@ -155,126 +155,23 @@ loginRouter.get('/verify_token', (req, res) => {
 	// assumming this is how the user is sending us their token
 	const { token } = req.query;
 
-	User.findOne({ verificationToken: token }, (err, user) => {
-		if (err) {
-			return res.status(500).send(err);
-		} else if (user) {
-			user.verificationToken = null;
-			user.verified = true;
-			user.save().then(() => {
-				if (req.xhr) {
-					res.status(200).send('verified');
-				} else {
-					res.redirect('/login');
-				}
-			}).catch(e => res.status(500).send('error'));
-		} else {
-			res.status(401).send('Unauthorized');
-		}
-	});
-});
-
-// recreate and resend user's token
-loginRouter.post('/retoken', (req, res) => {
-	const { email } = req.body;
-
-	if (emailRegex.test(email)) {
-		User.findOne({ email }, (err, user) => {
-			if (err) {
-				res.status(500).send(err);
-			} else if (user) {
-				if (!user.verified) {
-					// create and save new token
-					user.verificationToken = uid(16);
-					user.save().then((savedUser) => {
-						sendRegistrationEmail(savedUser);
-						res.status(200).send('success');
-					}).catch(err => res.status(500).send(err));
-				} else {
-					res.status(200).send('already verified');
-				}
-			} else {
-				// We're gonna call it a success
-				res.status(200).send('success');
-			}
-		});
+	if (token === req.user.verificationToken) {
+		req.user.verificationToken = null;
+		req.user.verified = true;
+		req.user.save().then(() => {
+			res.redirect('/');
+		}).catch(e => res.status(500).send('error'));
 	} else {
-		res.status(400).send('bad email syntax');
+		res.status(401).send('Unauthorized');
 	}
 });
 
-// get email from user, get user object, send reset password to email
-loginRouter.post('/repassword', (req, res) => 
-{
-	const reset_password_web_link = '${API_URL}/IDK';
-	const { email } = req.body;
-
-	User.findOne({email}, (err, user) => 
-	{
-		if (err) {
-			res.status(500).send(err);
-		}
-		else if (!user)
-		{
-			res.status(200).send('success');
-		}
-		else if (!user.verified)
-		{
-			res.status(500).send('you must be verified to reset password');
-		}
-		else
-		{
-			user.passwordVerification = uid(16);
-			user.save().then((savedUser) => 
-			{
-			
-				const token = savedUser.passwordVerification;
-
-				// authentication email
-				var mailOptions = 
-				{
-					from: sender_user,
-					to: savedUser.email,
-					subject: 'password reset token',
-					html: `You have requested (hopefully) to reset your Brist-Tool password. If you did not request a password reset, ignore this email. <a href="${reset_password_web_link}?token=${encodeURI(token)}">Click here</a> to reset your password, or enter this code:<br><b>${token}</b>`
-				};
-				
-				
-				emailTransporter.sendMail(mailOptions, function(error,info){
-					if (error){
-						console.log(error);
-					} else {
-						res.status(200).send('success');
-						
-					}
-				});
-			}).catch(err => res.status(500).send(err));
-		}
-	});
+// lil proof of concept
+loginRouter.get('/send_email', (req, res) => {
+	// if user is already verified, exit
+	req.user.verification_token = uid(16);
+	req.user.save();
+	sendRegistrationEmail(req.user);
 });
 
-loginRouter.post('/reset_password', (req,res) =>
-{
-	const { token, password } = req.body;
-	
-	User.findOne({ passwordVerification: token }, (err, user) =>
-	{
-		if (err)
-		{
-			res.status(500).send(err);
-		}
-		else if (!user)
-		{
-			res.status(401).send('Unauthorized');
-		}
-		else
-		{
-			user.password = generatePasswordWithSalt(user, password);
-			user.save().then((savedUser) =>
-			{
-				res.status(200).send('password reset');
-			}).catch(err => res.status(500).send(err));
-		}
-	});
-});
 export default loginRouter;

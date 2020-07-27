@@ -36,8 +36,8 @@ async function searchExercise(
 
 	return await Exercise
 		.find({
-			date: { $lte: dateMax, $gte: dateMin },
-			name: { $regex: `^${escapeRegExp(name)}` }
+			date: { $lte: new Date(Number(dateMax)), $gte: new Date(Number(dateMin)) },
+			name: { $regex: escapeRegExp(name) }
 		});
 };
 

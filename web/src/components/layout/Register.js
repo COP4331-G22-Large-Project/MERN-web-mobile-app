@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import { register } from '../../api/auth';
 
 export default class Register extends Component {
     constructor(props) {
@@ -59,108 +59,108 @@ export default class Register extends Component {
 
      onSubmit(e){
         e.preventDefault()
+        const
+        {
+            username,
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+        } = this.state;
 
-         if(this.state.password === this.state.confirmPassword)
-         {
-             const user = {
-                 username: this.state.username,
-                 firstName: this.state.firstName,
-                 lastName: this.state.lastName,
-                 email: this.state.email,
-                 password: this.state.password,
-                 confirmPassword: this.state.confirmPassword
-             }
+        if (password === confirmPassword)
+        {
+            register(username, password, email, firstName, lastName).then((res) => {
+                window.location.href = "/emailverification?email=" + window.encodeURI(res.data.email);
+                this.setState({
+                    username : '',
+                    firstName : '',
+                    lastName : '',
+                    email : '',
+                    password :'',
+                    confirmPassword : ''
+                });
+            }).catch((err) => {
 
-             console.log(user)
-             axios.post('http://localhost:3000/api/auth/register',user)
-                 .then(res => console.log(res.data))
-
-             this.setState({
-                 username : '',
-                 firstName : '',
-                 lastName : '',
-                 email : '',
-                 password :'',
-                 confirmPassword : ''
-             })
-         }
-         else
-         {
-             console.log("Passwords do NOT match")
-         }
-
-
+            })
+        }
+        else
+        {
+            console.log("Passwords do NOT match")
+        }
      }
 
      render(){
          return(
-            <section className="center">
-
-             <div>
-                 <h1 className="large text-primary">REGISTER</h1>
-                 <p className="lead"><i class="fas fa-user"></i> Sign Up an Account</p>
+            <div class="boxregister">
+                <p class="sign" align="center">REGISTER</p>
                  <form onSubmit={this.onSubmit}>
-                     <div className="form-group">
-                         <input type = "string"
-                                placeholder="UserName"
+                     <div className="form1">
+                         <input class="un "
+                                align="center" 
+                                type = "string"
+                                placeholder="Username"
                                 required
-                                className="form-control"
                                 value = {this.state.username}
                                 onChange = {this.onChangeUsername}
                          />
                      </div>
-                     <div>
-                         <input type = "string"
+                     <div class="form1">
+                         <input class="un "
+                                align="center"
+                                type = "string"
                                 placeholder="First Name"
                                 required
-                                className="form-control"
                                 value = {this.state.firstName}
                                 onChange={this.onChangeFirstName}
                          />
                      </div>
-                     <div>
-                         <input type = "string"
+                     <div class="form1">
+                         <input class="un "
+                                align="center"
+                                type = "string"
                                 placeholder="Last Name"
                                 required
-                                className="form-control"
                                 value = {this.state.lastName}
                                 onChange={this.onChangeLastName}
                          />
                      </div>
-                     <div>
-                         <input type = "string"
+                     <div class="form1">
+                         <input class="un "
+                                align="center"
+                                type = "string"
                                 placeholder="Email"
                                 required
-                                className="form-control"
                                 value = {this.state.email}
                                 onChange={this.onChangeEmail}
                          />
                      </div>
-                     <div>
-                         <input type = "password"
+                     <div class="form1">
+                         <input class="un "
+                                align="center"
+                                type = "password"
                                 placeholder="Password"
                                 required
-                                className="form-control"
                                 value = {this.state.password}
                                 onChange={this.onChangePassword}
                          />
                      </div>
-                     <div>
-                         <input type = "password"
+                     <div class="form1">
+                         <input class="un "
+                                align="center"
+                                type = "password"
                                 placeholder="Confirm Password"
                                 required
-                                className="form-control"
                                 value = {this.state.confirmPassword}
                                 onChange={this.onChangePasswordConfirm}
                          />
                      </div>
-                     <div className="form-group">
-                         <input type ="submit" value = "Register" className="btn btn-register"/>
-                     </div>
+                     <div className="form1" >
+                        <input type ="submit" value = "Register" className="submit"align="center" />
+                    </div>
                  </form>
              </div>
-             </section>
-
          )
      }
 }

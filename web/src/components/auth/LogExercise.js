@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import axios from 'axios';
+import { addExercise } from '../../api/exercise';
 
 export default class LogExercise extends Component {
     constructor(props) {
@@ -27,57 +27,50 @@ export default class LogExercise extends Component {
     }
 
     onSubmit(e){
+        const { name, duration } = this.state;
         e.preventDefault();
 
-        const exercise = {
-            name: this.state.name,
-            duration: this.state.duration
-        }
-        console.log(exercise)
-        axios.post('http://localhost:3000/api/exercise/add',exercise)
-            .then(res => console.log(res.data));
-
-        this.setState({
-            name: '',
-            duration: ''
-        })
+        addExercise(name, duration).then((res) => {
+            this.setState({
+                name: '',
+                duration: ''
+            });
+        }).catch((err) => console.log(err));
     }
 
 
 
     render(){
         return(
-            <section className="center">
-
-            <div>
-            <h1 className="large text-primary">Log An Exercise</h1>
-
+            <div class="boxlogE">
+                <p class="sign" align="center">Log A Exercise</p>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Exercise Name: </label>
-                        <input type = "string"
+                    <div className="form1">
+                        <input 
+                               class="un "
+                               type = "string"
+                               placeholder="Exercise"
                                required
-                               className="form-control"
                                value = {this.state.name}
                                onChange = {this.onChangeExerciseName}
                         />
                     </div>
-                    <div>
-                        <label>Duration: </label>
-                        <input type = "number"
+                    <div class="form1">
+                    <p class="sign" align="center">Duration</p>
+
+                        <input class="un "
+                               align="center" 
+                               type = "number"
                                required
-                               className="form-control"
                                value = {this.state.duration}
                                onChange={this.onChangeExerciseDuration}
                         />
                     </div>
-                    <div className="form-group">
-                        <input type ="submit" value = "Log Exercise" className="btn btn-primary"/>
+                    <div className="form1">
+                        <input type ="submit" value = "Log Exercise" className="submitlog" align="center"/>
                     </div>
                 </form>
             </div>
-            </section>
-
         )
     }
 }

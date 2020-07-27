@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-
+import { searchStool, getAllStools, deleteStools } from '../../api/stool';
 
 const Log = props => (
     <tr>
         <td>{props.log.userId}</td>
         <td>{props.log.amount}</td>
         <td>{props.log.type}</td>
-        <td>{props.log.date}</td>
+        <td>{props.log.date.substring(0,10)}</td>
+        <td>{props.log.date.substring(11,19)}</td>
         <td>
-             <a href="#" onClick={() => { props.deleteLog(props) }}>delete</a>
+             <a href="Delete Button" onClick={() => { props.deleteLog(props.log._id)}}>delete</a>
         </td>
     </tr>
 )
@@ -23,34 +22,27 @@ export default class Logs extends Component{
         this.state = {stools: []}
     }
 
+    refreshLogs() {
+        getAllStools().then((res) => {
+            this.setState({stools: res.data})
+        }).catch(err => console.log(err));
+    }
+
     componentDidMount() {
-        axios.get('http://localhost:3000/api/stool/')
-            .then(res =>{
-                this.setState({stools: res.data})
-            })
-            .catch((err) =>{
-            console.log(err);
-        })
+        this.refreshLogs();
     }
 
-    deleteLog(id){
-        axios.delete('http://localhost:3000/api/stool/delete/' + id)
-            .then(res => {console.log(res)})
-        this.setState({
-            stools: this.state.stools.filter(el=>el._id != id)
-        })
+    deleteLog(id) {
+        deleteStools([id]).then((res) => {
+            this.refreshLogs();
+        }).catch((err) => console.log(err));
     }
-    logList(){
-        return this.state.stools.map(currentLog =>{
-            return <Log log = {currentLog} deleteLog ={this.deleteLog} key={currentLog._id}/>
-        })
-    }
-
 
     render(){
         return (
-            <div>
-                <h3>Logs</h3>
+            <div class="boxview">
+                <div className="form1">
+                <p class="sign" align="center">Logs</p>
                 <table className="table">
                     <thead className="thead-light">
                     <tr>
@@ -58,14 +50,21 @@ export default class Logs extends Component{
                         <th>Amount</th>
                         <th>Type</th>
                         <th>Date</th>
+                        <th>Time</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    { this.logList() }
+                    {
+                        this.state.stools.map(log => (
+                            <Log log={log} deleteLog={this.deleteLog} key={log._id}/>
+                        ))
+                    }
                     </tbody>
                 </table>
-            </div>
+                </div>
+                </div>
+
         )
     }
 
