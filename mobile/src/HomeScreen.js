@@ -11,7 +11,7 @@ import { AuthContext } from "./utils";
 import Header from "../components/Header";
 import Card from "../components/Card";
 import Colors from "../constants/colors";
-
+import MainButton from '../components/MainButton'
 export function HomeScreen({}) {
   const { signOut } = React.useContext(AuthContext);
   const { container } = styles;
@@ -42,7 +42,9 @@ export function HomeScreen({}) {
           </Card>
         </View>
         <View style={styles.button}>
-          <Button color="white" title="Sign out" onPress={signOut} />
+          <MainButton onPress={signOut}>
+            Sign Out
+          </MainButton>
         </View>
       </ScrollView>
     </View>

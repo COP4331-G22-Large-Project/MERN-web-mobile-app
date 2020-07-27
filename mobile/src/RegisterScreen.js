@@ -8,17 +8,19 @@ import {
   Keyboard,
   ScrollView,
   Text,
+  KeyboardAvoidingView,
 } from "react-native";
 import { AuthContext } from "./utils";
 import Card from "../components/Card";
 import Colors from "../constants/colors";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export function RegisterScreen({ navigation }) {
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
-  const [errorTxt, setErrorTxt] = React.useState('');
+  const [errorTxt, setErrorTxt] = React.useState("");
 
   const { container, txtInput } = styles;
   const { signUp } = React.useContext(AuthContext);
@@ -27,9 +29,9 @@ export function RegisterScreen({ navigation }) {
     if (password === passwordConfirm) {
       signUp({ username, password, email }, (err, user) => {
         if (err) {
-          setErrorTxt('Email/username already exists');
+          setErrorTxt("Email/username already exists");
         } else {
-          navigation.navigate('CheckEmail', { email: user.email });
+          navigation.navigate("CheckEmail", { email: user.email });
         }
       });
     }
@@ -37,7 +39,12 @@ export function RegisterScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <ScrollView contentContainerStyle={container}>
+      <KeyboardAwareScrollView
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={container}
+        scrollEnabled={false}
+        extraHeight={100}
+      >
         <Card style={styles.cardStyle}>
           <TextInput
             placeholder="Enter A Username"
@@ -70,9 +77,7 @@ export function RegisterScreen({ navigation }) {
             style={txtInput}
             textAlign="center"
           />
-          <Text style={styles.errorTxt}>
-            {errorTxt}
-          </Text>
+          <Text style={styles.errorTxt}>{errorTxt}</Text>
           <View style={styles.buttonView}>
             <Button
               color="black"
@@ -83,8 +88,7 @@ export function RegisterScreen({ navigation }) {
             />
           </View>
         </Card>
-        <View></View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </TouchableWithoutFeedback>
   );
 }
@@ -110,7 +114,7 @@ const styles = StyleSheet.create({
     marginVertical: "8%",
   },
   errorTxt: {
-    color: 'red',
+    color: "red",
   },
   buttonView: {
     height: 50,

@@ -7,10 +7,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   Keyboard,
-  KeyboardAvoidingView,
   ScrollView,
-  ImageBackground,
-  Image,
 } from "react-native";
 import { AuthContext } from "./utils";
 import Header from "../components/Header";
@@ -38,6 +35,7 @@ export function SignInScreen({ navigation }) {
             onChangeText={setUsername}
             style={txtInput}
             textAlign="center"
+            autoCapitalize = {"none"}
           />
           <TextInput
             placeholder="Password"

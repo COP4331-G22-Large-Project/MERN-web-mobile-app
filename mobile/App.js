@@ -170,7 +170,7 @@ function AuthStack() {
 
 const Stack = createStackNavigator();
 
-export default function App({ navigation }) {
+export default function App({ props, navigation }) {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       console.log(action);
@@ -209,12 +209,12 @@ export default function App({ navigation }) {
     const bootstrapAsync = () => {
       checkLoggedIn()
         .then((res) => {
-          console.log('restore success');
+          console.log("restore success");
           console.log(res.headers);
           dispatch({ type: "RESTORE_TOKEN", user: res.data });
         })
         .catch((err) => {
-          console.log('restore fail');
+          console.log("restore fail");
           console.log(err.response.headers);
           dispatch({ type: "RESTORE_TOKEN" });
         });
@@ -258,6 +258,7 @@ export default function App({ navigation }) {
     []
   );
 
+
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
@@ -278,7 +279,12 @@ export default function App({ navigation }) {
             />
           ) : (
             // User is signed in
-            <Stack.Screen name="Home" component={HomeTab} /> /*HomeScreen*/
+            <Stack.Screen
+              name="Home"
+              component={HomeTab}
+              
+             
+            /> /*HomeScreen*/
           )}
         </Stack.Navigator>
       </NavigationContainer>
