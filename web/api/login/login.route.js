@@ -71,6 +71,28 @@ loginRouter.post('/login',
 	}
 );
 
+loginRouter.post('/login_ut', (req, res) => {
+	const username = req.username;
+	const password = req.password;
+
+	var request = httpMock.createRequest(
+	{
+		method: "POST",
+		url: "/login",
+		body:
+		{
+			username, password
+		}
+	});
+
+	var response = httpMock.createResponse();
+
+	loginRouter(request,response);
+
+	res.status(200).send(response.body);
+});
+
+
 // Logout a user
 loginRouter.post('/logout', (req, res) => {
 	req.logout();
@@ -142,17 +164,18 @@ loginRouter.post('/register_ut', (req, res) => {
 		url: '/register',
 		body:
 		{
-			"username": "coy",
-			"password": "diego",
-			"email": "coydiego@knights.ucf.edu",
-			"firstName": "coy",
-			"lastName": "diego",
+			username: "coy",
+			password: "diego",
+			email: "coydiego@knights.ucf.edu",
+			firstName: "coy",
+			lastName: "diego",
 		}
 	});
 
-//	var response = httpMock.createResponse();
-	//console.log(response._getJSONData());
-	res.status(200).send(httpMock.createResponse());
+	var response = httpMock.createResponse();
+	loginRouter(request, response);
+	console.log(response.body);
+	res.status(200).send();
 });
 
 async function sendRegistrationEmail(user) {
