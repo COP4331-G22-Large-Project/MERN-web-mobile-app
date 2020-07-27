@@ -10,7 +10,7 @@ const Log = props => (
         <td>{props.log.date.substring(0,10)}</td>
         <td>{props.log.date.substring(11,19)}</td>
         <td>
-             <a href="Delete Button" onClick={() => { props.deleteLog(props.log._id)}}>delete</a>
+             <a href="/logs" onClick={() => { props.deleteLog(props.log._id)}}>delete</a>
         </td>
     </tr>
 )
@@ -45,7 +45,7 @@ export default class Logs extends Component{
         return (
             <div className="boxview">
                 <div className="form1">
-                <p className="sign" align="center">Logs</p>
+                <p className="sign" align="center">Logs</p><br/>
                 <table className="table">
                     <thead className="thead-light">
                     <tr>

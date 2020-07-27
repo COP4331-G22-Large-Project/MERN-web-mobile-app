@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { addStool } from '../../api/stool';
+import chart from './chart.jpg'
 
 export default class LogStool extends Component {
     constructor(props) {
@@ -9,7 +10,7 @@ export default class LogStool extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            type: 0,
+            type: 1,
             amount: ''
         }
     }
@@ -30,11 +31,7 @@ export default class LogStool extends Component {
         const { type, amount } = this.state;
         e.preventDefault();
 
-        const stool = {
-            type: this.state.type,
-            amount: this.state.amount
-        }
-        console.log(stool)
+
         addStool(type, amount).then((res) => {
             this.setState({
                 type: '',
@@ -48,7 +45,7 @@ export default class LogStool extends Component {
             <div class="boxlogS">
                 <form onSubmit={this.onSubmit}>
                     <div className="form1">
-                    <p class="sign" align="center">Log Stool Type</p>
+                    <p class="sign" align="center">Log Stool Type(1-7)</p><br/>
                         <input 
                                class="un "
                                type = "integer"
@@ -72,6 +69,9 @@ export default class LogStool extends Component {
                         <input type ="submit" value = "Log Stool" className="submitlog" align="center"/>
                     </div>
                 </form>
+                <br/>
+                <img src={chart}/>
+
             </div>
         )
     }

@@ -33,7 +33,7 @@ export default class LogFood extends Component {
     render(){
         return(
             <div class="boxlogF">
-                <p class="sign" align="center">Log A Food/Drink</p>
+                <p class="sign" align="center">Log A Food/Drink</p><br/>
                 <form onSubmit={this.onSubmit}>
                     <div className="form1">
                         <input 

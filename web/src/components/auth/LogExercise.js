@@ -49,14 +49,14 @@ export default class LogExercise extends Component {
                         <input 
                                class="un "
                                type = "string"
-                               placeholder="Exercise"
+                               placeholder="Insert Your Exercise"
                                required
                                value = {this.state.name}
                                onChange = {this.onChangeExerciseName}
                         />
                     </div>
                     <div class="form1">
-                    <p class="sign" align="center">Duration</p>
+                    <p class="sign" align="center">Duration (mins)</p>
 
                         <input class="un "
                                align="center" 
