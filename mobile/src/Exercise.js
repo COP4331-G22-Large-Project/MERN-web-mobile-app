@@ -11,7 +11,7 @@ export function Exercise() {
   const [duration, set_duration] = useState("");
 
   const pressHandler = () => {
-    addExercise(name, duration)
+    addExercise(exercise, duration)
       .then((res) => {})
       .catch((err) => {});
     alert("Thank you for logging some activity!");
