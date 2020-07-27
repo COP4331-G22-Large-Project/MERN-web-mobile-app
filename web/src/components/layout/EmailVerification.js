@@ -27,7 +27,7 @@ export default class EmailVerification extends Component {
         e.preventDefault()
 
 
-        const emailVerification = { token: this.state.verificationCode };
+
 
         verifyEmail(this.state.verificationCode)
             .then(res => {

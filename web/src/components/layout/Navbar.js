@@ -17,10 +17,10 @@ const Navbar = req => {
                     <li><Link to="/logfood">Log Food</Link></li>
                     <li><Link to="/logstool">Log Stool</Link></li>
                     <li><Link to="/logs"> View Logs</Link></li>
-                    <a onClick={() => {axios.post('/api/auth/logout')
+                   <li><a onClick={() => {axios.post('/api/auth/logout')
                         .then(res => window.location.href="/",localStorage.setItem('user',''))
-                        .catch((err) => {console.log("Logout FAILED")}) }}>Log Out</a>
-                   
+                        .catch((err) => {console.log("Logout FAILED")}) }}>Log Out</a></li>
+
                 </ul>
             </nav>
 

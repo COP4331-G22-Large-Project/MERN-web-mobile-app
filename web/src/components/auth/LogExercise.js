@@ -33,7 +33,7 @@ export default class LogExercise extends Component {
         addExercise(name, duration).then((res) => {
             this.setState({
                 name: '',
-                duration: ''
+                duration: 0
             });
         }).catch((err) => console.log(err));
     }
@@ -43,7 +43,7 @@ export default class LogExercise extends Component {
     render(){
         return(
             <div class="boxlogE">
-                <p class="sign" align="center">Log A Exercise</p>
+                <p class="sign" align="center">Log A Exercise</p><br/>
                 <form onSubmit={this.onSubmit}>
                     <div className="form1">
                         <input 
