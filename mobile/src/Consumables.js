@@ -23,6 +23,7 @@ export function Consumables() {
 
   const [consumable, set_consumable] = useState("");
 
+
   const pressHandler = () => {
     addFood(consumable)
       .then((res) => {})
