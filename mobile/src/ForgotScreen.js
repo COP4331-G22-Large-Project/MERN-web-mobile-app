@@ -13,7 +13,7 @@ export function ForgotScreen({ navigation }) {
 
   return (
     <View style={container}>
-      <Text>Please enter your password:</Text>
+      <Text>Please enter your email:</Text>
       <TextInput
         placeholder="Email"
         value={email}

@@ -2,19 +2,19 @@ import * as React from "react";
 import { useState } from "react";
 import { Button, Text, View, StyleSheet, SafeAreaView } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { addExercise } from '../api/exercise';
+import { addExercise } from "../api/exercise";
 
 export function Exercise() {
   const { container } = styles;
 
   const [exercise, set_exercise] = useState("");
+  const [duration, set_duration] = useState("");
 
   const pressHandler = () => {
-    addExercise(/* name, duration */).then((res) => {
-      
-    }).catch((err) => {
-      
-    });
+    addExercise(name, duration)
+      .then((res) => {})
+      .catch((err) => {});
+    alert("Thank you for logging some activity!");
   };
 
   return (
@@ -27,6 +27,12 @@ export function Exercise() {
         style={styles.input}
         placeholder="e.g. 30 flights of stairs"
         onChangeText={(val) => set_exercise(val)}
+      />
+      <Text>Enter a duration in minutes:</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="e.g. 20"
+        onChangeText={(val) => set_duration(val)}
       />
       <Button title="Submit" onPress={pressHandler} />
     </SafeAreaView>

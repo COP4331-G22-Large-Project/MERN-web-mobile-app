@@ -11,7 +11,10 @@ export function Consumables() {
   const [consumable, set_consumable] = useState("");
 
   const pressHandler = () => {
-    alert("Thank you for submitting!");
+    addFood(consumable)
+      .then((res) => {})
+      .catch((err) => {});
+    alert("Thank you for logging a consumable!");
   };
 
   return (

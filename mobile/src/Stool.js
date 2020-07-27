@@ -7,9 +7,13 @@ export function Stool() {
   const { container } = styles;
 
   const [rating, set_rating] = useState("");
+  const [amount, set_amount] = useState("");
 
   const pressHandler = () => {
-    alert("Thank you for submitting!");
+    addStool(rating, amount)
+      .then((res) => {})
+      .catch((err) => {});
+    alert("Thank you for logging a stool!");
   };
 
   return (
@@ -25,6 +29,12 @@ export function Stool() {
         style={styles.input}
         placeholder="e.g. 5"
         onChangeText={(val) => set_rating(val)}
+      />
+      <Text>Enter an amount:</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="e.g. A ton"
+        onChangeText={(val) => set_amount(val)}
       />
       <Button title="Submit" onPress={pressHandler} />
     </SafeAreaView>
