@@ -6,7 +6,7 @@ import uid from 'uid';
 import { typeCheck } from 'type-check';
 import User, { emailRegex } from '../user/user.model';
 import { createTransport } from 'nodemailer';
-import { assert } from "assert";
+//const assert = require("assert");
 const httpMock = require("node-mocks-http");
 
 const API_URL = process.env.NODE_ENV === 'production'
@@ -190,12 +190,31 @@ loginRouter.get('/verify_token', (req, res) => {
 			user.verified = true;
 			user.save().then(() => {
 				res.redirect('/');
+				res.status(200).send('success');
 			}).catch(e => res.status(500).send('error'));
 		} else {
 			res.status(401).send('Unauthorized');
 		}
 	});
 });
+
+// unit test which passes given token to /verify_token get route
+loginRouter.get('/verify_token_ut', (req, res) => {
+	const {token } = req.query;
+
+	var request = httpMock.createRequest({
+		method: 'GET',
+		url: "/verify_token?token=" + token 
+	});
+
+	var response = httpMock.createResponse();
+	loginRouter(request,response);
+	
+	const actualResponseBody = response.body; // this is returning empty even on sucess
+	const expectedResponseBody = "success";
+	res.status(200).send(actualResponseBody === expectedResponseBody);
+});
+
 
 // recreate and resend user's token
 loginRouter.post('/retoken', (req, res) => {
