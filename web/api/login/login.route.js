@@ -8,8 +8,8 @@ import User, { emailRegex } from '../user/user.model';
 import { createTransport } from 'nodemailer';
 
 const API_URL = process.env.NODE_ENV === 'production'
-	? 'https://largeproject.herokuapp.com/api'
-	: 'http://localhost:8000/api';
+	? 'https://largeproject.herokuapp.com'
+	: 'http://localhost:8000';
 
 // email auth
 const sender_user = process.env.EMAIL_USER || "stool.analytics@gmail.com";
@@ -137,7 +137,7 @@ async function sendRegistrationEmail(user) {
 		from: sender_user,
 		to: user.email,
 		subject: 'verification email',
-		html: `You have registered for Brist-Tool. <a href="${API_URL}/auth/verify_token?token=${encodeURI(token)}">Click here</a> to complete the registration, or enter this code:<br><b>${token}</b>`
+		html: `You have registered for Brist-Tool. <a href="${API_URL}/api/auth/verify_token?token=${encodeURI(token)}">Click here</a> to complete the registration, or enter this code:<br><b>${token}</b>`
 	};
 
 	// send email and handle results
@@ -227,7 +227,7 @@ loginRouter.post('/retoken', (req, res) => {
 // get email from user, get user object, send reset password to email
 loginRouter.post('/repassword', (req, res) => 
 {
-	const reset_password_web_link = '${API_URL}/resetpassword';
+	const reset_password_web_link = `${API_URL}` + '/resetpassword';
 	const { email } = req.body;
 
 	User.findOne({email}, (err, user) => 

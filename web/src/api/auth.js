@@ -6,15 +6,6 @@ export const login = (username, password) => axios.post('/api/auth/login', {
 	username,
 	password: sha256(password),
 
-}
-).then((res) => {
-
-	localStorage.setItem('user', JSON.stringify(res.data));
-
-
-}).catch((error) => {
-console.log(error)
-	alert('Username/Password Incorrect')
 });
 
 // Logout securly
@@ -27,8 +18,7 @@ export const register = (username, password, email, firstName, lastName) => axio
 	email,
 	firstName,
 	lastName,
-})
-	.then();
+});
 
 export const verifyEmail = (token) => axios.get('/api/auth/verify_token', {
 	params: { token },
