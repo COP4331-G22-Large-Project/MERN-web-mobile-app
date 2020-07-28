@@ -137,7 +137,7 @@ function AuthStack() {
   return (
     <StackAuth.Navigator initialRouteName="SignIn">
       <StackAuth.Screen
-        name="Bris-Tool"
+        name="Brist-Tool"
         options={{
           headerStyle: { backgroundColor: Colors.primary },
           headerTitleStyle: {
@@ -258,7 +258,6 @@ export default function App({ props, navigation }) {
     []
   );
 
-
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
@@ -279,12 +278,7 @@ export default function App({ props, navigation }) {
             />
           ) : (
             // User is signed in
-            <Stack.Screen
-              name="Home"
-              component={HomeTab}
-              
-             
-            /> /*HomeScreen*/
+            <Stack.Screen name="Home" component={HomeTab} /> /*HomeScreen*/
           )}
         </Stack.Navigator>
       </NavigationContainer>

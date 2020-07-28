@@ -24,15 +24,13 @@ export function Logs() {
   const [rating, set_rating] = useState("");
   const [stools, setStools] = useState([]);
 
-
-
   //----------- Some coded that I (Raj) add -------------  -------------
 
   useEffect(() => {
     const bootstrapAsync = () => {
       getAllStools()
         .then((res) => {
-          setStools(res.data );
+          setStools(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -44,14 +42,32 @@ export function Logs() {
   const renderItem = (data) => {
     return (
       <View>
-        <Text>{data.item.amount}</Text>
+        <Text>Rating: {data.item.type}</Text>
+        <Text>Amount: {data.item.amount}</Text>
+        <Text>
+          Food:
+          {data.item.foods &&
+            data.item.foods.map((foods) => {
+              return <Text> {foods.name} </Text>;
+            })}
+        </Text>
+        <Text>
+          Exercises:
+          {data.item.exercises &&
+            data.item.exercises.map((exercises) => {
+              return (
+                <Text>
+                  ({exercises.name}, {exercises.duration} min)
+                </Text>
+              );
+            })}
+          ;
+        </Text>
       </View>
     );
   };
 
   //-----------  -------------  -------------  -------------  -------------
-
-
 
   const pressHandler = () => {
     alert("Thank you for submitting!");
@@ -61,7 +77,7 @@ export function Logs() {
   return (
     <ScrollView contentContainerStyle={container}>
       <Header title="Your Personal Logs" />
-      <Card style={styles.CardContainer}>
+      {/* <Card style={styles.CardContainer}>
         <Text>Filter based on rating</Text>
         <Text>Bristol Rating:</Text>
         <TextInput
@@ -70,13 +86,14 @@ export function Logs() {
           onChangeText={(val) => set_rating(val)}
         />
         <Button title="Search" onPress={pressHandler} />
-      </Card>
+      </Card> */}
 
       <Card style={styles.CardContainer}>
         <FlatList
           style={styles.flatListView}
           data={stools}
           renderItem={renderItem}
+          keyExtractor={(item) => item.userId}
         />
       </Card>
     </ScrollView>
@@ -92,6 +109,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 330,
     marginVertical: 30,
+    height: 300,
   },
   input: {
     borderWidth: 1,

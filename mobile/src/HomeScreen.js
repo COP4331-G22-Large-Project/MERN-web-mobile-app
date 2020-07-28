@@ -11,7 +11,7 @@ import { AuthContext } from "./utils";
 import Header from "../components/Header";
 import Card from "../components/Card";
 import Colors from "../constants/colors";
-import MainButton from '../components/MainButton'
+import MainButton from "../components/MainButton";
 export function HomeScreen({}) {
   const { signOut } = React.useContext(AuthContext);
   const { container } = styles;
@@ -24,7 +24,7 @@ export function HomeScreen({}) {
         <View style={styles.CardContainer}>
           <Card>
             <Text style={styles.introtext}>Hi UserName!</Text>
-            <Text style={styles.introtext}>Welcome to Bris-Tool</Text>
+            <Text style={styles.introtext}>Welcome to Brist-Tool</Text>
             <Text style={styles.introtext}>Your Personal Health Journal</Text>
             <Text style={styles.bodyText}>
               The Bristol Stool Chart or Bristol Stool Scale is a medical aid
@@ -42,9 +42,7 @@ export function HomeScreen({}) {
           </Card>
         </View>
         <View style={styles.button}>
-          <MainButton onPress={signOut}>
-            Sign Out
-          </MainButton>
+          <MainButton onPress={signOut}>Sign Out</MainButton>
         </View>
       </ScrollView>
     </View>
