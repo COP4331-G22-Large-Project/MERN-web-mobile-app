@@ -8,7 +8,7 @@ export const login = (username, password) => axios.post('/api/auth/login', {
 });
 
 // Logout securly
-export const logout = () => axios.post('/api/auth/logout');
+export const logout = () => axios.post('/apit/auth/logout');
 
 // Register a new user
 export const register = (username, password, email, firstName, lastName) => axios.post('/api/auth/register', {
