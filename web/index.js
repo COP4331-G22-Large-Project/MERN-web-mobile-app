@@ -31,7 +31,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 // Serve static files first, then look at api-related stuff
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '/build')));
 // Parse cookies automatically
 app.use(cookieParser());
 // Convert body to JSON
@@ -59,38 +59,46 @@ function ensureLoggedIn(req, res, next) {
 	}
 }
 
-app.use('/api/auth', loginRouter);
+const apiRouter = express.Router();
 
-app.post('/api/user',
+apiRouter.use('/auth', loginRouter);
+
+apiRouter.post('/user',
 	ensureLoggedIn,
 	(req, res) => {
 		res.json(req.user.toObject());
 	}
 );
 
-app.use('/api/secret',
+apiRouter.use('/secret',
 	ensureLoggedIn,
 	(req, res) => {
 		res.send('Welcome to the secret club, ' + req.user.username);
 	}
 );
 
-app.use('/api/stool',
+apiRouter.use('/stool',
 	ensureLoggedIn,
 	stoolRouter
 );
-app.use('/api/food',
+apiRouter.use('/food',
 	ensureLoggedIn,
 	foodRouter
 );
-app.use('/api/exercise',
+apiRouter.use('/exercise',
 	ensureLoggedIn,
 	exerciseRouter
 );
 
-// If there was no matching request
-app.use((req, res) => {
-	res.status(404).send('Route not found');
+apiRouter.use((req, res) => {
+	res.status(404).send('API route not found');
+})
+
+app.use('/api', apiRouter);
+
+// If there was no matching request, then it's a client route
+app.get('/*', function(req, res) {
+	res.sendFile(path.join(__dirname, "./build/index.html"));
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}`));
