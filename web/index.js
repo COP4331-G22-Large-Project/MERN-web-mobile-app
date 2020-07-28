@@ -30,23 +30,8 @@ mongoose.set('useCreateIndex', true);
 const app = express();
 const port = process.env.PORT || 8000;
 
-
-if (process.env.NODE_ENV === "production")
-{
-	app.use(express.static(path.join(__dirname, '/build')));
-	app.get("/*", function(req, res) {
-		res.sendFile(path.join(__dirname, "/build/index.html"));
-	});
-}
-
-else {
-	app.use(express.static(path.join(__dirname, '/public')));
-	app.get("/*", function(req, res) {
-		res.sendFile(path.join(__dirname, "/public/index.html"));
-	});
-}
 // Serve static files first, then look at api-related stuff
-
+app.use(express.static(path.join(__dirname, '/build')));
 // Parse cookies automatically
 app.use(cookieParser());
 // Convert body to JSON
