@@ -41,7 +41,9 @@ export function Logs() {
     const bootstrapAsync = () => {
       getAllStools()
         .then((res) => {
+          console.log(res.data);
           setStools(res.data);
+          console.log(stools);
         })
         .catch((err) => {
           console.log(err);
