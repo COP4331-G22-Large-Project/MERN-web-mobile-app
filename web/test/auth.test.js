@@ -23,10 +23,11 @@ test('checks db for given user and email', () => {
 	const user = "dummy1";
 	const email = "dummy1@gmail.com";"
 
-	expect(isUserDuplicate(user, email)).toBeCalledWith(
+	expect(isUserDuplicate(user, email).isEqual(
 		expect.objectContaining(
 		{
 			"isUsername": "true",
 			"isEmail": "true"
-		}));
+		})
+	);
 });
