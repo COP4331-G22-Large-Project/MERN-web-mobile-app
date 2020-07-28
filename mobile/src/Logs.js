@@ -52,36 +52,34 @@ export function Logs() {
     bootstrapAsync();
   }, []);
 
-
-
   const renderItem = (data) => {
-   
-      return (
-        <View>
+    return (
+      <View>
+        <View style={styles.rating}>
           <Text>Rating: {data.item.type}</Text>
-          <Text>Amount: {data.item.amount}</Text>
-          <Text>
-            Food:
-            {data.item.foods &&
-              data.item.foods.map((foods, key) => {
-                return <Text> {foods.name} </Text>;
-              })}
-          </Text>
-          <Text>
-            Exercises:
-            {data.item.exercises &&
-              data.item.exercises.map((exercises, key) => {
-                return (
-                  <Text>
-                    ({exercises.name}, {exercises.duration} min)
-                  </Text>
-                );
-              })}
-            ;
-          </Text>
         </View>
-      );
-
+        <Text>Amount: {data.item.amount}</Text>
+        <Text>
+          Food:
+          {data.item.foods &&
+            data.item.foods.map((foods, key) => {
+              return <Text> {foods.name} </Text>;
+            })}
+        </Text>
+        <Text>
+          Exercises:
+          {data.item.exercises &&
+            data.item.exercises.map((exercises, key) => {
+              return (
+                <Text>
+                  ({exercises.name}, {exercises.duration} min)
+                </Text>
+              );
+            })}
+          ;
+        </Text>
+      </View>
+    );
   };
 
   //-----------  -------------  -------------  -------------  -------------
@@ -106,6 +104,11 @@ export function Logs() {
       </Card> */}
 
       <Card style={styles.CardContainer}>
+        <Text style={styles.textStyling}>
+          This is where you can review your logs and find a correlation between
+          diet, exercise, and bowel movements.
+        </Text>
+
         <FlatList
           style={styles.flatListView}
           data={stools}
@@ -125,8 +128,8 @@ const styles = StyleSheet.create({
   CardContainer: {
     alignItems: "center",
     width: 330,
-    marginVertical: 30,
-    height: 300,
+    marginVertical: 50,
+    height: 340,
   },
   input: {
     borderWidth: 1,
@@ -138,5 +141,14 @@ const styles = StyleSheet.create({
   flatListView: {
     width: "100%",
     height: 40,
+  },
+  rating: {
+    marginTop: 10,
+  },
+  textStyling: {
+    textAlign: "center",
+    marginVertical: 20,
+    fontWeight: "bold",
+    fontSize: 15,
   },
 });
