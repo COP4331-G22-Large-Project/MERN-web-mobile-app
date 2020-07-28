@@ -10,18 +10,24 @@ import {
   SafeAreaView,
   FlatList,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { getAllStools } from "../api/stool";
 import Card from "../components/Card";
 import Header from "../components/Header";
+import Colors from "../constants/colors";
+import { set } from "react-native-reanimated";
+
+const wait = (timeout) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
+};
 
 export function Logs() {
   const { container } = styles;
 
-  const [consumable, set_consumable] = useState("");
-  const [exercise, set_exercise] = useState("");
-  const [rating, set_rating] = useState("");
   const [stools, setStools] = useState([]);
 
   // const Log = (props) => (
@@ -36,14 +42,27 @@ export function Logs() {
   // );
 
   //----------- Some coded that I (Raj) add -------------  -------------
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+      getAllStools()
+        .then((res) => {
+          setStools(res.data);
+          // setRefreshing(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    // console.log('page refreshed')
+    wait(800).then(() => setRefreshing(false));
+    
+  }, [refreshing]);
 
   useEffect(() => {
     const bootstrapAsync = () => {
       getAllStools()
         .then((res) => {
-          console.log(res.data);
           setStools(res.data);
-          console.log(stools);
         })
         .catch((err) => {
           console.log(err);
@@ -52,25 +71,32 @@ export function Logs() {
     bootstrapAsync();
   }, []);
 
-
-
   const renderItem = (data) => {
-   
-      return (
-        <View>
-          <Text>Rating: {data.item.type}</Text>
-          <Text>Amount: {data.item.amount}</Text>
+    return (
+      <Card style={styles.innerCardContainer}>
+        <View style={styles.logView}>
+          <Text style={styles.logText}>Rating: </Text>
+          <Text style={styles.logText}>{data.item.type}</Text>
+        </View>
+        <View style={styles.logBodyView}>
+          <Text style={styles.subHeadingText}>Amount: </Text>
+          <Text>{data.item.amount}</Text>
+        </View>
+        <View style={styles.logBodyView}>
           <Text>
-            Food:
+            <Text style={styles.subHeadingText}>Food: </Text>
             {data.item.foods &&
-              data.item.foods.map((foods, key) => {
-                return <Text> {foods.name} </Text>;
+              data.item.foods.map((foods) => {
+                return <Text> ({foods.name}) </Text>;
               })}
+            ;
           </Text>
+        </View>
+        <View style={styles.logBodyView}>
           <Text>
-            Exercises:
+            <Text style={styles.subHeadingText}>Exercises: </Text>
             {data.item.exercises &&
-              data.item.exercises.map((exercises, key) => {
+              data.item.exercises.map((exercises) => {
                 return (
                   <Text>
                     ({exercises.name}, {exercises.duration} min)
@@ -80,8 +106,8 @@ export function Logs() {
             ;
           </Text>
         </View>
-      );
-
+      </Card>
+    );
   };
 
   //-----------  -------------  -------------  -------------  -------------
@@ -94,23 +120,16 @@ export function Logs() {
   return (
     <View style={container}>
       <Header title="Your Personal Logs" />
-      {/* <Card style={styles.CardContainer}>
-        <Text>Filter based on rating</Text>
-        <Text>Bristol Rating:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="4"
-          onChangeText={(val) => set_rating(val)}
-        />
-        <Button title="Search" onPress={pressHandler} />
-      </Card> */}
-
       <Card style={styles.CardContainer}>
         <FlatList
+          // TODO: add a key property here
+          // keyExtractor={(item, index) => item._id}
           style={styles.flatListView}
           data={stools}
           renderItem={renderItem}
-          keyExtractor={(item) => item._id}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       </Card>
     </View>
@@ -124,9 +143,12 @@ const styles = StyleSheet.create({
   },
   CardContainer: {
     alignItems: "center",
-    width: 330,
+    width: 340,
     marginVertical: 30,
-    height: 300,
+    marginBottom: 20,
+    paddingBottom: 20,
+    height: "80%",
+    backgroundColor: Colors.primary,
   },
   input: {
     borderWidth: 1,
@@ -138,5 +160,30 @@ const styles = StyleSheet.create({
   flatListView: {
     width: "100%",
     height: 40,
+  },
+  innerCardContainer: {
+    marginBottom: 20,
+    width: "100%",
+  },
+  logView: {
+    width: "100%",
+    borderBottomWidth: 1,
+    borderColor: "black",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  logBodyView: {
+    flexDirection: "row",
+    width: "100%",
+    borderBottomWidth: 1,
+    borderColor: "black",
+    alignItems: "center",
+  },
+  logText: {
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+  subHeadingText: {
+    fontWeight: "bold",
   },
 });

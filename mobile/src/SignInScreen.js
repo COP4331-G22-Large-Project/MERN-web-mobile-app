@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
+  Image,
 } from "react-native";
 import { AuthContext } from "./utils";
 import Header from "../components/Header";
@@ -26,8 +27,6 @@ export function SignInScreen({ navigation }) {
       <ScrollView contentContainerStyle={container}>
         {/* <ImageBackground source = {require('../assets/Background.jpg')} style={container} resizeMode= 'cover'>
          */}
-        <View></View>
-
         <Card style={styles.card}>
           <TextInput
             placeholder="Username"
@@ -35,7 +34,7 @@ export function SignInScreen({ navigation }) {
             onChangeText={setUsername}
             style={txtInput}
             textAlign="center"
-            autoCapitalize = {"none"}
+            autoCapitalize={"none"}
           />
           <TextInput
             placeholder="Password"
@@ -48,7 +47,7 @@ export function SignInScreen({ navigation }) {
           <View style={styles.twoButton}>
             <View style={styles.buttonView}>
               <Button
-                color="black"
+                color="white"
                 title="Sign in"
                 onPress={() => signIn({ username, password })}
               />
@@ -56,7 +55,7 @@ export function SignInScreen({ navigation }) {
 
             <View style={styles.buttonView}>
               <Button
-                color="black"
+                color="white"
                 title="Register"
                 onPress={() => navigation.navigate("Register")}
               />
@@ -64,12 +63,15 @@ export function SignInScreen({ navigation }) {
           </View>
           <View style={styles.buttonView}>
             <Button
-              color="black"
+              color="white"
               title="Forgot Password"
               onPress={() => navigation.navigate("Forgot")}
             />
           </View>
         </Card>
+        <View style = {styles.imageContainer}>
+          <Image source={require("../assets/TitlePageImage.png")} resizeMode='contain' style = {styles.image}/>
+        </View>
 
         <View style={styles.footerBox}>
           <View>
@@ -85,7 +87,6 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     alignItems: "center",
-    justifyContent: "flex-end",
   },
   // imageContainer:{
   //   flex: 1,
@@ -94,11 +95,10 @@ const styles = StyleSheet.create({
   // },
   insideContainer: {
     flex: 1,
-    justifyContent: "center",
     backgroundColor: "red",
   },
   card: {
-    marginVertical: 150,
+    marginTop: 20,
     width: 330,
     // maxWidth: "80%",
     alignItems: "center",
@@ -129,8 +129,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   footerBox: {
-    padding: 40,
+    // padding: 40,
     width: "100%",
     alignItems: "center",
   },
+  imageContainer:{
+    height: 300,
+    width: 300,
+    justifyContent: 'flex-start',
+    marginBottom: 5,
+    alignItems: 'center',
+    marginTop: 30
+  },
+  image:{
+    padding: 10,
+    height: 230,
+    width:230,
+    overflow:'hidden',
+
+  }
 });

@@ -20,7 +20,8 @@ import Header from "../components/Header";
 import Card from "../components/Card";
 import MainButton from "../components/MainButton";
 import { AntDesign } from "@expo/vector-icons";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 
 export function Stool() {
   const { container } = styles;
@@ -74,7 +75,7 @@ export function Stool() {
             </View>
             <TextInput
               style={styles.inputBox}
-              placeholder="e.g. A ton"
+              placeholder="Enter: Little, Normal or A lot"
               onChangeText={(val) => set_amount(val)}
             />
             <View style={styles.buttonView}>
