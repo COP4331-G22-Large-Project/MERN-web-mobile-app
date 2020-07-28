@@ -88,6 +88,26 @@ async function isUserDuplicate(username, email) {
 	return { isUsername: usernameUser, isEmail: emailUser };
 }
 
+async function registerUser(userObj) {
+	const {
+		username,
+		password,
+		email,
+		firstName,
+		lastName,
+	} = userObj;
+
+	const user = new User({
+		firstName,
+		lastName,
+		username,
+		email,
+		verificationToken: uid(16),
+	});
+	user.password = generatePasswordWithSalt(user, password);
+	return await user.save();
+}
+
 loginRouter.post('/register', (req, res) => {
 	const {
 		username,
@@ -111,20 +131,19 @@ loginRouter.post('/register', (req, res) => {
 		if (isEmail) {
 			return res.status(403).json({ err: 'Email already exists' });
 		}
-
-		const user = new User({
-			firstName,
-			lastName,
-			username,
-			email,
-			verificationToken: uid(16),
-		});
-		user.password = generatePasswordWithSalt(user, password);
-		user.verificationToken = uid(16);
-		user.save().then((savedUser) => {
-			sendRegistrationEmail(savedUser);
-			res.json(savedUser.toObject());
-		}).catch(err => res.status(500).send(err));
+		try {
+			const user = registerUser({
+				username,
+				password,
+				email,
+				firstName,
+				lastName,
+			});
+			sendRegistrationEmail(user);
+			res.json(user.toObject());
+		} catch (err) {
+			res.status(500).send(err)
+		}
 	})
 });
 
@@ -286,4 +305,5 @@ export {
 	validatePassword,
 	logIn,
 	isUserDuplicate,
+	registerUser,
 };
