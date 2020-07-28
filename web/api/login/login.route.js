@@ -118,7 +118,7 @@ loginRouter.post('/register', (req, res) => {
 	} = req.body;
 
 	if (!typeCheck('{username: String, password: String, email: String}', { username, password, email })) {
-		return res.status(400).send('Invalid request parameters');
+		return res.status(400).send({ err: 'Invalid request parameters' });
 	}
 
 	isUserDuplicate().then(({ isUsername, isEmail }) => {

@@ -1,36 +1,300 @@
-import * as React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { Button, Text, TextInput, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import {
+  SplashScreen,
+  HomeScreen,
+  SignInScreen,
+  RegisterScreen,
+  SettingScreen,
+  Consumables,
+  Exercise,
+  Stool,
+  Logs,
+  ForgotScreen,
+  CheckEmail,
+} from "./src";
+import { AuthContext } from "./src/utils";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AsyncStorage from "@react-native-community/async-storage";
+import Colors from "./constants/colors";
+import Icon from "react-native-vector-icons/Ionicons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { NavigationEvents } from "react-navigation";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { login, checkLoggedIn, logout, register } from "./api/auth";
 
-const instructions = Platform.select({
-  ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
-  android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
-});
+//
+//const StackHome = createStackNavigator();
 
-export default function App() {
+//function HomeStack() {
+// return (
+//    <StackHome.Navigator initialRouteName="SignIn">
+//      <StackHome.Screen name="Home" component={HomeScreen} />
+//      <StackHome.Screen name="Detail" component={DetailScreen} />
+//    </StackHome.Navigator>
+//  );
+//}
+
+//const StackSetting = createStackNavigator();
+
+//function SettingStack() {
+//  return (
+//    <StackSetting.Navigator initialRouteName="Setting">
+//      <StackSetting.Screen name="Setting" component={SettingScreen} />
+//      <StackSetting.Screen name="Detail" component={DetailScreen} />
+//    </StackSetting.Navigator>
+//  );
+//}
+//
+
+const Tab = createBottomTabNavigator();
+
+function HomeTab() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to React Native!</Text>
-      <Text style={styles.instructions}>To get started, edit App.js</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
-    </View>
+    <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: Colors.primary,
+        inactiveTintColor: "black",
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen} /*component={HomeStack}*/
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <Icon name="ios-home" color={color} size={24} focused={focused} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Consumables"
+        component={Consumables} /*component={SettingStack}*/
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name="food"
+              size={24}
+              color={color}
+              focused={focused}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Exercise"
+        component={Exercise}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name="md-fitness"
+              size={24}
+              color={color}
+              focused={focused}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Stool"
+        component={Stool}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <FontAwesome5
+              name="poop"
+              size={24}
+              color={color}
+              focused={focused}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Logs"
+        component={Logs}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <FontAwesome
+              name="book"
+              size={24}
+              color={color}
+              focused={focused}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+const StackAuth = createStackNavigator();
+
+// CHECK ME OUT BELOW FOR FOGOT
+function AuthStack() {
+  return (
+    <StackAuth.Navigator initialRouteName="SignIn">
+      <StackAuth.Screen
+        name="Brist-Tool"
+        options={{
+          headerStyle: { backgroundColor: Colors.primary },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 25,
+            color: "black",
+          },
+        }}
+        component={SignInScreen}
+      />
+      <StackAuth.Screen
+        name="Register"
+        options={{
+          title: "Sign up!",
+          headerStyle: { backgroundColor: Colors.primary },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            color: "black",
+          },
+          headerTintColor: "black",
+        }}
+        component={RegisterScreen}
+      />
+      <StackAuth.Screen
+        name="Forgot"
+        component={ForgotScreen}
+        options={{
+          title: "Reset Password",
+          headerStyle: { backgroundColor: Colors.primary },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            color: "black",
+          },
+          headerTintColor: "black",
+        }}
+      />
+      <StackAuth.Screen name="CheckEmail" component={CheckEmail} />
+    </StackAuth.Navigator>
+  );
+}
+
+const Stack = createStackNavigator();
+
+export default function App({ props, navigation }) {
+  const [state, dispatch] = React.useReducer(
+    (prevState, action) => {
+      console.log(action);
+      switch (action.type) {
+        case "RESTORE_TOKEN":
+          return {
+            ...prevState,
+            user: action.user || null,
+            isLoading: false,
+          };
+        case "SIGN_IN":
+          return {
+            ...prevState,
+            user: action.user,
+            isSignout: false,
+          };
+        case "SIGN_OUT":
+          return {
+            ...prevState,
+            isSignout: true,
+            user: null,
+          };
+      }
+    },
+    {
+      isLoading: true,
+      isSignout: true,
+      user: null,
+    }
+  );
+
+  console.log(state);
+
+  React.useEffect(() => {
+    // Fetch the token from storage then navigate to our appropriate place
+    const bootstrapAsync = () => {
+      checkLoggedIn()
+        .then((res) => {
+          console.log("restore success");
+          console.log(res.headers);
+          dispatch({ type: "RESTORE_TOKEN", user: res.data });
+        })
+        .catch((err) => {
+          console.log("restore fail");
+          console.log(err.response.headers);
+          dispatch({ type: "RESTORE_TOKEN" });
+        });
+    };
+
+    bootstrapAsync();
+  }, []);
+
+  const authContext = React.useMemo(
+    () => ({
+      signIn: (data) => {
+        login(data.username, data.password)
+          .then((res) => {
+            dispatch({ type: "SIGN_IN", user: res.data });
+          })
+          .catch((err) => {
+            // TODO: Invalid username/password
+          });
+      },
+      signOut: () => {
+        logout();
+        dispatch({ type: "SIGN_OUT" });
+      },
+      signUp: (data) => {
+        register(
+          data.username,
+          data.password,
+          data.email,
+          data.firstName,
+          data.lastName
+        )
+          .then((res) => {
+            dispatch({ type: "SIGN_IN" });
+          })
+          .catch((err) => {
+            // TODO: Tell user the error that occured
+            console.log(err);
+          });
+      },
+    }),
+    []
+  );
+
+  return (
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {state.isLoading ? (
+            // We haven't finished checking for the token yet
+            <Stack.Screen name="Splash" component={SplashScreen} />
+          ) : state.user === null ? (
+            // No token found, user isn't signed in
+            <Stack.Screen
+              name="SignIn"
+              component={AuthStack}
+              options={{
+                title: "Sign in",
+                // When logging out, a pop animation feels intuitive
+                animationTypeForReplace: state.isSignout ? "pop" : "push",
+              }}
+            />
+          ) : (
+            // User is signed in
+            <Stack.Screen name="Home" component={HomeTab} /> /*HomeScreen*/
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthContext.Provider>
+  );
+}
