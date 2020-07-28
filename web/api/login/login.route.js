@@ -131,19 +131,16 @@ loginRouter.post('/register', (req, res) => {
 		if (isEmail) {
 			return res.status(403).json({ err: 'Email already exists' });
 		}
-		try {
-			const user = registerUser({
-				username,
-				password,
-				email,
-				firstName,
-				lastName,
-			});
+		registerUser({
+			username,
+			password,
+			email,
+			firstName,
+			lastName,
+		}).then((user) => {
 			sendRegistrationEmail(user);
 			res.json(user.toObject());
-		} catch (err) {
-			res.status(500).send(err)
-		}
+		}).catch((err) => res.status(500).send(err));
 	})
 });
 
