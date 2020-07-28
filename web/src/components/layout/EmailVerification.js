@@ -25,10 +25,6 @@ export default class EmailVerification extends Component {
 
     onSubmit(e) {
         e.preventDefault()
-
-
-
-
         verifyEmail(this.state.verificationCode)
             .then(res => {
                 window.location.href = "/login";
