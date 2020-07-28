@@ -9,7 +9,7 @@ import { createTransport } from 'nodemailer';
 
 const API_URL = process.env.NODE_ENV === 'production'
 	? 'https://largeproject.herokuapp.com'
-	: 'http://localhost:8000';
+	: 'http://localhost:3000';
 
 // email auth
 const sender_user = process.env.EMAIL_USER || "stool.analytics@gmail.com";
@@ -206,7 +206,7 @@ loginRouter.post('/retoken', (req, res) => {
 // get email from user, get user object, send reset password to email
 loginRouter.post('/repassword', (req, res) => 
 {
-	const reset_password_web_link = `${API_URL}` + '/verifyforgottenpassword';
+	const reset_password_web_link = `${API_URL}/verifyforgottenpassword`;
 	const { email } = req.body;
 
 	User.findOne({email}, (err, user) => 
@@ -236,7 +236,7 @@ loginRouter.post('/repassword', (req, res) =>
 					from: sender_user,
 					to: savedUser.email,
 					subject: 'password reset token',
-					html: `You have requested (hopefully) to reset your Brist-Tool password. If you did not request a password reset, ignore this email. <a href=${reset_password_web_link}>Click here</a> and enter this code:<br><b>${token}</b> to reset your passcode`
+					html: `You have requested (hopefully) to reset your Brist-Tool password. If you did not request a password reset, ignore this email. <a href="${reset_password_web_link}?token=${encodeURI(token)}">Click here</a> and enter this code:<br><b>${token}</b> to reset your passcode`
 				};
 				
 				
