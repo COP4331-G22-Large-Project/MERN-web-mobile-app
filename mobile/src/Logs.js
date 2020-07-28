@@ -24,11 +24,15 @@ export function Logs() {
   const [rating, set_rating] = useState("");
   const [stools, setStools] = useState([]);
 
+
+
+  //----------- Some coded that I (Raj) add -------------  -------------
+
   useEffect(() => {
     const bootstrapAsync = () => {
       getAllStools()
         .then((res) => {
-          this.setState({ stools: res.data });
+          setStools(res.data );
         })
         .catch((err) => {
           console.log(err);
@@ -40,10 +44,15 @@ export function Logs() {
   const renderItem = (data) => {
     return (
       <View>
-        <Text>{data.item.name}</Text>
+        <Text>{data.item.amount}</Text>
       </View>
     );
   };
+
+  //-----------  -------------  -------------  -------------  -------------
+
+
+
   const pressHandler = () => {
     alert("Thank you for submitting!");
     // this.logList();
