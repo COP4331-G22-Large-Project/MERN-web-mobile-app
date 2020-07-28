@@ -69,13 +69,11 @@ export default class ResetPassword extends Component {
         const { tokenInUrl, token } = this.state;
         return (
             <div class="boxlogE">
-                <h3>Reset Your Password </h3><br></br>
-                <h4> Enter Your New Password</h4><br></br>
                 <p class="sign" align="center">Reset Your Password </p>
                 <form onSubmit={this.onSubmit}>
                     { !tokenInUrl && (
                         <div className="form1">
-                            <p>Check your email for the token and insert it here</p>
+                            <p align='center'>Check your email for the token and insert it here</p>
                             <input 
                                class="un "
                                align="center" 
@@ -97,20 +95,23 @@ export default class ResetPassword extends Component {
                            value = {this.state.password}
                            onChange = {this.onChangePassword}
                         />
-                    </div>
-                    <br/>
-                    <div className="form-group">
-                        <label>Confirm Password: </label>
+
+
+
+                        <p  align="center">Confirm Password</p>
                         <input type = "password"
+                               class="un "
+                               align="center"
+                               type = "password"
+                               placeholder="Password"
                                required
-                               className="form-control"
                                value = {this.state.confirmPassword}
                                onChange = {this.onChangeConfirmPassword}
                         />
                     </div>
-                    <br></br>
+
                     <div className="form-group">
-                        <input type ="submit" value = "Reset Password" className="btn btn-primary"/>
+                        <input type ="submit" value = "Reset Password" className="submit"/>
                     </div>
                 </form>
             </div>
