@@ -6,11 +6,16 @@ export default class ResetPassword extends Component {
         super(props);
         this.onChangePassword = this.onChangePassword.bind(this)
         this.onChangeConfirmPassword = this.onChangeConfirmPassword.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        this.onSubmit = this.onSubmit.bind(this);
+
+        const searchParams = new URLSearchParams(window.location.search);
+        const token = searchParams.get('token');
 
         this.state = {
             password : '',
-            confirmPassword:""
+            confirmPassword: '',
+            token,
+            tokenInUrl: Boolean(token),
         }
     }
 
@@ -28,12 +33,11 @@ export default class ResetPassword extends Component {
 
     onSubmit(e){
         e.preventDefault()
-        const{password,confirmPassword} = this.state
+        const{ password, confirmPassword, token } = this.state;
         if(password === confirmPassword)
         {
-            const searchParams = new URLSearchParams(window.out)
-            const token = searchParams.get("token")
-            if(!token)
+            
+            if(token)
             {
 
                  doResetPassword(password, token).then((res) => {
@@ -61,19 +65,37 @@ export default class ResetPassword extends Component {
 
     }
 
-    render(){
-        return(
-            <div>
+    render() {
+        const { tokenInUrl, token } = this.state;
+        return (
+            <div class="boxlogE">
                 <h3>Reset Your Password </h3><br></br>
                 <h4> Enter Your New Password</h4><br></br>
+                <p class="sign" align="center">Reset Your Password </p>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Password: </label>
-                        <input type = "password"
+                    { !tokenInUrl && (
+                        <div className="form1">
+                            <p>Check your email for the token and insert it here</p>
+                            <input 
+                               class="un "
+                               align="center" 
+                               type="password"
+                               placeholder="Enter token"
                                required
-                               className="form-control"
-                               value = {this.state.password}
-                               onChange = {this.onChangePassword}
+                               value={token}
+                               onChange={(e) => this.setState({ token: e.target.value })}
+                            />
+                        </div>
+                    )}
+                    <div className="form1">
+                        <input 
+                           class="un "
+                           align="center" 
+                           type = "password"
+                           placeholder="Enter Your New Password"
+                           required
+                           value = {this.state.password}
+                           onChange = {this.onChangePassword}
                         />
                     </div>
                     <br/>

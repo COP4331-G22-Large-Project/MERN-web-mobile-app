@@ -8,7 +8,8 @@ export default class ForgotPassword extends Component {
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
-            email : ''
+            email : '',
+            sent: false,
         }
     }
 
@@ -21,27 +22,24 @@ export default class ForgotPassword extends Component {
     onSubmit(e){
         e.preventDefault()
 
-
-        const{email} = this.state;
+        const { email } = this.state;
 
         askResetPassword(email).then((res) =>
         {
             window.location.href = '/verifyforgottenpassword'
         })
-            .catch((err) =>
-            {
-                console.log(err)
-            })
-
-
+        .catch((err) =>
+        {
+            console.log(err)
+        });
 
         this.setState({
             email : ''
-        })
-
+        });
     }
 
     render(){
+        const { sent } = this.state;
         return(
             <div>
                 <h3>Forgot Your Password? </h3><br></br>

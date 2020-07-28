@@ -8,8 +8,8 @@ import User, { emailRegex } from '../user/user.model';
 import { createTransport } from 'nodemailer';
 
 const API_URL = process.env.NODE_ENV === 'production'
-	? 'https://largeproject.herokuapp.com/api'
-	: 'http://localhost:8000/api';
+	? 'https://largeproject.herokuapp.com'
+	: 'http://localhost:3000';
 
 // email auth
 const sender_user = process.env.EMAIL_USER || "stool.analytics@gmail.com";
@@ -137,7 +137,7 @@ async function sendRegistrationEmail(user) {
 		from: sender_user,
 		to: user.email,
 		subject: 'verification email',
-		html: `You have registered for Brist-Tool. <a href="${API_URL}/auth/verify_token?token=${encodeURI(token)}">Click here</a> to complete the registration, or enter this code:<br><b>${token}</b>`
+		html: `You have registered for Brist-Tool. <a href="${API_URL}/api/auth/verify_token?token=${encodeURI(token)}">Click here</a> to complete the registration, or enter this code:<br><b>${token}</b>`
 	};
 
 	// send email and handle results
@@ -206,7 +206,7 @@ loginRouter.post('/retoken', (req, res) => {
 // get email from user, get user object, send reset password to email
 loginRouter.post('/repassword', (req, res) => 
 {
-	const reset_password_web_link = '${API_URL}/IDK';
+	const reset_password_web_link = `${API_URL}/verifyforgottenpassword`;
 	const { email } = req.body;
 
 	User.findOne({email}, (err, user) => 
@@ -236,7 +236,7 @@ loginRouter.post('/repassword', (req, res) =>
 					from: sender_user,
 					to: savedUser.email,
 					subject: 'password reset token',
-					html: `You have requested (hopefully) to reset your Brist-Tool password. If you did not request a password reset, ignore this email. <a href="${reset_password_web_link}?token=${encodeURI(token)}">Click here</a> to reset your password, or enter this code:<br><b>${token}</b>`
+					html: `You have requested (hopefully) to reset your Brist-Tool password. If you did not request a password reset, ignore this email. <a href="${reset_password_web_link}?token=${encodeURI(token)}">Click here</a> and enter this code:<br><b>${token}</b> to reset your passcode`
 				};
 				
 				
@@ -270,6 +270,7 @@ loginRouter.post('/reset_password', (req,res) =>
 		else
 		{
 			user.password = generatePasswordWithSalt(user, password);
+			user.passwordVerification = null;
 			user.save().then((savedUser) =>
 			{
 				res.status(200).send('password reset');
