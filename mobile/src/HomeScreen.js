@@ -23,7 +23,7 @@ export function HomeScreen({}) {
       <ScrollView contentContainerStyle={styles.scrollview}>
         <View style={styles.CardContainer}>
           <Card>
-            <Text style={styles.introtext}>Hi UserName!</Text>
+            <Text style={styles.introtext}>Hello!</Text>
             <Text style={styles.introtext}>Welcome to Brist-Tool</Text>
             <Text style={styles.introtext}>Your Personal Health Journal</Text>
             <Text style={styles.bodyText}>

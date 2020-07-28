@@ -162,7 +162,20 @@ function AuthStack() {
         }}
         component={RegisterScreen}
       />
-      <StackAuth.Screen name="Forgot" component={ForgotScreen} />
+      <StackAuth.Screen
+        name="Forgot"
+        component={ForgotScreen}
+        options={{
+          title: "Reset Password",
+          headerStyle: { backgroundColor: Colors.primary },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            color: "black",
+          },
+          headerTintColor: "black",
+        }}
+      />
       <StackAuth.Screen name="CheckEmail" component={CheckEmail} />
     </StackAuth.Navigator>
   );

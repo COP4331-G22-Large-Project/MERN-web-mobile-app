@@ -62,9 +62,6 @@ export function Consumables() {
           </View>
         </Card>
       </View>
-      <View>
-        <Text style= {{textAlign: 'left'}}>Hello</Text>
-      </View>
     </View>
     </TouchableWithoutFeedback>
   );
