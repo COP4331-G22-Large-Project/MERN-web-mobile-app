@@ -270,7 +270,7 @@ loginRouter.post('/reset_password', (req,res) =>
 		else
 		{
 			user.password = generatePasswordWithSalt(user, password);
-			user.verificationToken = null;
+			user.passwordVerification = null;
 			user.save().then((savedUser) =>
 			{
 				res.status(200).send('password reset');
