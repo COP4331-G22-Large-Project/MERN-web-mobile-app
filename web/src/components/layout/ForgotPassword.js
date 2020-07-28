@@ -41,22 +41,23 @@ export default class ForgotPassword extends Component {
     render(){
         const { sent } = this.state;
         return(
-            <div>
-                <h3>Forgot Your Password? </h3><br></br>
-                <h4> Enter the email address associated with the registered Account</h4><br></br>
+            <div class="boxregister">
+                <p class ='sign' align ='center'>Forgot Your Password? </p><br></br>
+                <p align='center' > Enter the email address associated with the registered Account</p><br></br>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <label>Email: </label>
-                        <input type = "string"
+                        <p align='center'>Email: </p>
+                        <input class='un'
+                               align = "center"
+                               type = "string"
                                required
-                               className="form-control"
                                value = {this.state.email}
                                onChange = {this.onChangeEmail}
                         />
                     </div>
                     <br></br>
                     <div className="form-group">
-                        <input type ="submit" value = "Send Email" className="btn btn-primary"/>
+                        <input type ="submit" align='center ' value = "Send Email" className="submit"/>
                     </div>
                 </form>
             </div>

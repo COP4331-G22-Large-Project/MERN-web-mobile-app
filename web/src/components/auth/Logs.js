@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { searchStool, getAllStools, deleteStools } from '../../api/stool';
+import {getAllStools, deleteStools, addStool} from '../../api/stool';
+import logo from "../layout/bristtool1.png";
 
 const Log = props => (
     <tr>
@@ -10,7 +11,7 @@ const Log = props => (
         <td>{props.log.date.substring(0,10)}</td>
         <td>{props.log.date.substring(11,19)}</td>
         <td>
-             <a href="/logs" onClick={() => { props.deleteLog(props.log._id)}}>delete</a>
+             <a href="" onClick={() => { props.deleteLog(props.log)}}>delete</a>
         </td>
     </tr>
 )
@@ -18,6 +19,7 @@ const Log = props => (
 export default class Logs extends Component{
     constructor(props) {
         super(props);
+
         this.deleteLog = this.deleteLog.bind(this)
 
         this.state = {stools: []}
@@ -35,6 +37,9 @@ export default class Logs extends Component{
         this.refreshLogs();
     }
 
+
+
+
     deleteLog(id) {
         deleteStools([id]).then((res) => {
             this.refreshLogs();
@@ -43,7 +48,9 @@ export default class Logs extends Component{
 
     render(){
         return (
+
             <div className="boxview">
+
                 <div className="form1">
                 <p className="sign" align="center">Logs</p><br/>
                 <table className="table">
@@ -51,8 +58,8 @@ export default class Logs extends Component{
                     <tr>
                         <th>Food/Drinks</th>
                         <th>Exercise</th>
-                        <th>Amount</th>
-                        <th>Type</th>
+                        <th>Stool Amount</th>
+                        <th>Stool Type</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Actions</th>

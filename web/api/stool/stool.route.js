@@ -87,6 +87,7 @@ stoolRouter.get('/', (req, res) => {
 });
 
 stoolRouter.get('/search', (req, res) => {
+	console.log(req.user._id, req.query)
 	searchStool(req.user._id, req.query).then((stools) => {
 		res.json(stools);
 	}).catch(e => res.status(e.status || 500).send(e.msg || e));
@@ -136,7 +137,9 @@ stoolRouter.post('/add', (req, res) => {
 });
 
 stoolRouter.delete('/delete', (req, res) => {
+
 	const { stools } = req.body;
+
 	if (typeCheck('[String]', stools)) {
 		const query = { userId: req.user._id, _id: { $in: stools } };
 		Stool.find(query)

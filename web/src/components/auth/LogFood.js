@@ -17,7 +17,11 @@ export default class LogFood extends Component {
             name : e.target.value
         })
     }
-
+    onChangeSearch(e){
+        this.setState({
+            search : e.target.value
+        })
+    }
 
     onSubmit(e){
         const { name } = this.state;

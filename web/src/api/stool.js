@@ -26,8 +26,8 @@ export const deleteStools = (stools) => {
 		stoolIds = stools.map(s => s._id);
 	} else {
 		stoolIds = stools;
+
 	}
-	axios.delete('/api/stool/delete', {
-		stools: stoolIds
-	});
+	let payload = {data:{stools : stoolIds}}
+	axios.delete('/api/stool/delete', payload);
 }
