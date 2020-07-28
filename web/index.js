@@ -32,9 +32,7 @@ const port = process.env.PORT || 8000;
 
 // Serve static files first, then look at api-related stuff
 app.use(express.static(path.join(__dirname, '/build')));
-app.get('*', (req,res) => {
-	res.sendFile(path.join(__dirname + '/build/index.html'))
-})
+
 // Parse cookies automatically
 app.use(cookieParser());
 // Convert body to JSON
