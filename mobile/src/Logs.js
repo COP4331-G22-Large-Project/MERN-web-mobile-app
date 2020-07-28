@@ -24,6 +24,17 @@ export function Logs() {
   const [rating, set_rating] = useState("");
   const [stools, setStools] = useState([]);
 
+  const Log = (props) => (
+    <View>
+      <Text>{props.log.type}</Text>
+      <Text>{props.log.amount}</Text>
+      <Text>{props.log.foods.map((foods) => foods.name).join(", ")}</Text>
+      <Text>
+        {props.log.exercises.map((exercises) => exercises.name).join(", ")}
+      </Text>
+    </View>
+  );
+
   //----------- Some coded that I (Raj) add -------------  -------------
 
   useEffect(() => {
@@ -39,32 +50,43 @@ export function Logs() {
     bootstrapAsync();
   }, []);
 
+  //   const refresh = (data) => {
+  //     return (
+  //       <View>
+  //         <Text>Rating: {data.item.type}</Text>
+  //         <Text>Amount: {data.item.amount}</Text>
+  //         <Text>
+  //           Food:
+  //           {data.item.foods &&
+  //             data.item.foods.map((foods) => {
+  //               return <Text> {foods.name} </Text>;
+  //             })}
+  //         </Text>
+  //         <Text>
+  //           Exercises:
+  //           {data.item.exercises &&
+  //             data.item.exercises.map((exercises) => {
+  //               return (
+  //                 <Text>
+  //                   ({exercises.name}, {exercises.duration} min)
+  //                 </Text>
+  //               );
+  //             })}
+  //           ;
+  //         </Text>
+  //       </View>
+  //     );
+  //   };
+
   const renderItem = (data) => {
-    return (
-      <View>
-        <Text>Rating: {data.item.type}</Text>
-        <Text>Amount: {data.item.amount}</Text>
-        <Text>
-          Food:
-          {data.item.foods &&
-            data.item.foods.map((foods) => {
-              return <Text> {foods.name} </Text>;
-            })}
-        </Text>
-        <Text>
-          Exercises:
-          {data.item.exercises &&
-            data.item.exercises.map((exercises) => {
-              return (
-                <Text>
-                  ({exercises.name}, {exercises.duration} min)
-                </Text>
-              );
-            })}
-          ;
-        </Text>
-      </View>
-    );
+    return setStools(data).map((log) => (
+      <Log log={log} deleteLog={this.deleteLog} key={log._id} />
+
+      // {data.item.map(log => (
+      //<Log data={data} key={data._id} />
+      //   ))}
+      //return refresh(data);
+    ));
   };
 
   //-----------  -------------  -------------  -------------  -------------
