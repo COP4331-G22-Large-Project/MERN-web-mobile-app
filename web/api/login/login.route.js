@@ -278,4 +278,12 @@ loginRouter.post('/reset_password', (req,res) =>
 		}
 	});
 });
+
 export default loginRouter;
+
+export {
+	generatePasswordWithSalt,
+	validatePassword,
+	logIn,
+	isUserDuplicate,
+};
