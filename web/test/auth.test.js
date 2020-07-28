@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import User from '../api/user/user.model';
 import {
 	generatePasswordWithSalt,
 	validatePassword,
@@ -30,12 +31,13 @@ describe('User Login Tests', () => {
 	};
 
 	beforeAll(async (done) => {
-		await mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
+		await mongoose.connect('mongodb://localhost:27017/JestTesting', { useNewUrlParser: true, useCreateIndex: true }, (err) => {
 			if (err) {
 				console.log(err);
 				process.exit(1);
 			}
 		});
+		await User.deleteMany();
 		done();
 	});
 
@@ -81,21 +83,16 @@ describe('User Login Tests', () => {
 		});
 	});
 
+	it('detects duplicate users', async () => {
+		expect(await isUserDuplicate('bob', 'bob@example.com')).toEqual({
+			isUsername: true,
+			isEmail: true
+		});
+	})
+
 	afterAll(async (done) => {
+		await User.deleteMany();
 		await mongoose.connection.close();
 		done();
 	});
-});
-
-test('checks db for given user and email', () => {
-	const user = "dummy1";
-	const email = "dummy1@gmail.com";
-
-	expect(isUserDuplicate(user, email).isEqual(
-		expect.objectContaining(
-		{
-			"isUsername": "true",
-			"isEmail": "true"
-		})
-	);
 });
