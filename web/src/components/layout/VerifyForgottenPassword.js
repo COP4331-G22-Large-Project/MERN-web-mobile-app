@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {askResetPassword, verifyReset} from "../../api/auth";
+import {verifyEmail} from "../../api/auth";
 
 export default class VerifyForgottenPassword extends Component {
     constructor(props) {
@@ -23,7 +23,7 @@ export default class VerifyForgottenPassword extends Component {
 
 
 
-        verifyReset(this.state.passwordVerification).then(res =>{
+        verifyEmail(this.state.passwordVerification).then(res =>{
             window.location.href ='/resetpassword'
         } )
         this.setState({
@@ -34,22 +34,22 @@ export default class VerifyForgottenPassword extends Component {
 
     render(){
         return(
-            <div>
-                <h3>Verify Code</h3><br></br>
-                <h4> Enter the Verification Code sent to your email</h4><br></br>
+            <div class= 'boxlogE'>
+                <p className="sign" align="center">Verify Code </p>
+                <p align="center">Enter Verification Code Sent to Email</p><br/>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <label>Verification Code: </label>
-                        <input type = "string"
+                        <p  align="center">Verification Code </p>
+                        <input class='un'
+                            type = "string"
                                required
-                               className="form-control"
                                value = {this.state.passwordVerification}
                                onChange = {this.onChangeVerifyCode}
                         />
                     </div>
                     <br></br>
                     <div className="form-group">
-                        <input type ="submit" value = "Verify Code" className="btn btn-primary"/>
+                        <input type ="submit" value = "Verify Code" className="submit"/>
                     </div>
                 </form>
             </div>
